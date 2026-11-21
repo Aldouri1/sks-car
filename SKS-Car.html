@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>SKS Car | نظام SKS Car لإدارة خدمات السيارات</title>
   <meta name="application-name" content="SKS Car" />
-  <meta name="sks-app-version" content="1.3.1" />
-  <meta name="sks-build-id" content="20261121131" />
+  <meta name="sks-app-version" content="1.5.1" />
+  <meta name="sks-build-id" content="20261121151" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -417,6 +417,14 @@ body.dark-mode .sks-subcard {
   }
 }
 
+/* Clean Collapsible Summary Cards */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
 </style>
 </head>
 <body class="min-h-screen antialiased">
@@ -441,34 +449,13 @@ body.dark-mode .sks-subcard {
       </div>
 
       <div class="p-4 border-t border-slate-800 space-y-2">
-        <button onclick="openCloudSyncModal('ota')" class="w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-[#070b14] text-xs font-black flex items-center justify-between transition shadow">
-          <span>🔄 التحديث التلقائي عن بُعد</span>
-          <span class="text-[10px] bg-black/15 px-1.5 py-0.5 rounded font-black" dir="ltr">v1.3.1</span>
+        <button onclick="openCloudSyncModal('ota')" class="w-full py-2.5 px-3 rounded-xl bg-[#0066ff] hover:bg-blue-500 text-white text-xs font-black flex items-center justify-between transition shadow">
+          <span>⚙️ الإعدادات والتحديث</span>
+          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-black" dir="ltr">v1.5.1</span>
         </button>
-        <button onclick="openCloudSyncModal('cloud')" class="w-full py-2 px-3 rounded-xl bg-[#0066ff] hover:bg-blue-500 text-white text-xs font-extrabold flex items-center justify-between transition shadow">
-          <span>☁️ السحابة وتثبيت التطبيق</span>
-          <i data-lucide="cloud" class="w-4 h-4"></i>
-        </button>
-        <a href="SKS-Car.html" download="SKS-Car.html" class="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center justify-between transition">
-          <span>تحميل ملف البرنامج للواتساب</span>
-          <i data-lucide="share-2" class="w-4 h-4"></i>
-        </a>
-        <button onclick="exportBackupData()" class="w-full py-2 px-3 rounded-xl bg-sky-500/15 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-bold flex items-center justify-between transition">
-          <span>حفظ البيانات لنقلها</span>
-          <i data-lucide="download" class="w-4 h-4"></i>
-        </button>
-        <label class="w-full py-2 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-bold flex items-center justify-between transition cursor-pointer">
-          <span>استرجاع بيانات من ملف</span>
-          <i data-lucide="upload" class="w-4 h-4"></i>
-          <input type="file" accept=".json" onchange="importBackupData(event)" class="hidden" />
-        </label>
         <button onclick="toggleSurfaceTheme()" class="w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 text-xs font-bold flex items-center justify-between">
           <span id="surface-theme-label">الوضع الليلي</span>
           <i data-lucide="moon" class="w-4 h-4 text-sky-400"></i>
-        </button>
-        <button onclick="clearAllSystemData()" class="w-full py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-600 text-rose-300 hover:text-white text-xs font-bold flex items-center justify-between transition">
-          <span>تصفير كافة البيانات</span>
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
         </button>
       </div>
     </aside>
@@ -476,29 +463,26 @@ body.dark-mode .sks-subcard {
     <!-- CONTENT AREA -->
     <div class="flex-1 flex flex-col min-w-0">
 
-      <!-- SIMPLE TOP HEADER -->
-      <header class="sticky top-0 z-30 bg-[#070b14] text-white px-3 md:px-6 py-2.5 md:py-3 border-b border-slate-800">
-        <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+      <!-- ULTRA-CLEAN MINIMAL TOP HEADER -->
+      <header class="sticky top-0 z-30 bg-[#070b14] text-white px-3 md:px-6 py-2.5 border-b border-slate-800">
+        <div class="max-w-5xl mx-auto flex items-center justify-between gap-2">
           <div class="flex items-center gap-2 min-w-0">
             <button onclick="toggleMobileSidebar(true)" class="lg:hidden p-2 rounded-xl bg-slate-800 text-sky-400 shrink-0" aria-label="القائمة">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
-            <div id="mobile-logo-slot" class="lg:hidden shrink-0"></div>
-            <h1 class="hidden md:block text-base lg:text-lg font-black text-white truncate">
-              نظام SKS Car لإدارة خدمات السيارات
+            <div id="mobile-logo-slot" onclick="switchTab('dashboard')" class="lg:hidden shrink-0 cursor-pointer"></div>
+            <h1 onclick="switchTab('dashboard')" class="hidden lg:block text-base font-black text-white truncate cursor-pointer">
+              SKS Car
             </h1>
           </div>
 
-          <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            <button id="cloud-sync-badge" onclick="openCloudSyncModal()" class="bg-slate-900 border border-emerald-500/40 px-2.5 sm:px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-[11px] sm:text-xs font-extrabold text-emerald-400 hover:border-emerald-400 transition whitespace-nowrap" title="السحابة والمزامنة التلقائية">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-              <span class="hidden sm:inline">مزامنة تلقائية</span>
-              <span class="sm:hidden">السحابة</span>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="toggleMiniCalculator()" class="w-9 h-9 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-sky-400 flex items-center justify-center transition" title="حاسبة سريعة">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
             </button>
-
-            <button onclick="switchTab('reception')" class="sks-electric-btn px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs md:text-sm flex items-center gap-1 whitespace-nowrap">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              <span>استلام</span>
+            <button type="button" onclick="openCloudSyncModal('ota')" class="px-3 h-9 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-extrabold flex items-center gap-1.5 transition" title="الإعدادات والتحديث عن بُعد">
+              <span>⚙️</span>
+              <span class="hidden sm:inline">الإعدادات</span>
             </button>
           </div>
         </div>
@@ -522,35 +506,27 @@ body.dark-mode .sks-subcard {
     </div>
   </div>
 
-  <!-- MOBILE & TABLET BOTTOM BAR (ALL 7 TABS ACCURATELY REPRESENTED) -->
-  <nav id="mobile-bottom-nav" class="fixed bottom-0 inset-x-0 z-30 bg-[#070b14] text-white border-t border-slate-800 px-0.5 py-1.5 grid grid-cols-7 gap-0.5 lg:hidden no-print">
+  <!-- SIMPLE & SPACIOUS MOBILE BOTTOM BAR (5 CLEAR BUTTONS) -->
+  <nav id="mobile-bottom-nav" class="fixed bottom-0 inset-x-0 z-30 bg-[#070b14] text-white border-t border-slate-800 px-1.5 py-1.5 grid grid-cols-5 gap-1 lg:hidden no-print">
     <button type="button" data-mobile-tab="dashboard" onclick="switchTab('dashboard')" class="flex flex-col items-center justify-center py-1 rounded-xl">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span class="text-[9px] sm:text-[10px] mt-0.5 leading-tight whitespace-nowrap">الرئيسية</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="text-[11px] mt-0.5 leading-tight whitespace-nowrap">الرئيسية</span>
     </button>
     <button type="button" data-mobile-tab="reception" onclick="switchTab('reception')" class="flex flex-col items-center justify-center py-1 rounded-xl">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-      <span class="text-[9px] sm:text-[10px] mt-0.5 leading-tight whitespace-nowrap">استلام</span>
-    </button>
-    <button type="button" data-mobile-tab="installments" onclick="switchTab('installments')" class="flex flex-col items-center justify-center py-1 rounded-xl">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>
-      <span class="text-[9px] sm:text-[10px] mt-0.5 leading-tight whitespace-nowrap">الأقساط</span>
-    </button>
-    <button type="button" data-mobile-tab="contracts" onclick="switchTab('contracts')" class="flex flex-col items-center justify-center py-1 rounded-xl">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      <span class="text-[9px] sm:text-[10px] mt-0.5 leading-tight whitespace-nowrap">العقود</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <span class="text-[11px] mt-0.5 leading-tight whitespace-nowrap">استلام</span>
     </button>
     <button type="button" data-mobile-tab="accounting" onclick="switchTab('accounting')" class="flex flex-col items-center justify-center py-1 rounded-xl">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
-      <span class="text-[9px] sm:text-[10px] mt-0.5 leading-tight whitespace-nowrap">الحسابات</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+      <span class="text-[11px] mt-0.5 leading-tight whitespace-nowrap">الحسابات</span>
     </button>
     <button type="button" data-mobile-tab="customers" onclick="switchTab('customers')" class="flex flex-col items-center justify-center py-1 rounded-xl">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span class="text-[9px] sm:text-[10px] mt-0.5 leading-tight whitespace-nowrap">الجهات</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span class="text-[11px] mt-0.5 leading-tight whitespace-nowrap">الزبائن</span>
     </button>
-    <button type="button" data-mobile-tab="billing" onclick="switchTab('billing')" class="flex flex-col items-center justify-center py-1 rounded-xl">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>
-      <span class="text-[9px] sm:text-[10px] mt-0.5 leading-tight whitespace-nowrap">الفواتير</span>
+    <button type="button" data-mobile-tab="more" onclick="toggleMobileSidebar(true)" class="flex flex-col items-center justify-center py-1 rounded-xl text-slate-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      <span class="text-[11px] mt-0.5 leading-tight whitespace-nowrap">المزيد</span>
     </button>
   </nav>
 
@@ -559,10 +535,10 @@ body.dark-mode .sks-subcard {
     <div id="modal-content" class="sks-card max-w-2xl w-full max-h-[92vh] overflow-y-auto"></div>
   </div>
 
-  <!-- FLOATING MINI CALCULATOR (أيقونة حاسبة صغيرة في أسفل الشاشة) -->
-  <div id="mini-calc-wrapper" class="fixed bottom-20 lg:bottom-5 left-3 lg:left-5 z-40 no-print" dir="ltr">
+  <!-- MINI CALCULATOR POPUP (يفتح من زر الحاسبة بالأعلى بدون تغطية الشاشة) -->
+  <div id="mini-calc-wrapper" class="fixed top-14 left-3 sm:left-5 z-50 no-print" dir="ltr">
     <!-- Calculator Popup Panel -->
-    <div id="mini-calc-popup" class="hidden mb-3 w-64 rounded-2xl bg-[#070b14] border border-slate-700/80 shadow-2xl overflow-hidden text-white">
+    <div id="mini-calc-popup" class="hidden w-64 rounded-2xl bg-[#070b14] border border-slate-700/80 shadow-2xl overflow-hidden text-white">
       <div class="px-3.5 py-2.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between" dir="rtl">
         <div class="flex items-center gap-1.5 text-xs font-extrabold text-sky-400">
           <i data-lucide="calculator" class="w-4 h-4"></i>
@@ -607,11 +583,6 @@ body.dark-mode .sks-subcard {
         <button type="button" onclick="calcInput('=')" class="py-2.5 rounded-xl bg-gradient-to-r from-[#0066ff] to-[#00c6ff] hover:opacity-95 text-white shadow-md transition">=</button>
       </div>
     </div>
-
-    <!-- Floating Calculator Trigger Button -->
-    <button id="mini-calc-btn" type="button" onclick="toggleMiniCalculator()" class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#070b14] hover:bg-[#0f172a] text-sky-400 border-2 border-sky-500/50 shadow-xl flex items-center justify-center transition transform hover:scale-105" title="آلة حاسبة سريعة">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-    </button>
   </div>
 
   <!-- TOAST -->
@@ -719,7 +690,6 @@ const INITIAL_SKS_DATA = {
   ],
   transactions: [],
   trafficContracts: [],
-  installmentPlans: [],
   loyaltyConfig: {
     freeEveryVisits: 5,
     silverThreshold: 3,
@@ -843,9 +813,6 @@ function ensureAccountingStructures(db) {
   if (!Array.isArray(db.trafficContracts)) {
     db.trafficContracts = [];
   }
-  if (!Array.isArray(db.installmentPlans)) {
-    db.installmentPlans = [];
-  }
   if (!db.loyaltyConfig || typeof db.loyaltyConfig !== 'object') {
     db.loyaltyConfig = Object.assign({}, DEFAULT_LOYALTY_CONFIG);
   } else {
@@ -944,7 +911,6 @@ function confirmClearAllSystemData(e) {
   AppState.db.technicians = [];
   AppState.db.transactions = [];
   AppState.db.trafficContracts = [];
-  AppState.db.installmentPlans = [];
   AppState.db.loyaltyConfig = Object.assign({}, DEFAULT_LOYALTY_CONFIG);
   AppState.db.safes = JSON.parse(JSON.stringify(INITIAL_SKS_DATA.safes));
   AppState.db.isReset = true;
@@ -1050,7 +1016,6 @@ function getDbContentHash(db) {
     s: db.safes || [],
     t: db.transactions || [],
     tc: db.trafficContracts || [],
-    ins: db.installmentPlans || [],
     loy: db.loyaltyConfig || null,
     cat: db.serviceCatalog || []
   });
@@ -1750,8 +1715,8 @@ function copySupabaseSetupSQL() {
 /* ==========================================================================
    1-E. REMOTE OTA AUTO-UPDATE ENGINE (🔄 التحديث التلقائي عن بُعد للأندرويد والكمبيوتر والآيفون)
    ========================================================================== */
-const SKS_APP_VERSION = '1.3.1';
-const SKS_BUILD_ID = '20261121131';
+const SKS_APP_VERSION = '1.5.1';
+const SKS_BUILD_ID = '20261121151';
 const SKS_DEFAULT_OTA_URL = 'https://github.com/Aldouri1/sks-car';
 const SKS_OTA_LOCAL_STORAGE_KEY = 'sks_car_ota_local_cfg_v1';
 
@@ -1977,8 +1942,8 @@ function openCloudSyncModal(subTab) {
     <div class="p-5 space-y-4">
       <div class="flex items-center justify-between border-b pb-3">
         <div>
-          <h3 class="text-base font-black">☁️ السحابة والتحديث التلقائي عن بُعد (v${SKS_APP_VERSION})</h3>
-          <p class="text-xs text-slate-500 font-bold">تحديث تلقائي عن بُعد بدون إعادة تثبيت APK + حفظ سحابي دائم للصور والعقود</p>
+          <h3 class="text-base font-black">⚙️ الإعدادات والتحديث والنسخ الاحتياطي (v${SKS_APP_VERSION})</h3>
+          <p class="text-xs text-slate-500 font-bold">التحديث التلقائي عن بُعد + النسخ الاحتياطي + السحابة</p>
         </div>
         <button onclick="closeModal()" class="p-1.5 rounded-lg bg-slate-100 text-slate-600 font-black">✕</button>
       </div>
@@ -1988,11 +1953,11 @@ function openCloudSyncModal(subTab) {
         <button type="button" onclick="openCloudSyncModal('ota')" class="py-2 px-2 rounded-xl text-xs font-black transition ${sksCloudModalTab === 'ota' ? 'bg-amber-500 text-[#070b14] shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
           🔄 التحديث عن بُعد
         </button>
+        <button type="button" onclick="openCloudSyncModal('install')" class="py-2 px-2 rounded-xl text-xs font-black transition ${sksCloudModalTab === 'install' ? 'bg-[#0066ff] text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+          💾 النسخ والبيانات
+        </button>
         <button type="button" onclick="openCloudSyncModal('cloud')" class="py-2 px-2 rounded-xl text-xs font-black transition ${sksCloudModalTab === 'cloud' ? 'bg-[#0066ff] text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
           ☁️ الحفظ السحابي
-        </button>
-        <button type="button" onclick="openCloudSyncModal('install')" class="py-2 px-2 rounded-xl text-xs font-black transition ${sksCloudModalTab === 'install' ? 'bg-[#0066ff] text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-          📲 تثبيت التطبيق
         </button>
         <button type="button" onclick="openCloudSyncModal('mqtt')" class="py-2 px-2 rounded-xl text-xs font-black transition ${sksCloudModalTab === 'mqtt' ? 'bg-[#0066ff] text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
           ⚡ المزامنة الفورية
@@ -2132,41 +2097,34 @@ function openCloudSyncModal(subTab) {
 
       ${sksCloudModalTab === 'install' ? `
         <div class="space-y-3.5">
-          <div class="sks-subcard p-4 border border-sky-200 bg-sky-50/40 space-y-2">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="text-xs font-black text-[#0f172a]">
-                ${isStandalone ? '✅ البرنامج يعمل الآن كتطبيق مستقل بدون شريط المتصفح!' : '📲 تثبيت SKS Car كتطبيق رسمي مستقل على جهازك'}
-              </div>
-              <span class="px-2.5 py-1 rounded-lg text-[11px] font-black bg-emerald-100 text-emerald-800">
-                🗄️ IndexedDB مفعّل (سعة كبيرة للصور)
-              </span>
-            </div>
-            <p class="text-xs text-slate-600 font-bold leading-relaxed">
-              يعمل النظام بتقنية <strong>PWA</strong> الحديثة مع دعم العمل بدون إنترنت (Service Worker) وتخزين موسّع للصور والمستمسكات.
-            </p>
-            ${sksDeferredPwaPrompt ? `
-              <button type="button" onclick="triggerPwaInstall()" class="w-full sks-electric-btn py-2.5 text-xs">
-                📲 اضغط هنا لتثبيت تطبيق SKS Car مباشرة على الجهاز
-              </button>
-            ` : ''}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <button type="button" onclick="exportBackupData()" class="p-3.5 rounded-2xl bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-900 text-xs font-black flex items-center justify-between transition">
+              <span>💾 حفظ نسخة احتياطية من البيانات</span>
+              <span>⬇️</span>
+            </button>
+            <label class="p-3.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 text-xs font-black flex items-center justify-between transition cursor-pointer">
+              <span>📂 استرجاع بيانات من ملف</span>
+              <span>⬆️</span>
+              <input type="file" accept=".json" onchange="importBackupData(event)" class="hidden" />
+            </label>
+            <a href="SKS-Car.html" download="SKS-Car.html" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-xs font-black flex items-center justify-between transition">
+              <span>📤 تحميل ملف البرنامج المستقل</span>
+              <span>📄</span>
+            </a>
+            <button type="button" onclick="clearAllSystemData()" class="p-3.5 rounded-2xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-xs font-black flex items-center justify-between transition">
+              <span>🗑️ تصفير كافة البيانات (بكلمة مرور)</span>
+              <span>🔒</span>
+            </button>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div class="sks-subcard p-3.5 space-y-1.5 border border-slate-200">
-              <div class="font-black text-[#0066ff]">🖥️ التشغيل كتطبيق سطح مكتب (Windows):</div>
-              <p class="text-slate-600 font-bold leading-relaxed">
-                1. داخل مجلد <code>sks-car</code> اضغط مرتين على <strong>تثبيت-أيقونة-سطح-المكتب.bat</strong> لإنشاء أيقونة <strong>SKS Car</strong> الرسمية على سطح المكتب.<br />
-                2. أو افتح <strong>SKS-Car-App.bat</strong> ليشتغل البرنامج بنافذة مستقلة تماماً بدون شريط المتصفح!<br />
-                ${isHttp ? '3. يمكنك أيضاً الضغط على أيقونة التثبيت (+) في شريط المتصفح بالأعلى.' : ''}
-              </p>
-            </div>
-            <div class="sks-subcard p-3.5 space-y-1.5 border border-slate-200">
-              <div class="font-black text-emerald-700">📱 التثبيت كتطبيق على الموبايل (Android / iPhone):</div>
-              <p class="text-slate-600 font-bold leading-relaxed">
-                • <strong>الأندرويد (Chrome):</strong> اضغط القائمة (⋮) ⬅ <strong>تثبيت التطبيق / إضافة إلى الشاشة الرئيسية</strong>.<br />
-                • <strong>الآيفون (Safari):</strong> اضغط زر المشاركة (⬆️) ⬅ <strong>إضافة إلى الصفحة الرئيسية (Add to Home Screen)</strong>.
-              </p>
-            </div>
+          ${sksDeferredPwaPrompt ? `
+            <button type="button" onclick="triggerPwaInstall()" class="w-full sks-electric-btn py-2.5 text-xs">
+              📲 تثبيت تطبيق SKS Car مباشرة على الجهاز
+            </button>
+          ` : ''}
+
+          <div class="sks-subcard p-3.5 border border-slate-200 text-[11px] text-slate-600 font-bold leading-relaxed">
+            🗄️ يتم حفظ جميع بياناتك وصورك محلياً بسعة عالية (IndexedDB) وتعمل بدون إنترنت بالكامل.
           </div>
         </div>
       ` : ''}
@@ -2322,7 +2280,6 @@ function toggleSurfaceTheme() {
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'الرئيسية', icon: 'home' },
   { id: 'reception', label: 'استلام سيارة جديدة', icon: 'plus-circle' },
-  { id: 'installments', label: 'الأقساط والكمبيالات', icon: 'calendar-clock' },
   { id: 'contracts', label: 'العقود المرورية', icon: 'file-text' },
   { id: 'accounting', label: 'الحسابات والقاصات', icon: 'wallet' },
   { id: 'customers', label: 'جهات الاتصال والـ VIP', icon: 'users' },
@@ -2332,7 +2289,6 @@ const NAV_ITEMS = [
 const NAV_ICONS_SVG = {
   home: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
   'plus-circle': '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>',
-  'calendar-clock': '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>',
   'file-text': '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
   wallet: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>',
   users: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
@@ -2352,8 +2308,10 @@ function renderSidebarNav() {
     </div>
   `).join('');
 
+  const moreTabs = new Set(['billing', 'contracts']);
   document.querySelectorAll('[data-mobile-tab]').forEach(btn => {
-    const isCurrent = btn.getAttribute('data-mobile-tab') === AppState.activeTab;
+    const tabKey = btn.getAttribute('data-mobile-tab');
+    const isCurrent = tabKey === AppState.activeTab || (tabKey === 'more' && moreTabs.has(AppState.activeTab));
     btn.className = `flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition ${
       isCurrent ? 'bg-sky-500/20 text-sky-400 font-black ring-1 ring-sky-500/40' : 'text-slate-400 font-semibold hover:text-slate-200'
     }`;
@@ -2411,7 +2369,6 @@ function switchTab(tabId) {
   const views = {
     dashboard: renderDashboardView,
     reception: renderReceptionView,
-    installments: renderInstallmentsView,
     contracts: renderTrafficContractsView,
     accounting: renderAccountingView,
     customers: renderCustomersView,
@@ -2480,8 +2437,6 @@ function exportJobsToExcel() {
     'العداد الحالي (كم)',
     'موعد الاستلام',
     'موعد التسليم',
-    'تاريخ الصيانة القادمة',
-    'عداد الصيانة القادمة (كم)',
     'الضربات والخدوش المسجلة',
     'العقد المروري',
     'الخدمات والعمليات',
@@ -2504,8 +2459,6 @@ function exportJobsToExcel() {
       j.mileageIn || 0,
       formatDateTimeDisplay(j.receivedAt || j.createdAt),
       formatDateTimeDisplay(j.deliveryAt),
-      j.nextServiceDate || '—',
-      j.nextServiceKm || '—',
       damagesText || 'سليمة / بدون ملاحظات',
       j.trafficContract || '—',
       servicesText || j.complaint || '—',
@@ -2590,69 +2543,6 @@ function exportInvoicesToExcel() {
     inv.status || 'مدفوعة'
   ]);
   exportTableToExcelCSV('SKS-Car-Invoices', headers, rows);
-}
-
-function getMaintenanceReminders() {
-  const jobs = AppState.db.jobCards || [];
-  const todayStr = new Date().toISOString().slice(0, 10);
-  const soonDateStr = getLocalDateOnlyValue(14); // within 14 days
-
-  return jobs
-    .filter(j => j.nextServiceDate || j.nextServiceKm)
-    .map(j => {
-      const dateStr = j.nextServiceDate || '';
-      let isOverdue = false;
-      let isDueSoon = false;
-      let statusLabel = 'مجدول';
-      let badgeClass = 'bg-sky-100 text-sky-800';
-
-      if (dateStr) {
-        if (dateStr <= todayStr) {
-          isOverdue = true;
-          statusLabel = '⚠️ مستحق الآن / حان الموعد';
-          badgeClass = 'bg-rose-100 text-rose-800';
-        } else if (dateStr <= soonDateStr) {
-          isDueSoon = true;
-          statusLabel = '🔔 قريب جداً (خلال أسبوعين)';
-          badgeClass = 'bg-amber-100 text-amber-900';
-        }
-      }
-      return {
-        job: j,
-        isOverdue,
-        isDueSoon,
-        statusLabel,
-        badgeClass
-      };
-    })
-    .sort((a, b) => (a.job.nextServiceDate || '9999').localeCompare(b.job.nextServiceDate || '9999'));
-}
-
-function sendMaintenanceReminderWhatsApp(jobId) {
-  const job = (AppState.db.jobCards || []).find(j => j.id === jobId);
-  if (!job) return;
-  let phone = (job.customerPhone || '').replace(/[^0-9]/g, '');
-  if (phone.startsWith('07')) {
-    phone = '964' + phone.substring(1);
-  }
-
-  const nextDate = job.nextServiceDate || 'قريباً';
-  const nextKm = job.nextServiceKm ? `${Number(job.nextServiceKm).toLocaleString()} كم` : 'حسب العداد';
-  const serviceNote = job.nextServiceNote || 'تبديل الدهن والفلتر والفحص الدوري';
-
-  const msg = `*تذكير موعد الصيانة الدورية — مركز SKS Car* 🚗🔔\n` +
-    `مرحباً أستاذ *${job.customerName}* المحترم،\n` +
-    `━━━━━━━━━━━━━━\n` +
-    `نود تذكيركم بموعد الصيانة القادمة لسيارتكم:\n` +
-    `🔹 *المركبة:* ${job.vehicleTitle} (${job.plateNumber})\n` +
-    `🔧 *نوع الصيانة:* ${serviceNote}\n` +
-    `📅 *التاريخ المحدد:* ${nextDate}\n` +
-    `⏲ *عند عداد:* ${nextKm}\n` +
-    `━━━━━━━━━━━━━━\n` +
-    `نسعد بخدمتكم في مركز *SKS Car* للحفاظ على أفضل أداء لمركبتكم.`;
-
-  const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-  window.open(waUrl, '_blank');
 }
 
 /* Interactive Multi-Shape Car Body Diagram State & Functions */
@@ -3419,18 +3309,6 @@ function refreshCarBodyInspectorUI() {
   if (wrapper) {
     wrapper.innerHTML = renderCarBodyInspectorSection();
   }
-}
-
-function setQuickNextServiceDate(addDays) {
-  const el = document.getElementById('rec-next-service-date');
-  if (el) el.value = getLocalDateOnlyValue(addDays);
-}
-
-function setQuickNextServiceKm(addKm) {
-  const curEl = document.getElementById('rec-mileage');
-  const nextEl = document.getElementById('rec-next-service-km');
-  const curKm = Number(curEl?.value) || 0;
-  if (nextEl) nextEl.value = curKm + addKm;
 }
 
 /* ==========================================================================
@@ -4393,604 +4271,16 @@ function printCustomerVipCard(contactId) {
 }
 
 /* ==========================================================================
-   3-C. MONTHLY INSTALLMENTS & PROMISSORY NOTES MODULE
-        (📅 نظام الأقساط والدفعات الشهرية المجدولة والكمبيالات)
+   4. ULTRA-SIMPLE DASHBOARD (الرئيسية السهلة والمباشرة بـ 4 أزرار سريعة وبحث فوري)
    ========================================================================== */
-let installmentSearchQuery = '';
-let collapsedInstallmentPlans = new Set();
+let dashQuickSearchQuery = '';
 
-function addMonthsToDateString(baseDateStr, monthsOffset) {
-  const parts = String(baseDateStr || getLocalDateOnlyValue(0)).split('-').map(Number);
-  const year = parts[0] || new Date().getFullYear();
-  const month = (parts[1] || 1) - 1;
-  const day = parts[2] || 1;
-  const target = new Date(year, month + monthsOffset, 1);
-  const lastDayOfTargetMonth = new Date(target.getFullYear(), target.getMonth() + 1, 0).getDate();
-  target.setDate(Math.min(day, lastDayOfTargetMonth));
-  const pad = (n) => String(n).padStart(2, '0');
-  return `${target.getFullYear()}-${pad(target.getMonth() + 1)}-${pad(target.getDate())}`;
-}
-
-function getInstallmentPlanStats(plan) {
-  const schedule = Array.isArray(plan?.schedule) ? plan.schedule : [];
-  const downPayment = Number(plan?.downPayment) || 0;
-  const totalAmount = Number(plan?.totalAmount) || 0;
-  const paidScheduleSum = schedule.reduce((sum, it) => sum + (it.status === 'paid' ? (Number(it.paidAmount || it.amount) || 0) : 0), 0);
-  const totalPaid = downPayment + paidScheduleSum;
-  const remaining = Math.max(0, totalAmount - totalPaid);
-  const paidCount = schedule.filter(it => it.status === 'paid').length;
-  const unpaidCount = schedule.length - paidCount;
-  const todayStr = getLocalDateOnlyValue(0);
-  const overdueCount = schedule.filter(it => it.status !== 'paid' && it.dueDate && it.dueDate < todayStr).length;
-  const dueTodayCount = schedule.filter(it => it.status !== 'paid' && it.dueDate === todayStr).length;
-  const progressPct = totalAmount > 0 ? Math.min(100, Math.round((totalPaid / totalAmount) * 100)) : 100;
-  return {
-    totalAmount,
-    downPayment,
-    paidScheduleSum,
-    totalPaid,
-    remaining,
-    totalCount: schedule.length,
-    paidCount,
-    unpaidCount,
-    overdueCount,
-    dueTodayCount,
-    progressPct,
-    isCompleted: unpaidCount === 0 && remaining <= 0
-  };
-}
-
-function getDueInstallmentAlerts() {
-  ensureAccountingStructures(AppState.db);
-  const plans = AppState.db.installmentPlans || [];
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const alerts = [];
-
-  plans.forEach(plan => {
-    (plan.schedule || []).forEach((item, idx) => {
-      if (item.status === 'paid' || !item.dueDate) return;
-      const parts = item.dueDate.split('-').map(Number);
-      if (parts.length !== 3) return;
-      const due = new Date(parts[0], parts[1] - 1, parts[2]);
-      due.setHours(0, 0, 0, 0);
-      const diffDays = Math.round((due.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-
-      if (diffDays <= 7) {
-        let urgency = 'soon';
-        let statusLabel = `يستحق خلال ${diffDays} أيام`;
-        let badgeClass = 'bg-amber-100 text-amber-900 border border-amber-300';
-        if (diffDays < 0) {
-          urgency = 'overdue';
-          statusLabel = `متأخر منذ ${Math.abs(diffDays)} يوم`;
-          badgeClass = 'bg-rose-600 text-white';
-        } else if (diffDays === 0) {
-          urgency = 'today';
-          statusLabel = 'مستحق اليوم!';
-          badgeClass = 'bg-orange-500 text-white';
-        } else if (diffDays === 1) {
-          statusLabel = 'يستحق غداً';
-        }
-        alerts.push({ plan, item, idx, diffDays, urgency, statusLabel, badgeClass });
-      }
-    });
-  });
-
-  alerts.sort((a, b) => a.diffDays - b.diffDays);
-  return alerts;
-}
-
-function startInstallmentForContact(contactId) {
-  preselectedContactId = contactId;
-  switchTab('installments');
-}
-
-function toggleInstallmentPlanCollapse(planId) {
-  if (collapsedInstallmentPlans.has(planId)) {
-    collapsedInstallmentPlans.delete(planId);
-  } else {
-    collapsedInstallmentPlans.add(planId);
-  }
-  switchTab('installments');
-}
-
-function onInstallmentContactChange(contactId) {
-  preselectedContactId = contactId;
-  const contact = (AppState.db.customers || []).find(c => c.id === contactId);
-  const vehEl = document.getElementById('ins-vehicle-title');
-  const plateEl = document.getElementById('ins-plate-number');
-  if (contact) {
-    if (vehEl && contact.defaultVehicle) vehEl.value = contact.defaultVehicle;
-    if (plateEl && contact.defaultPlate) plateEl.value = contact.defaultPlate;
-  }
-}
-
-function updateInstallmentPreview() {
-  const total = Math.max(0, Number(document.getElementById('ins-total-amount')?.value) || 0);
-  const down = Math.max(0, Number(document.getElementById('ins-down-payment')?.value) || 0);
-  const months = Math.max(1, Math.min(120, Math.round(Number(document.getElementById('ins-months-count')?.value) || 1)));
-  const firstDate = document.getElementById('ins-first-due')?.value || getLocalDateOnlyValue(30);
-  const previewEl = document.getElementById('ins-live-preview');
-  if (!previewEl) return;
-
-  const financed = Math.max(0, total - down);
-  const monthly = months > 0 ? Math.floor(financed / months) : 0;
-  const lastDate = addMonthsToDateString(firstDate, months - 1);
-
-  previewEl.innerHTML = `
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
-      <div class="bg-white rounded-xl p-2.5 border border-blue-200">
-        <div class="text-[11px] font-bold text-slate-500">المبلغ الصافي للتقسيط</div>
-        <div class="font-black text-[#0f172a] text-sm mt-0.5">${formatCurrency(financed)}</div>
-      </div>
-      <div class="bg-white rounded-xl p-2.5 border border-emerald-200">
-        <div class="text-[11px] font-bold text-slate-500">قيمة القسط الشهري التلقائي</div>
-        <div class="font-black text-emerald-700 text-sm mt-0.5">${formatCurrency(monthly)} × ${months} شهر</div>
-      </div>
-      <div class="bg-white rounded-xl p-2.5 border border-amber-200">
-        <div class="text-[11px] font-bold text-slate-500">تاريخ أول وآخر كمبيالة</div>
-        <div class="font-black text-[#0066ff] text-xs mt-1" dir="ltr">${firstDate} ➔ ${lastDate}</div>
-      </div>
-    </div>
-  `;
-}
-
-function submitNewInstallmentPlan(e) {
-  e.preventDefault();
-  ensureAccountingStructures(AppState.db);
-
-  const contactId = document.getElementById('ins-contact-select')?.value || '';
-  const contact = (AppState.db.customers || []).find(c => c.id === contactId);
-  if (!contact) {
-    showToast('⚠️ يرجى اختيار الزبون من قائمة جهات الاتصال أولاً');
-    openQuickAddContactModal('installments');
-    return;
-  }
-
-  const itemDescription = document.getElementById('ins-item-desc')?.value.trim() || 'بيع سيارة / خدمة بالأقساط';
-  const vehicleTitle = document.getElementById('ins-vehicle-title')?.value.trim() || contact.defaultVehicle || '';
-  const plateNumber = document.getElementById('ins-plate-number')?.value.trim() || contact.defaultPlate || '';
-  const totalAmount = Math.max(0, Number(document.getElementById('ins-total-amount')?.value) || 0);
-  const downPayment = Math.max(0, Number(document.getElementById('ins-down-payment')?.value) || 0);
-  const monthsCount = Math.max(1, Math.min(120, Math.round(Number(document.getElementById('ins-months-count')?.value) || 1)));
-  const firstDueDate = document.getElementById('ins-first-due')?.value || getLocalDateOnlyValue(30);
-  const safeId = document.getElementById('ins-down-safe')?.value || AppState.db.safes?.[0]?.id || 'SAFE-01';
-  const guarantorName = document.getElementById('ins-guarantor-name')?.value.trim() || '';
-  const guarantorPhone = document.getElementById('ins-guarantor-phone')?.value.trim() || '';
-  const notes = document.getElementById('ins-notes')?.value.trim() || '';
-
-  if (totalAmount <= 0) {
-    showToast('يرجى إدخال المبلغ الإجمالي الصحيح');
-    return;
-  }
-  if (downPayment >= totalAmount) {
-    showToast('المقدمة يجب أن تكون أقل من المبلغ الإجمالي لتوليد أقساط');
-    return;
-  }
-
-  const financedAmount = totalAmount - downPayment;
-  const baseInstallment = Math.floor(financedAmount / monthsCount);
-  const remainder = financedAmount - (baseInstallment * monthsCount);
-  const planSuffix = Date.now().toString().slice(-6);
-  const planId = 'INS-' + planSuffix;
-  const nowStr = formatDateTimeDisplay(getLocalDateTimeValue(0));
-
-  const schedule = [];
-  for (let i = 0; i < monthsCount; i++) {
-    const amount = i === monthsCount - 1 ? (baseInstallment + remainder) : baseInstallment;
-    schedule.push({
-      number: i + 1,
-      dueDate: addMonthsToDateString(firstDueDate, i),
-      amount,
-      paidAmount: 0,
-      status: 'unpaid',
-      paidAt: '',
-      safeId: '',
-      receiptId: '',
-      promissoryNo: `KMB-${planSuffix}-${String(i + 1).padStart(2, '0')}`
-    });
-  }
-
-  let downReceiptId = '';
-  if (downPayment > 0) {
-    downReceiptId = 'TRX-' + Date.now().toString().slice(-6);
-    AppState.db.transactions.unshift({
-      id: downReceiptId,
-      type: 'receipt',
-      safeId,
-      contactId: contact.id,
-      party: contact.name,
-      amount: downPayment,
-      description: `مقدمة عقد أقساط (${planId}) — ${itemDescription} ${vehicleTitle ? `(${vehicleTitle})` : ''}`,
-      date: nowStr,
-      installmentPlanId: planId
-    });
-  }
-
-  const newPlan = {
-    id: planId,
-    createdAt: nowStr,
-    customerId: contact.id,
-    customerName: contact.name,
-    customerPhone: contact.phone || '',
-    vehicleTitle,
-    plateNumber,
-    itemDescription,
-    totalAmount,
-    downPayment,
-    downSafeId: downPayment > 0 ? safeId : '',
-    downReceiptId,
-    financedAmount,
-    monthsCount,
-    firstDueDate,
-    guarantorName,
-    guarantorPhone,
-    notes,
-    schedule
-  };
-
-  AppState.db.installmentPlans.unshift(newPlan);
-  if (vehicleTitle && !contact.defaultVehicle) contact.defaultVehicle = vehicleTitle;
-  if (plateNumber && !contact.defaultPlate) contact.defaultPlate = plateNumber;
-  awardCustomerLoyaltyPoints(contact, 1, `فتح عقد أقساط (${planId})`);
-
-  preselectedContactId = '';
-  saveDatabase();
-  showToast(`تم إنشاء عقد الأقساط (${planId}) وتوليد ${monthsCount} كمبيالة شهرية تلقائياً 📅`);
-  switchTab('installments');
-}
-
-function openPayInstallmentModal(planId, itemIdx) {
-  ensureAccountingStructures(AppState.db);
-  const plan = (AppState.db.installmentPlans || []).find(p => p.id === planId);
-  if (!plan || !plan.schedule?.[itemIdx]) return;
-  const item = plan.schedule[itemIdx];
-  const safes = AppState.db.safes || [];
-
-  const modalBackdrop = document.getElementById('modal-backdrop');
-  const modalContent = document.getElementById('modal-content');
-  if (!modalBackdrop || !modalContent) return;
-
-  modalContent.innerHTML = `
-    <form onsubmit="confirmPayInstallment(event, '${plan.id}', ${itemIdx})" class="p-5 space-y-4">
-      <div class="flex items-center justify-between border-b pb-3">
-        <div>
-          <h3 class="text-base font-black text-emerald-700">✅ تسديد القسط رقم (#${item.number}) — ${item.promissoryNo}</h3>
-          <p class="text-xs text-slate-500 font-bold">الزبون: ${plan.customerName} | تاريخ الاستحقاق: <span dir="ltr">${item.dueDate}</span></p>
-        </div>
-        <button type="button" onclick="closeModal()" class="p-1.5 rounded-lg bg-slate-100 text-slate-600 font-black">✕</button>
-      </div>
-
-      <div class="sks-subcard p-3.5 text-xs space-y-1.5 border border-emerald-200 bg-emerald-50/40">
-        <div><strong>البيان / المركبة:</strong> ${plan.itemDescription} ${plan.vehicleTitle ? `— ${plan.vehicleTitle} (${plan.plateNumber || ''})` : ''}</div>
-        <div><strong>مبلغ القسط المستحق:</strong> <span class="font-black text-emerald-700 text-sm">${formatCurrency(item.amount)}</span></div>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div>
-          <label class="block text-xs font-extrabold mb-1">المبلغ المستلم (${SKS_BRAND.currency}) *</label>
-          <input id="pay-ins-amount" type="number" step="any" min="1" required value="${item.amount}" class="sks-input font-black text-center text-emerald-700" />
-        </div>
-        <div>
-          <label class="block text-xs font-extrabold mb-1">القاصة المستلمة *</label>
-          <select id="pay-ins-safe" class="sks-input font-bold">
-            ${safes.map(sf => `<option value="${sf.id}">${sf.name}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-xs font-extrabold mb-1">ملاحظة التسديد (اختياري)</label>
-        <input id="pay-ins-note" type="text" placeholder="مثال: استلام نقدي مباشر / تحويل زين كاش..." class="sks-input text-xs" />
-      </div>
-
-      <label class="flex items-center gap-2 text-xs font-extrabold text-[#0066ff] cursor-pointer">
-        <input id="pay-ins-auto-print" type="checkbox" checked class="accent-blue-600 w-4 h-4" />
-        <span>🖨️ طباعة وصل استلام القسط (إخلاء الكمبيالة) تلقائياً بعد الحفظ</span>
-      </label>
-
-      <div class="flex justify-end gap-2 pt-2 border-t">
-        <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-extrabold">إلغاء</button>
-        <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow">✅ تأكيد التسديد وإيداع بالقاصة</button>
-      </div>
-    </form>
-  `;
-  modalBackdrop.classList.remove('hidden');
-  modalBackdrop.classList.add('flex');
-}
-
-function confirmPayInstallment(e, planId, itemIdx) {
-  e.preventDefault();
-  ensureAccountingStructures(AppState.db);
-  const plan = (AppState.db.installmentPlans || []).find(p => p.id === planId);
-  if (!plan || !plan.schedule?.[itemIdx]) return;
-  const item = plan.schedule[itemIdx];
-  if (item.status === 'paid') {
-    closeModal();
-    return;
-  }
-
-  const paidAmount = Math.max(0, Number(document.getElementById('pay-ins-amount')?.value) || item.amount);
-  const safeId = document.getElementById('pay-ins-safe')?.value || AppState.db.safes?.[0]?.id || 'SAFE-01';
-  const payNote = document.getElementById('pay-ins-note')?.value.trim() || '';
-  const shouldAutoPrint = !!document.getElementById('pay-ins-auto-print')?.checked;
-
-  const nowStr = formatDateTimeDisplay(getLocalDateTimeValue(0));
-  const receiptId = 'TRX-' + Date.now().toString().slice(-6);
-
-  item.status = 'paid';
-  item.paidAmount = paidAmount;
-  item.paidAt = nowStr;
-  item.safeId = safeId;
-  item.receiptId = receiptId;
-  item.payNote = payNote;
-
-  AppState.db.transactions.unshift({
-    id: receiptId,
-    type: 'receipt',
-    safeId,
-    contactId: plan.customerId,
-    party: plan.customerName,
-    amount: paidAmount,
-    description: `تسديد قسط رقم #${item.number} (${item.promissoryNo}) — عقد ${plan.id} — ${plan.itemDescription}${payNote ? ' | ' + payNote : ''}`,
-    date: nowStr,
-    installmentPlanId: plan.id,
-    installmentNumber: item.number
-  });
-
-  const contact = (AppState.db.customers || []).find(c => c.id === plan.customerId);
-  if (contact) {
-    awardCustomerLoyaltyPoints(contact, 1, `تسديد القسط #${item.number} (${item.promissoryNo})`);
-  }
-
-  saveDatabase();
-  closeModal();
-  showToast(`تم تسديد القسط #${item.number} بمبلغ ${formatCurrency(paidAmount)} وإيداعه في القاصة ✅`);
-  switchTab(AppState.activeTab);
-
-  if (shouldAutoPrint) {
-    setTimeout(() => printPromissoryNote(plan.id, itemIdx), 150);
-  }
-}
-
-function printPromissoryNote(planId, itemIdx) {
-  const plan = (AppState.db.installmentPlans || []).find(p => p.id === planId);
-  if (!plan || !plan.schedule?.[itemIdx]) return;
-  const item = plan.schedule[itemIdx];
-  const stats = getInstallmentPlanStats(plan);
-  const contact = (AppState.db.customers || []).find(c => c.id === plan.customerId);
-  const loy = contact ? getCustomerLoyaltyInfo(contact) : null;
-  const safeName = (AppState.db.safes || []).find(s => s.id === item.safeId)?.name || 'القاصة الرئيسية';
-  const printArea = document.getElementById('printable-document-area');
-  if (!printArea) return;
-
-  const isPaid = item.status === 'paid';
-  const docTitle = isPaid ? 'وصل استلام قسط وإخلاء كمبيالة' : 'سند أمر (كمبيالة) قسط شهري رسمي';
-
-  printArea.innerHTML = `
-    <div class="print-doc-shell">
-      <div class="print-header-bar flex items-center justify-between">
-        <div>${renderSksLogo('print')}</div>
-        <div style="text-align: left;">
-          <div style="font-size: 15.5pt; font-weight: 900; color: ${isPaid ? '#34d399' : '#00E5FF'};">${docTitle}</div>
-          <div style="font-size: 10.5pt; font-weight: 800; color: #FFFFFF;">${SKS_BRAND.companyName}</div>
-          <div style="font-size: 9.5pt; color: #cbd5e1; margin-top: 4px;">
-            رقم الكمبيالة: <strong dir="ltr">${item.promissoryNo}</strong> | مرجع العقد: <strong dir="ltr">${plan.id}</strong>
-          </div>
-        </div>
-      </div>
-
-      <!-- Amount & Status Ribbon -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding: 12px 16px; border: 2px solid ${isPaid ? '#15803d' : '#0f172a'}; border-radius: 10px; background: ${isPaid ? '#f0fdf4' : '#f8fafc'};">
-        <div>
-          <div style="font-size: 9pt; color: #475569; font-weight: 700;">مبلغ الكمبيالة / القسط رقم (${item.number} من ${plan.monthsCount})</div>
-          <div style="font-size: 18pt; font-weight: 900; color: ${isPaid ? '#15803d' : '#0066ff'};">${formatCurrency(isPaid ? (item.paidAmount || item.amount) : item.amount)}</div>
-        </div>
-        <div style="text-align: left;">
-          <div style="font-size: 9pt; color: #475569; font-weight: 700;">تاريخ الاستحقاق</div>
-          <div style="font-size: 13pt; font-weight: 900; color: #0f172a;" dir="ltr">${item.dueDate}</div>
-          <div style="margin-top: 4px; display: inline-block; padding: 2px 10px; border-radius: 6px; font-size: 9pt; font-weight: 900; background: ${isPaid ? '#15803d' : '#b45309'}; color: #fff;">
-            ${isPaid ? `✅ مسددة بتاريخ ${item.paidAt}` : '⏳ قسط مستحق للدفع'}
-          </div>
-        </div>
-      </div>
-
-      <!-- Parties & Vehicle Info -->
-      <div style="border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 12px 14px; margin-top: 14px; font-size: 10.5pt; line-height: 1.9; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-        <div><strong>اسم المدين / الزبون:</strong> ${plan.customerName}</div>
-        <div><strong>رقم هاتف المدين:</strong> <span dir="ltr">${plan.customerPhone || '—'}</span></div>
-        <div><strong>المركبة / موضوع التقسيط:</strong> ${plan.itemDescription} ${plan.vehicleTitle ? `— ${plan.vehicleTitle}` : ''}</div>
-        <div><strong>رقم اللوحة المرورية:</strong> ${plan.plateNumber || '—'}</div>
-        <div><strong>اسم الكفيل الضامن:</strong> ${plan.guarantorName || 'بدون كفيل مسجل'}</div>
-        <div><strong>هاتف الكفيل الضامن:</strong> <span dir="ltr">${plan.guarantorPhone || '—'}</span></div>
-        ${isPaid ? `<div><strong>رقم سند القاصة:</strong> <span dir="ltr">${item.receiptId || '—'}</span></div><div><strong>القاصة المستلمة:</strong> ${safeName}</div>` : ''}
-      </div>
-
-      <!-- Legal Undertaking or Receipt Box -->
-      <div style="border: 2px solid #0f172a; border-radius: 10px; padding: 14px 16px; margin-top: 14px; font-size: 10.5pt; line-height: 2; background: #ffffff;">
-        ${isPaid ? `
-          <div style="font-weight: 900; color: #15803d; margin-bottom: 4px;">📜 إقرار استلام قسط وإبراء ذمة للكمبيالة:</div>
-          <div>
-            نقرّ نحن إدارة <strong>${SKS_BRAND.companyName}</strong> بأننا استلمنا من السيد/ة <strong>${plan.customerName}</strong> مبلغاً وقدره
-            <strong>(${formatCurrency(item.paidAmount || item.amount)})</strong> وذلك عن تسديد القسط الشهري رقم <strong>(${item.number})</strong> من أصل <strong>(${plan.monthsCount})</strong> أقساط للعقد رقم <strong>(${plan.id})</strong>، وبذلك تُعدّ هذه الكمبيالة مسددة ومخالصة أصولياً.
-          </div>
-        ` : `
-          <div style="font-weight: 900; color: #0f172a; margin-bottom: 4px;">⚖️ نص التعهد والالتزام القانوني (سند كمبيالة):</div>
-          <div>
-            أتعهد أنا الموقع أدناه <strong>(${plan.customerName})</strong> بأن أدفع لأمر <strong>${SKS_BRAND.companyName}</strong> مبلغاً وقدره
-            <strong>(${formatCurrency(item.amount)})</strong> عند تاريخ الاستحقاق المحدد أعلاه <strong>(${item.dueDate})</strong>، وذلك عن القسط رقم <strong>(${item.number})</strong> من عقد الأقساط رقم <strong>(${plan.id})</strong> الخاص بـ (<strong>${plan.itemDescription} ${plan.vehicleTitle ? '- ' + plan.vehicleTitle : ''}</strong>)، والقيمة وصلتنا أصولياً، ويكون الكفيل الضامن متضامناً معي في السداد.
-          </div>
-        `}
-      </div>
-
-      <!-- Plan Balance Summary -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; font-size: 9.5pt; text-align: center;">
-        <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px;">
-          <div style="color: #64748b; font-weight: 700;">إجمالي مبلغ العقد</div>
-          <div style="font-weight: 900; font-size: 11pt;">${formatCurrency(stats.totalAmount)}</div>
-        </div>
-        <div style="border: 1px solid #86efac; background: #f0fdf4; border-radius: 8px; padding: 8px;">
-          <div style="color: #166534; font-weight: 700;">إجمالي المدفوع (مع المقدمة)</div>
-          <div style="font-weight: 900; font-size: 11pt; color: #15803d;">${formatCurrency(stats.totalPaid)} (${stats.paidCount}/${stats.totalCount})</div>
-        </div>
-        <div style="border: 1px solid #fcd34d; background: #fffbeb; border-radius: 8px; padding: 8px;">
-          <div style="color: #92400e; font-weight: 700;">الرصيد المتبقي على العقد</div>
-          <div style="font-weight: 900; font-size: 11pt; color: #b45309;">${formatCurrency(stats.remaining)}</div>
-        </div>
-      </div>
-
-      ${loy ? `
-        <div style="margin-top: 10px; padding: 8px 12px; border-radius: 8px; border: 1.5px solid #f59e0b; background: #fffbeb; font-size: 9.5pt; display: flex; justify-content: space-between; align-items: center;">
-          <div><strong>⭐ برنامج ولاء SKS Car:</strong> فئتك (${loy.tier.icon} ${loy.tier.label}) | رصيد نقاطك: <strong>${loy.points} نقطة</strong></div>
-          <div style="font-weight: 900; color: #b45309;">${loy.starsVisual}</div>
-        </div>
-      ` : ''}
-
-      <!-- Signatures -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 26px; text-align: center; font-size: 10pt;">
-        <div style="border-top: 1.5px dashed #475569; padding-top: 8px;">
-          <div style="font-weight: 900;">توقيع المدين / الزبون</div>
-          <div style="font-size: 9pt; color: #475569; margin-top: 4px;">${plan.customerName}</div>
-        </div>
-        <div style="border-top: 1.5px dashed #475569; padding-top: 8px;">
-          <div style="font-weight: 900;">توقيع الكفيل الضامن</div>
-          <div style="font-size: 9pt; color: #475569; margin-top: 4px;">${plan.guarantorName || '.......................'}</div>
-        </div>
-        <div style="border-top: 1.5px solid #0f172a; padding-top: 8px;">
-          <div style="font-weight: 900;">ختم وتوقيع إدارة SKS Car</div>
-          <div style="font-size: 9pt; color: #475569; margin-top: 4px;">تاريخ الطباعة: <span dir="ltr">${formatDateTimeDisplay(getLocalDateTimeValue(0))}</span></div>
-        </div>
-      </div>
-    </div>
-  `;
-  window.print();
-}
-
-function printInstallmentPlanSchedule(planId) {
-  const plan = (AppState.db.installmentPlans || []).find(p => p.id === planId);
-  if (!plan) return;
-  const stats = getInstallmentPlanStats(plan);
-  const printArea = document.getElementById('printable-document-area');
-  if (!printArea) return;
-
-  printArea.innerHTML = `
-    <div class="print-doc-shell">
-      <div class="print-header-bar flex items-center justify-between">
-        <div>${renderSksLogo('print')}</div>
-        <div style="text-align: left;">
-          <div style="font-size: 15.5pt; font-weight: 900; color: #00E5FF;">عقد وجدول الأقساط الشهرية والكمبيالات</div>
-          <div style="font-size: 10.5pt; font-weight: 800; color: #FFFFFF;">${SKS_BRAND.companyName}</div>
-          <div style="font-size: 9.5pt; color: #cbd5e1; margin-top: 4px;">رقم العقد: <strong dir="ltr">${plan.id}</strong> | تاريخ الإنشاء: <span dir="ltr">${plan.createdAt}</span></div>
-        </div>
-      </div>
-
-      <div style="border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 12px; margin-top: 12px; font-size: 10pt; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; line-height: 1.8;">
-        <div><strong>الزبون:</strong> ${plan.customerName} (<span dir="ltr">${plan.customerPhone || '—'}</span>)</div>
-        <div><strong>الكفيل الضامن:</strong> ${plan.guarantorName || '—'} ${plan.guarantorPhone ? `(<span dir="ltr">${plan.guarantorPhone}</span>)` : ''}</div>
-        <div><strong>المركبة / الخدمة:</strong> ${plan.itemDescription} ${plan.vehicleTitle ? `— ${plan.vehicleTitle}` : ''}</div>
-        <div><strong>رقم اللوحة:</strong> ${plan.plateNumber || '—'}</div>
-        <div><strong>المبلغ الإجمالي:</strong> ${formatCurrency(stats.totalAmount)} | <strong>المقدمة:</strong> ${formatCurrency(stats.downPayment)}</div>
-        <div><strong>المدفوع حتى الآن:</strong> <strong style="color:#15803d;">${formatCurrency(stats.totalPaid)}</strong> | <strong>المتبقي:</strong> <strong style="color:#b45309;">${formatCurrency(stats.remaining)}</strong></div>
-      </div>
-
-      <table class="print-table" style="margin-top: 12px;">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>رقم الكمبيالة</th>
-            <th>تاريخ الاستحقاق</th>
-            <th>مبلغ القسط</th>
-            <th>الحالة</th>
-            <th>تاريخ التسديد / رقم الوصل</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${(plan.schedule || []).map(it => `
-            <tr>
-              <td style="text-align:center; font-weight:900;">${it.number}</td>
-              <td dir="ltr" style="font-weight:800;">${it.promissoryNo}</td>
-              <td dir="ltr" style="font-weight:800;">${it.dueDate}</td>
-              <td style="font-weight:900;">${formatCurrency(it.amount)}</td>
-              <td style="font-weight:900; color:${it.status === 'paid' ? '#15803d' : '#b45309'};">${it.status === 'paid' ? '✅ مدفوع' : '⏳ غير مدفوع'}</td>
-              <td dir="ltr">${it.status === 'paid' ? `${it.paidAt} (${it.receiptId || '—'})` : '—'}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-
-      <div style="display: flex; justify-content: space-between; margin-top: 24px; font-size: 10pt;">
-        <div style="border-top: 1.5px dashed #475569; padding-top: 6px; min-width: 190px; text-align: center;"><strong>توقيع الزبون:</strong> ${plan.customerName}</div>
-        <div style="border-top: 1.5px dashed #475569; padding-top: 6px; min-width: 190px; text-align: center;"><strong>توقيع الكفيل:</strong> ${plan.guarantorName || '...............'}</div>
-        <div style="border-top: 1.5px solid #0f172a; padding-top: 6px; min-width: 190px; text-align: center;"><strong>إدارة مركز SKS Car</strong></div>
-      </div>
-    </div>
-  `;
-  window.print();
-}
-
-function sendInstallmentWhatsAppReminder(planId, itemIdx) {
-  const plan = (AppState.db.installmentPlans || []).find(p => p.id === planId);
-  if (!plan || !plan.schedule?.[itemIdx]) return;
-  const item = plan.schedule[itemIdx];
-  const stats = getInstallmentPlanStats(plan);
-
-  let phone = (plan.customerPhone || '').replace(/[^0-9]/g, '');
-  if (phone.startsWith('07')) phone = '964' + phone.substring(1);
-
-  const msg = `*تذكير قسط شهري / كمبيالة — SKS Car* 📅\n` +
-    `مرحباً أستاذ *${plan.customerName}*\n` +
-    `━━━━━━━━━━━━━━\n` +
-    `نود تذكيركم بموعد استحقاق القسط الشهري الخاص بكم:\n` +
-    `🔹 *العقد / الموضوع:* ${plan.itemDescription}${plan.vehicleTitle ? ` (${plan.vehicleTitle})` : ''}\n` +
-    `📄 *رقم الكمبيالة:* ${item.promissoryNo} (القسط ${item.number} من ${plan.monthsCount})\n` +
-    `📅 *تاريخ الاستحقاق:* ${item.dueDate}\n` +
-    `💰 *مبلغ القسط المستحق:* ${formatCurrency(item.amount)}\n` +
-    `📌 *المتبقي الإجمالي على العقد:* ${formatCurrency(stats.remaining)}\n` +
-    `━━━━━━━━━━━━━━\n` +
-    `نشكركم على التزامكم الدائم مع مركز *SKS Car* 🚗`;
-
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-}
-
-function deleteInstallmentPlan(planId) {
-  if (!confirm('هل أنت متأكد من حذف عقد الأقساط هذا؟ (السندات المالية السابقة في القاصات تبقى محفوظة)')) return;
-  AppState.db.installmentPlans = (AppState.db.installmentPlans || []).filter(p => p.id !== planId);
-  saveDatabase();
-  showToast('تم حذف عقد الأقساط بنجاح');
-  switchTab('installments');
-}
-
-function exportInstallmentsToExcel() {
-  ensureAccountingStructures(AppState.db);
-  const headers = ['رقم العقد', 'الزبون', 'الهاتف', 'الموضوع والمركبة', 'الكفيل', 'رقم الكمبيالة', 'رقم القسط', 'تاريخ الاستحقاق', 'مبلغ القسط', 'الحالة', 'تاريخ التسديد'];
-  const rows = [];
-  (AppState.db.installmentPlans || []).forEach(p => {
-    (p.schedule || []).forEach(it => {
-      rows.push([
-        p.id,
-        p.customerName,
-        p.customerPhone,
-        `${p.itemDescription} ${p.vehicleTitle || ''}`.trim(),
-        p.guarantorName || '—',
-        it.promissoryNo,
-        `${it.number}/${p.monthsCount}`,
-        it.dueDate,
-        it.amount,
-        it.status === 'paid' ? 'مدفوع' : 'غير مدفوع',
-        it.paidAt || '—'
-      ]);
-    });
-  });
-  exportTableToExcelCSV('SKS-Car-Installments', headers, rows);
-}
-
-function updateInstallmentSearch(val) {
-  installmentSearchQuery = val || '';
-  const container = document.getElementById('main-view-container');
-  if (!container || AppState.activeTab !== 'installments') return;
-  container.innerHTML = renderInstallmentsView();
-  if (typeof lucide !== 'undefined') lucide.createIcons();
-  const inp = document.getElementById('installment-search-input');
+function updateDashQuickSearch(val) {
+  dashQuickSearchQuery = val || '';
+  const mainEl = document.getElementById('main-view-container');
+  if (!mainEl || AppState.activeTab !== 'dashboard') return;
+  mainEl.innerHTML = renderDashboardView();
+  const inp = document.getElementById('dash-quick-search');
   if (inp) {
     inp.focus();
     const len = inp.value.length;
@@ -4998,797 +4288,282 @@ function updateInstallmentSearch(val) {
   }
 }
 
-function renderInstallmentsView() {
-  ensureAccountingStructures(AppState.db);
-  const plans = AppState.db.installmentPlans || [];
-  const contacts = AppState.db.customers || [];
-  const safes = AppState.db.safes || [];
-  const selectedContact = contacts.find(c => c.id === preselectedContactId) || null;
-  const dueAlerts = getDueInstallmentAlerts();
-  const defaultFirstDue = getLocalDateOnlyValue(30);
-  const todayStr = getLocalDateOnlyValue(0);
-
-  let totalScheduledAll = 0;
-  let totalPaidAll = 0;
-  let totalRemainingAll = 0;
-  plans.forEach(p => {
-    const st = getInstallmentPlanStats(p);
-    totalScheduledAll += st.totalAmount;
-    totalPaidAll += st.totalPaid;
-    totalRemainingAll += st.remaining;
-  });
-
-  const q = installmentSearchQuery.trim().toLowerCase();
-  const filteredPlans = q
-    ? plans.filter(p =>
-        (p.id || '').toLowerCase().includes(q) ||
-        (p.customerName || '').toLowerCase().includes(q) ||
-        (p.customerPhone || '').toLowerCase().includes(q) ||
-        (p.vehicleTitle || '').toLowerCase().includes(q) ||
-        (p.plateNumber || '').toLowerCase().includes(q) ||
-        (p.itemDescription || '').toLowerCase().includes(q) ||
-        (p.guarantorName || '').toLowerCase().includes(q) ||
-        (p.schedule || []).some(it => (it.promissoryNo || '').toLowerCase().includes(q))
-      )
-    : plans;
-
-  return `
-    <div class="space-y-5">
-      <!-- Header Banner -->
-      <div class="bg-[#070b14] text-white rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b-4 border-[#0066ff]">
-        <div>
-          <h2 class="text-lg md:text-xl font-black">📅 نظام الأقساط والدفعات الشهرية المجدولة (الكمبيالات)</h2>
-          <p class="text-xs text-slate-400 font-semibold mt-0.5">توليد جدول أقساط شهري تلقائي لبيع السيارات أو الخدمات مع تنبيه يومي وطباعة سند كمبيالة / وصل قسط</p>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <button type="button" onclick="exportInstallmentsToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-4 py-2 rounded-xl text-xs shadow">
-            📊 تصدير الأقساط إلى Excel
-          </button>
-          <button type="button" onclick="openQuickAddContactModal('installments')" class="bg-slate-800 hover:bg-slate-700 text-sky-300 font-extrabold px-3.5 py-2 rounded-xl text-xs border border-slate-700">
-            + إضافة جهة اتصال
-          </button>
-        </div>
-      </div>
-
-      <!-- KPIs -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div class="sks-card p-4">
-          <div class="text-xs font-bold text-slate-500">عقود الأقساط الفعالة</div>
-          <div class="text-2xl font-black text-[#0066ff] mt-1">${plans.length} عقد</div>
-        </div>
-        <div class="sks-card p-4">
-          <div class="text-xs font-bold text-slate-500">إجمالي المبالغ المحصّلة</div>
-          <div class="text-xl font-black text-emerald-600 mt-1">${formatCurrency(totalPaidAll)}</div>
-        </div>
-        <div class="sks-card p-4">
-          <div class="text-xs font-bold text-slate-500">إجمالي المتبقي بذمة الزبائن</div>
-          <div class="text-xl font-black text-amber-600 mt-1">${formatCurrency(totalRemainingAll)}</div>
-        </div>
-        <div class="sks-card p-4 ${dueAlerts.length > 0 ? 'border-2 border-rose-400 bg-rose-50/40' : ''}">
-          <div class="text-xs font-bold text-slate-500">تنبيهات الأقساط المستحقة/المتأخرة</div>
-          <div class="text-2xl font-black ${dueAlerts.length > 0 ? 'text-rose-600' : 'text-emerald-600'} mt-1">${dueAlerts.length} قسط</div>
-        </div>
-      </div>
-
-      <!-- Daily Overdue & Due-Soon Alerts -->
-      ${dueAlerts.length > 0 ? `
-        <div class="sks-card p-5 space-y-3 border-2 border-rose-400/80 bg-rose-50/30">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-base font-black text-rose-800">🔔 تنبيه يومي: الأقساط والكمبيالات المستحقة أو المتأخرة (${dueAlerts.length})</h3>
-              <p class="text-xs text-slate-600 font-bold">قم بتسديد القسط للقاصة مباشرة أو إرسال تذكير واتساب فوري للزبون</p>
-            </div>
-          </div>
-          <div class="sks-table-wrap">
-            <table class="sks-table">
-              <thead>
-                <tr>
-                  <th>الزبون والهاتف</th>
-                  <th>العقد / المركبة</th>
-                  <th>الكمبيالة</th>
-                  <th>تاريخ الاستحقاق</th>
-                  <th>المبلغ</th>
-                  <th>الحالة</th>
-                  <th>إجراءات فورية</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${dueAlerts.map(a => `
-                  <tr>
-                    <td>
-                      <div class="font-black text-xs">${a.plan.customerName}</div>
-                      <div class="text-[11px] text-slate-500 font-bold" dir="ltr">${a.plan.customerPhone || '—'}</div>
-                    </td>
-                    <td class="text-xs font-bold">${a.plan.itemDescription} ${a.plan.vehicleTitle ? `(${a.plan.vehicleTitle})` : ''}</td>
-                    <td class="font-black text-xs text-[#0066ff]" dir="ltr">${a.item.promissoryNo} (#${a.item.number})</td>
-                    <td class="font-black text-xs" dir="ltr">${a.item.dueDate}</td>
-                    <td class="font-black text-xs text-rose-700">${formatCurrency(a.item.amount)}</td>
-                    <td><span class="px-2.5 py-1 rounded-lg text-[11px] font-black ${a.badgeClass}">${a.statusLabel}</span></td>
-                    <td>
-                      <div class="flex flex-wrap items-center gap-1.5">
-                        <button type="button" onclick="openPayInstallmentModal('${a.plan.id}', ${a.idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-2.5 py-1.5 rounded-xl text-xs">✅ تسديد</button>
-                        <button type="button" onclick="printPromissoryNote('${a.plan.id}', ${a.idx})" class="sks-navy-btn px-2.5 py-1.5 text-xs">🖨️ كمبيالة</button>
-                        <button type="button" onclick="sendInstallmentWhatsAppReminder('${a.plan.id}', ${a.idx})" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-2.5 py-1.5 rounded-xl text-xs">💬 واتساب</button>
-                      </div>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ` : ''}
-
-      <!-- Create New Installment Plan Form -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="border-b pb-3 flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h3 class="text-base font-black text-[#0f172a]">➕ إنشاء عقد أقساط جديد وتوليد جدول الكمبيالات تلقائياً</h3>
-            <p class="text-xs text-slate-500 font-bold">اختر الزبون من جهات الاتصال وأدخل المبلغ والمقدمة وعدد الأشهر ليتم تقسيم الأقساط وتواريخها تلقائياً</p>
-          </div>
-        </div>
-
-        <form onsubmit="submitNewInstallmentPlan(event)" class="space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label class="text-xs font-extrabold">الزبون (من جهات الاتصال) *</label>
-                <button type="button" onclick="openQuickAddContactModal('installments')" class="text-[11px] font-black text-[#0066ff] hover:underline">+ إضافة</button>
-              </div>
-              <select id="ins-contact-select" required onchange="onInstallmentContactChange(this.value)" class="sks-input font-extrabold">
-                <option value="">-- اختر الزبون من جهات الاتصال --</option>
-                ${contacts.map(c => `
-                  <option value="${c.id}" ${selectedContact && selectedContact.id === c.id ? 'selected' : ''}>
-                    ${c.name} ${c.phone ? `(${c.phone})` : ''}
-                  </option>
-                `).join('')}
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold mb-1">موضوع التقسيط (بيع سيارة / خدمة) *</label>
-              <input id="ins-item-desc" type="text" required placeholder="مثال: بيع سيارة بالأقساط / تجفيت محرك..." class="sks-input font-bold" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold mb-1">نوع وموديل السيارة</label>
-              <input id="ins-vehicle-title" type="text" value="${selectedContact?.defaultVehicle || ''}" placeholder="مثال: تويوتا كامري 2024" class="sks-input" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold mb-1">رقم اللوحة المرورية</label>
-              <input id="ins-plate-number" type="text" value="${selectedContact?.defaultPlate || ''}" placeholder="بغداد أ - 12345" class="sks-input" />
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            <div>
-              <label class="block text-xs font-extrabold mb-1">المبلغ الإجمالي (${SKS_BRAND.currency}) *</label>
-              <input id="ins-total-amount" type="number" step="any" min="1" required oninput="updateInstallmentPreview()" placeholder="مثال: 12000000" class="sks-input font-black text-center text-[#0066ff]" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold mb-1">المقدمة المدفوعة الآن (${SKS_BRAND.currency})</label>
-              <input id="ins-down-payment" type="number" step="any" min="0" value="0" oninput="updateInstallmentPreview()" class="sks-input font-black text-center text-emerald-700" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold mb-1">عدد الأقساط الشهرية *</label>
-              <input id="ins-months-count" type="number" step="any" min="1" max="120" required value="6" oninput="updateInstallmentPreview()" class="sks-input font-black text-center" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold mb-1">تاريخ استحقاق أول قسط *</label>
-              <input id="ins-first-due" type="date" required value="${defaultFirstDue}" onchange="updateInstallmentPreview()" class="sks-input font-black" dir="ltr" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold mb-1">قاصة استلام المقدمة</label>
-              <select id="ins-down-safe" class="sks-input font-bold">
-                ${safes.map(sf => `<option value="${sf.id}">${sf.name}</option>`).join('')}
-              </select>
-            </div>
-          </div>
-
-          <!-- Live Calculation Preview -->
-          <div id="ins-live-preview" class="sks-subcard p-3 border border-dashed border-[#0066ff]/50 bg-blue-50/40">
-            <div class="text-xs font-bold text-slate-500 text-center">أدخل المبلغ الإجمالي والمقدمة وعدد الأشهر لمعاينة قيمة القسط الشهري وتواريخ الكمبيالات تلقائياً</div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
-            <div>
-              <label class="block text-xs font-extrabold mb-1">اسم الكفيل الضامن (اختياري)</label>
-              <input id="ins-guarantor-name" type="text" placeholder="اسم الكفيل للكمبيالة..." class="sks-input text-xs font-bold" />
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">رقم هاتف الكفيل (اختياري)</label>
-              <input id="ins-guarantor-phone" type="text" placeholder="0770XXXXXXX" class="sks-input text-xs font-bold" dir="ltr" />
-            </div>
-            <div>
-              <button type="submit" class="w-full sks-electric-btn py-2.5 text-xs">
-                📅 حفظ وتوليد جدول الأقساط والكمبيالات
-              </button>
-            </div>
-          </div>
-          <input id="ins-notes" type="hidden" value="" />
-        </form>
-      </div>
-
-      <!-- Search + Plans List -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <h3 class="text-base font-black">📋 سجلات عقود الأقساط وجداول الكمبيالات (${filteredPlans.length})</h3>
-          <input id="installment-search-input" type="text" value="${installmentSearchQuery}" oninput="updateInstallmentSearch(this.value)" placeholder="بحث باسم الزبون، رقم العقد (INS)، رقم الكمبيالة (KMB)، السيارة، الكفيل..." class="sks-input sm:w-80 py-2 text-xs font-bold" />
-        </div>
-
-        ${filteredPlans.length === 0 ? `
-          <div class="text-center py-10 text-slate-400 font-bold bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-            لا توجد عقود أقساط مسجلة حالياً — استخدم النموذج أعلاه لتوليد أول جدول أقساط وكمبيالات تلقائياً
-          </div>
-        ` : filteredPlans.map(plan => {
-          const st = getInstallmentPlanStats(plan);
-          const isCollapsed = collapsedInstallmentPlans.has(plan.id);
-          return `
-            <div class="rounded-2xl border-2 ${st.isCompleted ? 'border-emerald-300 bg-emerald-50/20' : (st.overdueCount > 0 ? 'border-rose-300 bg-rose-50/15' : 'border-slate-200 bg-white')} overflow-hidden">
-              <div class="p-4 bg-slate-50/80 border-b flex flex-wrap items-center justify-between gap-3">
-                <div class="space-y-1">
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span class="font-black text-xs px-2.5 py-1 rounded-lg bg-[#070b14] text-sky-400" dir="ltr">${plan.id}</span>
-                    <span class="font-black text-sm text-[#0f172a]">${plan.customerName}</span>
-                    <span class="text-xs font-bold text-slate-500" dir="ltr">${plan.customerPhone || ''}</span>
-                    ${st.isCompleted
-                      ? `<span class="px-2.5 py-0.5 rounded-lg bg-emerald-600 text-white text-[11px] font-black">✅ مسدد بالكامل</span>`
-                      : (st.overdueCount > 0
-                        ? `<span class="px-2.5 py-0.5 rounded-lg bg-rose-600 text-white text-[11px] font-black">⚠️ ${st.overdueCount} قسط متأخر</span>`
-                        : `<span class="px-2.5 py-0.5 rounded-lg bg-blue-100 text-blue-800 text-[11px] font-black">📅 قيد التقسيط (${st.paidCount}/${st.totalCount})</span>`
-                      )
-                    }
-                  </div>
-                  <div class="text-xs font-bold text-slate-600">
-                    🚗 ${plan.itemDescription}${plan.vehicleTitle ? ` — ${plan.vehicleTitle} (${plan.plateNumber || 'بدون لوحة'})` : ''}
-                    ${plan.guarantorName ? ` &nbsp;|&nbsp; 🛡️ الكفيل: <strong>${plan.guarantorName}</strong>` : ''}
-                  </div>
-                </div>
-
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <button type="button" onclick="printInstallmentPlanSchedule('${plan.id}')" class="sks-electric-btn px-3 py-1.5 text-xs">🖨️ طباعة الجدول الكامل</button>
-                  <button type="button" onclick="toggleInstallmentPlanCollapse('${plan.id}')" class="sks-light-btn px-3 py-1.5 text-xs">${isCollapsed ? '▼ عرض الأقساط' : '▲ طي الجدول'}</button>
-                  <button type="button" onclick="deleteInstallmentPlan('${plan.id}')" class="px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-black transition" title="حذف العقد">✕</button>
-                </div>
-              </div>
-
-              <!-- Plan Financial Summary Bar -->
-              <div class="px-4 py-3 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs border-b bg-white">
-                <div>
-                  <span class="text-slate-500 font-bold">الإجمالي:</span>
-                  <strong class="block text-sm font-black text-[#0f172a]">${formatCurrency(st.totalAmount)}</strong>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-bold">المقدمة:</span>
-                  <strong class="block text-sm font-black text-sky-700">${formatCurrency(st.downPayment)}</strong>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-bold">إجمالي المدفوع:</span>
-                  <strong class="block text-sm font-black text-emerald-600">${formatCurrency(st.totalPaid)} (${st.progressPct}%)</strong>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-bold">المتبقي للسداد:</span>
-                  <strong class="block text-sm font-black text-amber-600">${formatCurrency(st.remaining)}</strong>
-                </div>
-              </div>
-
-              ${!isCollapsed ? `
-                <div class="sks-table-wrap">
-                  <table class="sks-table">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>رقم الكمبيالة</th>
-                        <th>تاريخ الاستحقاق</th>
-                        <th>مبلغ القسط</th>
-                        <th>الحالة</th>
-                        <th>الإجراءات (تسديد / طباعة / واتساب)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      ${(plan.schedule || []).map((it, idx) => {
-                        const isOverdue = it.status !== 'paid' && it.dueDate && it.dueDate < todayStr;
-                        const isToday = it.status !== 'paid' && it.dueDate === todayStr;
-                        return `
-                          <tr class="${it.status === 'paid' ? 'bg-emerald-50/35' : (isOverdue ? 'bg-rose-50/50' : (isToday ? 'bg-amber-50/50' : ''))}">
-                            <td class="font-black text-xs">${it.number}</td>
-                            <td class="font-black text-xs text-[#0066ff]" dir="ltr">${it.promissoryNo}</td>
-                            <td class="font-black text-xs" dir="ltr">${it.dueDate}</td>
-                            <td class="font-black text-xs">${formatCurrency(it.amount)}</td>
-                            <td>
-                              ${it.status === 'paid'
-                                ? `<span class="px-2.5 py-0.5 rounded-lg bg-emerald-100 text-emerald-800 text-[11px] font-black">✅ مدفوع (${it.paidAt})</span>`
-                                : (isOverdue
-                                  ? `<span class="px-2.5 py-0.5 rounded-lg bg-rose-600 text-white text-[11px] font-black">🔴 متأخر</span>`
-                                  : (isToday
-                                    ? `<span class="px-2.5 py-0.5 rounded-lg bg-orange-500 text-white text-[11px] font-black">🟠 مستحق اليوم</span>`
-                                    : `<span class="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 text-[11px] font-black">⏳ مجدول</span>`
-                                  )
-                                )
-                              }
-                            </td>
-                            <td>
-                              <div class="flex flex-wrap items-center gap-1.5">
-                                ${it.status !== 'paid'
-                                  ? `<button type="button" onclick="openPayInstallmentModal('${plan.id}', ${idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-2.5 py-1 rounded-lg text-[11px]">✅ تسديد للقاصة</button>`
-                                  : `<span class="text-[11px] font-black text-emerald-700" dir="ltr">${it.receiptId || ''}</span>`
-                                }
-                                <button type="button" onclick="printPromissoryNote('${plan.id}', ${idx})" class="sks-navy-btn px-2.5 py-1 text-[11px]">
-                                  ${it.status === 'paid' ? '🖨️ وصل القسط' : '🖨️ سند كمبيالة'}
-                                </button>
-                                ${it.status !== 'paid'
-                                  ? `<button type="button" onclick="sendInstallmentWhatsAppReminder('${plan.id}', ${idx})" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-2.5 py-1 rounded-lg text-[11px]">💬 تذكير واتساب</button>`
-                                  : ''
-                                }
-                              </div>
-                            </td>
-                          </tr>
-                        `;
-                      }).join('')}
-                    </tbody>
-                  </table>
-                </div>
-              ` : ''}
-            </div>
-          `;
-        }).join('')}
-      </div>
-    </div>
-  `;
-}
-
-/* ==========================================================================
-   4. SIMPLE DASHBOARD (الرئيسية البسيطة والواضحة + تذكيرات الصيانة والأقساط + تصدير Excel)
-   ========================================================================== */
 function renderDashboardView() {
-  const jobs = AppState.db.jobCards;
+  const jobs = AppState.db.jobCards || [];
   const activeJobs = jobs.filter(j => j.status !== 'delivered');
-  const readyJobs = jobs.filter(j => j.status === 'ready');
   const totalRevenue = jobs.reduce((sum, j) => sum + calcJobTotals(j).paid, 0);
-  const reminders = getMaintenanceReminders();
-  const dueInstallments = getDueInstallmentAlerts();
+
+  const q = dashQuickSearchQuery.trim().toLowerCase();
+  const filteredJobs = q
+    ? jobs.filter(j =>
+        (j.customerName || '').toLowerCase().includes(q) ||
+        (j.customerPhone || '').toLowerCase().includes(q) ||
+        (j.vehicleTitle || '').toLowerCase().includes(q) ||
+        (j.plateNumber || '').toLowerCase().includes(q) ||
+        (j.id || '').toLowerCase().includes(q)
+      )
+    : jobs;
 
   return `
-    <div class="space-y-5">
-      <!-- Clean Header Card with SKS Car Logo -->
-      <div class="bg-[#070b14] text-white rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b-4 border-[#0066ff]">
+    <div class="max-w-4xl mx-auto space-y-4">
+      <!-- 2 Primary Big Buttons (أهم زرين في يومك فقط) -->
+      <div class="grid grid-cols-2 gap-3">
+        <button type="button" onclick="switchTab('reception')" class="p-4 rounded-2xl bg-[#0066ff] hover:bg-blue-600 text-white shadow-md transition flex items-center justify-center gap-2.5 font-black text-sm sm:text-base">
+          <span class="text-xl">🚗</span>
+          <span>استلام سيارة</span>
+        </button>
+
+        <button type="button" onclick="switchTab('accounting')" class="p-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition flex items-center justify-center gap-2.5 font-black text-sm sm:text-base">
+          <span class="text-xl">💰</span>
+          <span>قبض / دفع</span>
+        </button>
+      </div>
+
+      <!-- Compact Shortcut Pills (اختصارات هادئة) -->
+      <div class="grid grid-cols-3 gap-2 text-xs font-extrabold">
+        <button type="button" onclick="switchTab('billing')" class="sks-card py-2.5 px-2 text-center hover:border-[#0066ff] transition">🧾 الفواتير</button>
+        <button type="button" onclick="switchTab('contracts')" class="sks-card py-2.5 px-2 text-center hover:border-[#0066ff] transition">📄 العقود</button>
+        <button type="button" onclick="switchTab('customers')" class="sks-card py-2.5 px-2 text-center hover:border-[#0066ff] transition">👥 الزبائن</button>
+      </div>
+
+      <!-- Single Minimal Summary Bar -->
+      <div class="sks-card px-4 py-3 flex flex-wrap items-center justify-between gap-2 text-xs font-black">
         <div class="flex items-center gap-4">
-          ${renderSksLogo('sm')}
-          <div>
-            <h2 class="text-lg md:text-xl font-black">نظام SKS Car لإدارة خدمات السيارات</h2>
-            <p class="text-xs text-slate-400 font-semibold">لوحة المتابعة السريعة، تذكيرات الصيانة الدورية، الأقساط والـ VIP</p>
-          </div>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <button onclick="exportJobsToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center gap-1.5 transition shadow">
-            <span>📊 تصدير الجدول إلى Excel</span>
-          </button>
-          <button onclick="switchTab('reception')" class="sks-electric-btn px-5 py-2.5 text-sm flex items-center gap-2">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i>
-            <span>استلام سيارة جديدة</span>
-          </button>
+          <span class="text-slate-600">بالورشة: <strong class="text-[#0066ff] text-sm">${activeJobs.length}</strong></span>
+          <span class="text-slate-300">|</span>
+          <span class="text-slate-600">المستلم: <strong class="text-emerald-600 text-sm">${formatCurrency(totalRevenue)}</strong></span>
         </div>
       </div>
 
-      <!-- Summary KPI Numbers -->
-      <div class="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
-        <div class="sks-card p-4">
-          <div class="text-xs font-bold text-slate-500">سيارات قيد العمل</div>
-          <div class="text-2xl font-black text-[#0066ff] mt-1">${activeJobs.length}</div>
+      <!-- Search + Clean Mobile-First Vehicle Cards (بدون سكرول أفقي!) -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <input id="dash-quick-search" type="text" value="${dashQuickSearchQuery}" oninput="updateDashQuickSearch(this.value)" placeholder="🔍 ابحث بالاسم أو السيارة أو رقم اللوحة..." class="sks-input py-2.5 px-3.5 text-xs font-bold flex-1 bg-white" />
+          <button type="button" onclick="exportJobsToExcel()" class="px-3 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-emerald-700 text-xs font-black shrink-0" title="تصدير Excel">📊</button>
         </div>
 
-        <div class="sks-card p-4">
-          <div class="text-xs font-bold text-slate-500">جاهزة للتسليم</div>
-          <div class="text-2xl font-black text-emerald-600 mt-1">${readyJobs.length}</div>
-        </div>
-
-        <div onclick="switchTab('billing')" class="sks-card p-4 cursor-pointer hover:border-blue-500 transition">
-          <div class="text-xs font-bold text-slate-500">المبالغ المستلمة</div>
-          <div class="text-xl font-black mt-1">${formatCurrency(totalRevenue)}</div>
-        </div>
-
-        <div class="sks-card p-4">
-          <div class="text-xs font-bold text-slate-500">تذكيرات الصيانة القادمة</div>
-          <div class="text-2xl font-black text-amber-600 mt-1">${reminders.length}</div>
-        </div>
-
-        <div onclick="switchTab('installments')" class="sks-card p-4 cursor-pointer hover:border-rose-500 transition col-span-2 lg:col-span-1 ${dueInstallments.length > 0 ? 'border-2 border-rose-400 bg-rose-50/40' : ''}">
-          <div class="text-xs font-bold text-slate-500">📅 أقساط مستحقة / متأخرة</div>
-          <div class="text-2xl font-black ${dueInstallments.length > 0 ? 'text-rose-600' : 'text-emerald-600'} mt-1">${dueInstallments.length}</div>
-        </div>
-      </div>
-
-      <!-- Daily Due & Overdue Installments Alert Banner on Dashboard -->
-      ${dueInstallments.length > 0 ? `
-        <div class="sks-card p-5 space-y-3 border-2 border-rose-400/80 bg-rose-50/30">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-base font-black text-rose-800">📅 تنبيه يومي: الأقساط والكمبيالات المستحقة أو المتأخرة (${dueInstallments.length})</h3>
-              <p class="text-xs text-slate-600 font-bold">أقساط حان أو اقترب موعد استحقاقها خلال 7 أيام — يمكنك تسديدها أو إرسال تذكير واتساب مباشرة</p>
-            </div>
-            <button type="button" onclick="switchTab('installments')" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black">فتح قسم الأقساط ←</button>
+        ${filteredJobs.length === 0 ? `
+          <div class="sks-card p-8 text-center space-y-2">
+            <div class="text-3xl">🚗</div>
+            <div class="text-sm font-black text-slate-600">لا توجد سيارات مسجلة حالياً</div>
+            <div class="text-xs text-slate-400 font-bold">اضغط على «🚗 استلام سيارة» بالأعلى لإضافة أول سيارة</div>
           </div>
-          <div class="sks-table-wrap">
-            <table class="sks-table">
-              <thead>
-                <tr>
-                  <th>الزبون</th>
-                  <th>الكمبيالة / الموضوع</th>
-                  <th>الاستحقاق</th>
-                  <th>المبلغ</th>
-                  <th>الحالة</th>
-                  <th>إجراء سريع</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${dueInstallments.slice(0, 6).map(a => `
-                  <tr>
-                    <td>
-                      <div class="font-black text-xs">${a.plan.customerName}</div>
-                      <div class="text-[11px] text-slate-500 font-bold" dir="ltr">${a.plan.customerPhone || '—'}</div>
-                    </td>
-                    <td class="text-xs font-bold">
-                      <span class="text-[#0066ff] font-black" dir="ltr">${a.item.promissoryNo}</span> — ${a.plan.itemDescription}
-                    </td>
-                    <td class="font-black text-xs" dir="ltr">${a.item.dueDate}</td>
-                    <td class="font-black text-xs text-rose-700">${formatCurrency(a.item.amount)}</td>
-                    <td><span class="px-2 py-0.5 rounded-lg text-[11px] font-black ${a.badgeClass}">${a.statusLabel}</span></td>
-                    <td>
-                      <div class="flex flex-wrap items-center gap-1">
-                        <button type="button" onclick="openPayInstallmentModal('${a.plan.id}', ${a.idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-2.5 py-1 rounded-lg text-[11px]">✅ تسديد</button>
-                        <button type="button" onclick="printPromissoryNote('${a.plan.id}', ${a.idx})" class="sks-navy-btn px-2 py-1 text-[11px]">🖨️ كمبيالة</button>
-                        <button type="button" onclick="sendInstallmentWhatsAppReminder('${a.plan.id}', ${a.idx})" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-2 py-1 rounded-lg text-[11px]">💬 واتساب</button>
+        ` : `
+          <div class="space-y-2.5">
+            ${filteredJobs.map(j => {
+              const totals = calcJobTotals(j);
+              const cnt = (AppState.db.customers || []).find(c => (j.customerId && c.id === j.customerId) || c.name === j.customerName);
+              const loy = cnt ? getCustomerLoyaltyInfo(cnt) : null;
+              return `
+                <div class="sks-card p-4 space-y-3 hover:border-blue-300 transition">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="min-w-0">
+                      <div class="flex flex-wrap items-center gap-2">
+                        <span class="font-black text-sm text-[#0f172a]">${j.vehicleTitle}</span>
+                        <span class="license-plate-badge">${j.plateNumber}</span>
                       </div>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ` : ''}
-
-      <!-- Upcoming Maintenance Reminders (تذكير موعد الصيانة القادمة وتبديل الدهن) -->
-      ${reminders.length > 0 ? `
-        <div class="sks-card p-5 space-y-3 border-2 border-amber-400/70 bg-amber-50/30">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-base font-black text-[#0f172a]">🔔 تذكير مواعيد الصيانة القادمة (تبديل الدهن / الفحص الدوري) (${reminders.length})</h3>
-              <p class="text-xs text-slate-600 font-bold">تنبيه تلقائي بالسيارات التي حان أو اقترب موعد صيانتها القادمة حسب التاريخ أو الكيلومترات</p>
-            </div>
-          </div>
-
-          <div class="sks-table-wrap">
-            <table class="sks-table">
-              <thead>
-                <tr>
-                  <th>الزبون والهاتف</th>
-                  <th>السيارة واللوحة</th>
-                  <th>نوع الصيانة القادمة</th>
-                  <th>تاريخ الصيانة القادمة</th>
-                  <th>عداد الصيانة القادمة</th>
-                  <th>حالة الموعد</th>
-                  <th>مراسلة فورية</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${reminders.map(({ job: j, statusLabel, badgeClass }) => `
-                  <tr>
-                    <td>
-                      <div class="font-black text-xs">${j.customerName}</div>
-                      <div class="text-[11px] text-slate-500 font-bold" dir="ltr">${j.customerPhone}</div>
-                    </td>
-                    <td class="font-bold text-xs">${j.vehicleTitle} (${j.plateNumber})</td>
-                    <td class="text-xs font-bold text-[#0066ff]">${j.nextServiceNote || 'تبديل دهن وفلتر وفحص دوري'}</td>
-                    <td class="font-black text-xs" dir="ltr">${j.nextServiceDate || '—'}</td>
-                    <td class="font-black text-xs" dir="ltr">${j.nextServiceKm ? Number(j.nextServiceKm).toLocaleString() + ' كم' : '—'}</td>
-                    <td><span class="px-2.5 py-1 rounded-lg text-[11px] font-black ${badgeClass}">${statusLabel}</span></td>
-                    <td>
-                      <button onclick="sendMaintenanceReminderWhatsApp('${j.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1 shadow-sm">
-                        <span>💬 تذكير واتساب</span>
-                      </button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ` : ''}
-
-      <!-- Simple Active Cars Table -->
-      <div class="sks-card p-5">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <h3 class="text-base font-black">السيارات المستلمة (${jobs.length})</h3>
-          <div class="flex items-center gap-3">
-            <button onclick="exportJobsToExcel()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
-              📊 تصدير Excel
-            </button>
-            <button onclick="switchTab('reception')" class="text-xs font-extrabold text-[#0066ff] hover:underline">+ استلام سيارة</button>
-          </div>
-        </div>
-
-        <div class="sks-table-wrap">
-          <table class="sks-table">
-            <thead>
-              <tr>
-                <th>السيارة</th>
-                <th>رقم اللوحة</th>
-                <th>العميل</th>
-                <th>موعد الاستلام والتسليم</th>
-                <th>الحالة وفحص البدي</th>
-                <th>الصافي</th>
-                <th>إجراءات سريعة</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${jobs.map(j => {
-                const totals = calcJobTotals(j);
-                const recTime = formatDateTimeDisplay(j.receivedAt || j.createdAt);
-                const delTime = formatDateTimeDisplay(j.deliveryAt || 'نفس اليوم');
-                const dmgCount = (j.bodyDamages || []).length;
-                return `
-                  <tr>
-                    <td class="font-extrabold">
-                      <div>${j.vehicleTitle}</div>
-                      ${j.nextServiceDate ? `<div class="text-[11px] font-bold text-amber-700 mt-0.5">🔔 الصيانة القادمة: ${j.nextServiceDate}</div>` : ''}
-                    </td>
-                    <td><span class="license-plate-badge">${j.plateNumber}</span></td>
-                    <td>
-                      <div class="font-bold text-sm flex flex-wrap items-center gap-1">
-                        <span>${j.customerName}</span>
-                        ${(() => {
-                          const cnt = (AppState.db.customers || []).find(c => (j.customerId && c.id === j.customerId) || c.name === j.customerName);
-                          if (!cnt) return '';
-                          const loy = getCustomerLoyaltyInfo(cnt);
-                          return loy.autoDiscountPct > 0
-                            ? `<span class="px-1.5 py-0.5 rounded-md text-[10px] font-black ${loy.tier.badgeClass}">${loy.tier.icon} ${loy.tier.label}</span>`
-                            : `<span class="text-[10px] font-bold text-amber-600">⭐ ${loy.points}</span>`;
-                        })()}
+                      <div class="text-xs font-bold text-slate-600 mt-1 flex flex-wrap items-center gap-1.5">
+                        <span>👤 ${j.customerName}</span>
+                        ${loy && loy.autoDiscountPct > 0 ? `<span class="px-1.5 py-0.5 rounded-md text-[10px] font-black ${loy.tier.badgeClass}">${loy.tier.icon} ${loy.tier.label}</span>` : ''}
+                        <span class="text-slate-400" dir="ltr">${j.customerPhone || ''}</span>
                       </div>
-                      <div class="text-xs text-slate-500" dir="ltr">${j.customerPhone}</div>
-                    </td>
-                    <td class="text-xs">
-                      <div class="font-bold text-[#0066ff]">الاستلام: <span dir="ltr">${recTime}</span></div>
-                      <div class="font-bold text-emerald-600 mt-0.5">التسليم: <span dir="ltr">${delTime}</span></div>
-                    </td>
-                    <td>
-                      <select onchange="updateJobStatus('${j.id}', this.value)" class="sks-input w-auto py-1 px-2.5 text-xs">
-                        ${Object.entries(JOB_STATUS_META).map(([key, meta]) => `
-                          <option value="${key}" ${j.status === key ? 'selected' : ''}>${meta.label}</option>
-                        `).join('')}
-                      </select>
-                      ${dmgCount > 0 ? `<div class="text-[11px] font-black text-rose-600 mt-1">🚗 مسجل (${dmgCount}) ملاحظة بدي</div>` : ''}
-                      ${(j.attachments || []).length > 0 ? `<div class="text-[11px] font-black text-[#0066ff] mt-0.5">📸 مرفق (${j.attachments.length}) صورة / مستمسك</div>` : ''}
-                    </td>
-                    <td class="font-black">${formatCurrency(totals.total)}</td>
-                    <td>
-                      <div class="flex flex-wrap items-center gap-1.5">
-                        <button onclick="openJobDetailsModal('${j.id}')" class="sks-light-btn px-2.5 py-1.5 text-xs">الخدمات / الصور / تسديد</button>
-                        <button onclick="printCarBodyDiagramReport('${j.id}')" class="sks-navy-btn px-2.5 py-1.5 text-xs">🖨️ طباعة المخطط والتفاصيل</button>
-                        <button onclick="printInvoiceForJob('${j.id}')" class="sks-electric-btn px-2.5 py-1.5 text-xs">طباعة فاتورة</button>
-                        <button onclick="sendWhatsAppToCustomer('${j.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-2.5 py-1.5 rounded-xl text-xs">واتساب 💬</button>
+                    </div>
+
+                    <div class="text-left shrink-0">
+                      <div class="font-black text-sm text-[#0066ff]">${formatCurrency(totals.total)}</div>
+                      <div class="text-[11px] font-black ${totals.remaining > 0 ? 'text-amber-600' : 'text-emerald-600'}">
+                        ${totals.remaining > 0 ? `متبقي ${formatCurrency(totals.remaining)}` : '✅ خالص'}
                       </div>
-                    </td>
-                  </tr>
-                `;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
+                    <select onchange="updateJobStatus('${j.id}', this.value)" class="sks-input w-auto py-1.5 px-2.5 text-xs font-bold">
+                      ${Object.entries(JOB_STATUS_META).map(([key, meta]) => `
+                        <option value="${key}" ${j.status === key ? 'selected' : ''}>${meta.label}</option>
+                      `).join('')}
+                    </select>
+
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="openJobDetailsModal('${j.id}')" class="sks-navy-btn px-3 py-1.5 text-xs">📋 التفاصيل</button>
+                      <button type="button" onclick="printInvoiceForJob('${j.id}')" class="sks-electric-btn px-3 py-1.5 text-xs">🖨️ فاتورة</button>
+                      <button type="button" onclick="sendWhatsAppToCustomer('${j.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-2.5 py-1.5 rounded-xl text-xs" title="واتساب">💬</button>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `}
       </div>
     </div>
   `;
 }
 
 /* ==========================================================================
-   5. SIMPLE VEHICLE RECEPTION (نموذج استلام سيارة مع مخطط جسم السيارة التفاعلي وتذكير الصيانة القادمة)
+   5. ULTRA-SIMPLE 1-SCREEN RECEPTION (استلام سريع بشاشة واحدة بدون تعقيد)
    ========================================================================== */
 let sigCanvasState = { hasDrawn: false };
 let preselectedContactId = '';
 
+function toggleRecServiceChip(srvId) {
+  const cb = document.getElementById('rec-srv-cb-' + srvId);
+  const chip = document.getElementById('rec-srv-chip-' + srvId);
+  if (!cb || !chip) return;
+  cb.checked = !cb.checked;
+  chip.className = `px-3 py-2 rounded-xl border-2 text-xs font-black transition cursor-pointer flex items-center justify-between gap-2 ${
+    cb.checked ? 'border-[#0066ff] bg-blue-50 text-[#0066ff]' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+  }`;
+  updateReceptionTotalPreview();
+}
+
+function updateReceptionTotalPreview() {
+  let total = 0;
+  document.querySelectorAll('input[name="rec-services"]:checked').forEach(el => {
+    const priceEl = document.getElementById('rec-srv-price-' + el.value);
+    total += Number(priceEl?.value) || 0;
+  });
+  const customPrice = Number(document.getElementById('rec-custom-op-price')?.value) || 0;
+  const customName = document.getElementById('rec-custom-op-name')?.value.trim() || '';
+  if (customName || customPrice > 0) total += customPrice;
+  const btn = document.getElementById('rec-submit-btn');
+  if (btn) {
+    btn.textContent = total > 0 ? `✅ حفظ واستلام السيارة — ${formatCurrency(total)}` : '✅ حفظ واستلام السيارة';
+  }
+}
+
 function renderReceptionView() {
   const autoNow = getLocalDateTimeValue(0);
   const defaultDelivery = getLocalDateTimeValue(3);
-  const defaultNextServiceDate = getLocalDateOnlyValue(90);
   const contacts = AppState.db.customers || [];
   const selectedContact = contacts.find(c => c.id === preselectedContactId) || null;
   receptionBodyDamages = [];
   receptionAttachments = [];
   manualVehicleBodyOverride = false;
   selectedVehicleBodyType = detectVehicleBodyTypeFromTitle(selectedContact?.defaultVehicle || '');
+  const firstPrice = AppState.db.serviceCatalog[0]?.price || 0;
 
   return `
-    <div class="max-w-3xl mx-auto space-y-5">
-      <div class="sks-card p-6">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-5 border-b pb-3">
-          <div>
-            <h2 class="text-lg font-black">استلام سيارة جديدة - SKS Car</h2>
-            <p class="text-xs text-slate-500 font-semibold">يتم اختيار الزبون حصراً من قائمة جهات الاتصال المسجلة</p>
-          </div>
-          <div class="bg-blue-50 border border-blue-200 text-[#0066ff] px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5">
-            <span>⏱ وقت الاستلام التلقائي:</span>
-            <span dir="ltr">${formatDateTimeDisplay(autoNow)}</span>
-          </div>
+    <div class="max-w-xl mx-auto">
+      <div class="sks-card p-5 space-y-4">
+        <div class="flex items-center justify-between gap-2">
+          <h2 class="text-base sm:text-lg font-black">🚗 استلام سيارة جديدة</h2>
+          <button type="button" onclick="openQuickAddContactModal('reception')" class="px-3 py-1.5 rounded-xl bg-blue-50 text-[#0066ff] hover:bg-[#0066ff] hover:text-white text-xs font-black transition">+ زبون جديد</button>
         </div>
 
-        <form onsubmit="submitNewReceptionJob(event)" class="space-y-4">
-          <!-- مواعيد الاستلام والتسليم -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sks-subcard p-3.5 border border-blue-200/70">
-            <div>
-              <label class="block text-xs font-extrabold text-[#0066ff] mb-1">موعد ووقت استلام السيارة (تلقائي مباشر) *</label>
-              <input id="rec-received-at" type="datetime-local" required value="${autoNow}" class="sks-input font-black" dir="ltr" />
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold text-emerald-700 mb-1">موعد تسليم السيارة المتوقع *</label>
-              <input id="rec-delivery-at" type="datetime-local" required value="${defaultDelivery}" class="sks-input font-black" dir="ltr" />
-            </div>
+        <form onsubmit="submitNewReceptionJob(event)" class="space-y-3.5">
+          <!-- 1. Customer -->
+          <div>
+            <select id="rec-contact-select" required onchange="onReceptionContactChange(this.value)" class="sks-input font-extrabold text-sm">
+              <option value="">👤 اختر الزبون *</option>
+              ${contacts.map(c => `
+                <option value="${c.id}" ${selectedContact && selectedContact.id === c.id ? 'selected' : ''}>
+                  ${c.name} ${c.phone ? `(${c.phone})` : ''}
+                </option>
+              `).join('')}
+            </select>
+            <input id="rec-customer-phone" type="hidden" value="${selectedContact?.phone || ''}" />
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label class="text-xs font-extrabold">اختر الزبون (من جهات الاتصال) *</label>
-                <button type="button" onclick="openQuickAddContactModal('reception')" class="text-[11px] font-black text-[#0066ff] hover:underline">
-                  + إضافة جهة اتصال جديدة
-                </button>
-              </div>
-              <select id="rec-contact-select" required onchange="onReceptionContactChange(this.value)" class="sks-input font-extrabold">
-                <option value="">-- اختر اسم الزبون من جهات الاتصال --</option>
-                ${contacts.map(c => `
-                  <option value="${c.id}" ${selectedContact && selectedContact.id === c.id ? 'selected' : ''}>
-                    ${c.name} ${c.phone ? `(${c.phone})` : ''} — ${c.type || 'زبون'}
-                  </option>
-                `).join('')}
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">رقم الهاتف (تلقائي من جهة الاتصال) *</label>
-              <input id="rec-customer-phone" required type="text" value="${selectedContact?.phone || ''}" placeholder="يظهر تلقائياً عند اختيار الزبون" class="sks-input bg-slate-50 font-bold" dir="ltr" readonly />
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">نوع وموديل السيارة *</label>
-              <input id="rec-vehicle-title" required type="text" value="${selectedContact?.defaultVehicle || ''}" oninput="onReceptionVehicleTitleInput(this.value)" placeholder="مثال: تويوتا لاندكروزر 2024 / هايلوكس / كامري..." class="sks-input" />
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">رقم اللوحة *</label>
-              <input id="rec-plate-number" required type="text" value="${selectedContact?.defaultPlate || ''}" placeholder="بغداد أ - 12345" class="sks-input" />
-            </div>
-            <div class="sm:col-span-2">
-              <label class="block text-xs font-extrabold mb-1">العداد الحالي (كم)</label>
-              <input id="rec-mileage" type="number" step="any" value="40000" oninput="setQuickNextServiceKm(5000)" class="sks-input" />
-            </div>
+          <!-- 2. Vehicle + Plate -->
+          <div class="grid grid-cols-2 gap-2.5">
+            <input id="rec-vehicle-title" required type="text" value="${selectedContact?.defaultVehicle || ''}" oninput="onReceptionVehicleTitleInput(this.value)" placeholder="🚗 نوع السيارة *" class="sks-input font-bold text-sm" />
+            <input id="rec-plate-number" required type="text" value="${selectedContact?.defaultPlate || ''}" placeholder="🔢 رقم اللوحة *" class="sks-input font-bold text-sm" />
           </div>
 
-          <!-- بطاقة نقاط الولاء وخصم الـ VIP التلقائي للزبون -->
+          <!-- VIP Loyalty Banner (auto-shows when VIP/Customer selected) -->
           <div id="rec-vip-loyalty-slot">
             ${selectedContact ? renderLoyaltyBannerForForm(selectedContact, 'rec') : ''}
           </div>
 
-          <!-- مخطط جسم السيارة التفاعلي (تحديد الضربات والخدوش) -->
-          <div id="car-body-inspector-wrapper">
-            ${renderCarBodyInspectorSection()}
-          </div>
-
-          <!-- إرفاق صور السيارة (4 جهات) والسنوية والبطاقة الوطنية (كاميرا / ملفات) -->
-          <div id="reception-attachments-wrapper">
-            ${renderAttachmentsManagerCard('reception', '', receptionAttachments, VEHICLE_PHOTO_SLOTS)}
-          </div>
-
-          <!-- تذكير موعد الصيانة القادمة (تبديل الدهن / الفحص الدوري) -->
-          <div class="sks-subcard p-4 space-y-3 border border-amber-300 bg-amber-50/40">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div>
-                <label class="block text-xs font-black text-[#0f172a]">🔔 تذكير موعد الصيانة القادمة (تبديل الدهن / الفحص الدوري):</label>
-                <p class="text-[11px] text-slate-600 font-bold">يظهر تنبيه تلقائي في لوحة التحكم مع زر إرسال تذكير واتساب للزبون بضغطة واحدة</p>
-              </div>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="setQuickNextServiceDate(30)" class="px-2 py-1 rounded-lg bg-white border border-amber-300 text-[11px] font-extrabold text-amber-900 hover:bg-amber-100">بعد شهر</button>
-                <button type="button" onclick="setQuickNextServiceDate(90)" class="px-2 py-1 rounded-lg bg-white border border-amber-300 text-[11px] font-extrabold text-amber-900 hover:bg-amber-100">بعد 3 أشهر</button>
-                <button type="button" onclick="setQuickNextServiceDate(180)" class="px-2 py-1 rounded-lg bg-white border border-amber-300 text-[11px] font-extrabold text-amber-900 hover:bg-amber-100">بعد 6 أشهر</button>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div>
-                <label class="block text-xs font-extrabold mb-1">تاريخ الصيانة القادمة</label>
-                <input id="rec-next-service-date" type="date" value="${defaultNextServiceDate}" class="sks-input bg-white font-black" dir="ltr" />
-              </div>
-              <div>
-                <label class="block text-xs font-extrabold mb-1">عداد الصيانة القادمة (كم)</label>
-                <input id="rec-next-service-km" type="number" step="any" value="45000" class="sks-input bg-white font-black text-[#0066ff]" dir="ltr" />
-              </div>
-              <div>
-                <label class="block text-xs font-extrabold mb-1">نوع الصيانة القادمة</label>
-                <input id="rec-next-service-note" type="text" value="تبديل دهن وفلتر وفحص دوري" placeholder="مثال: تبديل دهن المحرك..." class="sks-input bg-white text-xs font-bold" />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-extrabold mb-1">الخدمة أو الملاحظات المطلوبة *</label>
-            <textarea id="rec-complaint" required rows="2" placeholder="اكتب الخدمة المطلوبة باختصار..." class="sks-input"></textarea>
-          </div>
-
-          <!-- حقل كتابة العقود المرورية -->
-          <div class="sks-subcard p-3.5 space-y-2 border border-blue-200 bg-blue-50/40">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <label class="block text-xs font-black text-[#0f172a]">📄 حقل كتابة العقود المرورية (رقم وتفاصيل العقد المروري):</label>
-              <button type="button" onclick="fillDefaultTrafficContractTemplate('rec-traffic-contract')" class="text-[11px] font-black text-[#0066ff] hover:underline">
-                + إدراج صيغة عقد مروري جاهزة
-              </button>
-            </div>
-            <textarea id="rec-traffic-contract" rows="3" placeholder="اكتب رقم وتفاصيل وبنود العقد المروري هنا (اختياري)..." class="sks-input bg-white text-xs font-bold leading-relaxed"></textarea>
-          </div>
-
-          <div class="space-y-3">
-            <label class="block text-xs font-extrabold">اختر الخدمات السريعة (يمكنك تعديل السعر مباشرة):</label>
-            <div class="grid grid-cols-1 gap-2">
+          <!-- 3. Ultra-Simple Service Chips (اضغط لاختيار الخدمة) -->
+          <div class="space-y-2">
+            <div class="text-xs font-black text-slate-600">🔧 اختر الخدمة المطلوبة:</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
               ${AppState.db.serviceCatalog.map((srv, idx) => `
-                <div class="sks-subcard p-3 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
-                  <label class="flex items-center gap-2.5 cursor-pointer flex-1">
-                    <input type="checkbox" name="rec-services" value="${srv.id}" ${idx === 0 ? 'checked' : ''} class="accent-blue-600 w-4 h-4 shrink-0" />
-                    <span class="text-xs font-extrabold">${srv.name}</span>
-                  </label>
-                  <div class="flex items-center gap-1.5 shrink-0">
-                    <input
-                      type="number"
-                      id="rec-srv-price-${srv.id}"
-                      value="${srv.price}"
-                      step="any"
-                      onchange="updateCatalogServicePrice('${srv.id}', this.value)"
-                      class="sks-input w-28 py-1 px-2.5 text-xs font-black text-[#0066ff] text-center"
-                    />
-                    <span class="text-xs font-bold text-slate-500">${SKS_BRAND.currency}</span>
+                <div id="rec-srv-chip-${srv.id}" onclick="toggleRecServiceChip('${srv.id}')" class="px-3 py-2 rounded-xl border-2 text-xs font-black transition cursor-pointer flex items-center justify-between gap-2 ${idx === 0 ? 'border-[#0066ff] bg-blue-50 text-[#0066ff]' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'}">
+                  <div class="flex items-center gap-1.5 min-w-0">
+                    <input id="rec-srv-cb-${srv.id}" type="checkbox" name="rec-services" value="${srv.id}" ${idx === 0 ? 'checked' : ''} onclick="event.stopPropagation(); toggleRecServiceChip('${srv.id}')" class="hidden" />
+                    <span class="truncate">${srv.name}</span>
                   </div>
+                  <input
+                    type="number"
+                    id="rec-srv-price-${srv.id}"
+                    value="${srv.price}"
+                    step="any"
+                    onclick="event.stopPropagation()"
+                    oninput="updateReceptionTotalPreview()"
+                    onchange="updateCatalogServicePrice('${srv.id}', this.value); updateReceptionTotalPreview();"
+                    class="w-20 py-0.5 px-1.5 rounded-lg border border-slate-200 bg-white text-[11px] font-black text-center text-[#0066ff] shrink-0"
+                  />
                 </div>
               `).join('')}
             </div>
 
-            <!-- خيار تحديد نوع العملية يدوياً مع تحديد السعر -->
-            <div class="sks-subcard p-3.5 border border-dashed border-[#0066ff]/50 space-y-2.5">
-              <div class="text-xs font-black text-[#0066ff]">تحديد نوع عملية مخصصة مع السعر:</div>
-              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
-                <div class="sm:col-span-6">
-                  <input id="rec-custom-op-name" type="text" placeholder="اكتب نوع العملية (مثال: تبديل راديتر / برمجة...)" class="sks-input py-2 text-xs" />
+            <!-- Compact Custom Service + Price -->
+            <div class="grid grid-cols-12 gap-2">
+              <input id="rec-custom-op-name" type="text" oninput="updateReceptionTotalPreview()" placeholder="+ خدمة أخرى (اختياري)..." class="col-span-8 sks-input py-2 text-xs font-bold" />
+              <input id="rec-custom-op-price" type="number" step="any" oninput="updateReceptionTotalPreview()" placeholder="السعر" class="col-span-4 sks-input py-2 text-xs font-black text-[#0066ff] text-center" />
+            </div>
+            <input id="rec-complaint" type="hidden" value="" />
+          </div>
+
+          <!-- SINGLE Clean Optional Drawer (كل الإضافات في مكان واحد مطوي!) -->
+          <details ontoggle="if(this.open) setTimeout(initSignaturePad, 40)" class="rounded-2xl border border-slate-200 bg-slate-50/70 overflow-hidden">
+            <summary class="px-4 py-3 text-xs font-black text-slate-700 cursor-pointer select-none flex items-center justify-between hover:bg-slate-100 transition">
+              <span>➕ خيارات إضافية (مخطط البدي • الصور • العقد • التوقيع)</span>
+              <span class="text-[#0066ff]">▼</span>
+            </summary>
+            <div class="p-3.5 border-t bg-white space-y-4">
+              <div id="car-body-inspector-wrapper">
+                ${renderCarBodyInspectorSection()}
+              </div>
+
+              <div id="reception-attachments-wrapper">
+                ${renderAttachmentsManagerCard('reception', '', receptionAttachments, VEHICLE_PHOTO_SLOTS)}
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <div>
+                  <label class="block text-[11px] font-extrabold mb-1">وقت الاستلام</label>
+                  <input id="rec-received-at" type="datetime-local" value="${autoNow}" class="sks-input text-xs font-bold" dir="ltr" />
                 </div>
-                <div class="sm:col-span-3">
-                  <input id="rec-custom-op-price" type="number" step="any" placeholder="السعر (د.ع)" class="sks-input py-2 text-xs font-black text-[#0066ff]" />
+                <div>
+                  <label class="block text-[11px] font-extrabold mb-1">موعد التسليم</label>
+                  <input id="rec-delivery-at" type="datetime-local" value="${defaultDelivery}" class="sks-input text-xs font-bold" dir="ltr" />
                 </div>
-                <div class="sm:col-span-3">
-                  <button type="button" onclick="addCustomOpToCatalogFromReception()" class="w-full sks-light-btn py-2 px-3 text-xs font-extrabold">
-                    + إضافة للقائمة
-                  </button>
+                <div>
+                  <label class="block text-[11px] font-extrabold mb-1">العداد (كم)</label>
+                  <input id="rec-mileage" type="number" step="any" value="0" class="sks-input text-xs font-bold" />
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- حقل توقيع الزبون في الأسفل -->
-          <div class="sks-subcard p-4 space-y-3 border border-slate-300">
-            <div class="flex items-center justify-between">
-              <label class="text-xs font-black text-[#0f172a]">✍️ توقيع الزبون بالموافقة والاستلام (في الأسفل):</label>
-              <button type="button" onclick="clearSignaturePad()" class="text-xs font-bold text-rose-600 hover:underline">مسح التوقيع</button>
-            </div>
-            <div class="bg-white border-2 border-dashed border-slate-300 rounded-xl overflow-hidden">
-              <canvas id="customer-signature-canvas" width="600" height="130" class="w-full h-32 cursor-crosshair touch-none"></canvas>
-            </div>
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
-              <span class="text-slate-500 font-semibold">وقّع بإصبعك أو بالماوس داخل المربع أعلاه، أو اكتب الاسم للتأكيد:</span>
-              <input id="rec-signature-text" type="text" placeholder="اسم وتوقيع الزبون" class="sks-input sm:w-64 py-1.5 text-xs font-extrabold" />
-            </div>
-          </div>
+              <div class="space-y-1">
+                <div class="flex items-center justify-between">
+                  <label class="text-xs font-extrabold">📄 العقد المروري</label>
+                  <button type="button" onclick="fillDefaultTrafficContractTemplate('rec-traffic-contract')" class="text-[11px] font-black text-[#0066ff] hover:underline">+ صيغة جاهزة</button>
+                </div>
+                <textarea id="rec-traffic-contract" rows="2" placeholder="رقم وتفاصيل العقد المروري..." class="sks-input text-xs"></textarea>
+              </div>
 
-          <div class="pt-2 flex flex-wrap gap-3">
-            <button type="submit" class="flex-1 sks-electric-btn py-3 text-sm">حفظ واستلام السيارة</button>
-            <button type="button" onclick="printCurrentReceptionDiagram()" class="sks-navy-btn px-5 py-3 text-sm">🖨️ طباعة مخطط السيارة مع التفاصيل</button>
-            <button type="button" onclick="switchTab('dashboard')" class="sks-light-btn px-5 py-3 text-sm">إلغاء</button>
-          </div>
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <label class="text-xs font-extrabold">✍️ توقيع الزبون</label>
+                  <button type="button" onclick="clearSignaturePad()" class="text-xs font-bold text-rose-600">مسح</button>
+                </div>
+                <div class="bg-white border-2 border-dashed border-slate-300 rounded-xl overflow-hidden">
+                  <canvas id="customer-signature-canvas" width="600" height="110" class="w-full h-24 cursor-crosshair touch-none"></canvas>
+                </div>
+                <input id="rec-signature-text" type="text" value="${selectedContact?.name || ''}" placeholder="اسم وتوقيع الزبون" class="sks-input py-1.5 text-xs font-bold" />
+              </div>
+
+              <button type="button" onclick="printCurrentReceptionDiagram()" class="w-full sks-navy-btn py-2.5 text-xs">🖨️ طباعة الاستمارة والمخطط</button>
+            </div>
+          </details>
+
+          <button id="rec-submit-btn" type="submit" class="w-full sks-electric-btn py-3.5 text-sm shadow-lg">
+            ${firstPrice > 0 ? `✅ حفظ واستلام السيارة — ${formatCurrency(firstPrice)}` : '✅ حفظ واستلام السيارة'}
+          </button>
         </form>
       </div>
     </div>
@@ -5938,13 +4713,9 @@ function submitNewReceptionJob(e) {
   const customerPhone = contact.phone || document.getElementById('rec-customer-phone')?.value.trim() || '';
   const vehicleTitle = document.getElementById('rec-vehicle-title').value.trim();
   const plateNumber = document.getElementById('rec-plate-number').value.trim();
-  const mileageIn = Number(document.getElementById('rec-mileage').value) || 0;
-  const complaint = document.getElementById('rec-complaint').value.trim();
+  const mileageIn = Number(document.getElementById('rec-mileage')?.value) || 0;
+  const rawComplaint = document.getElementById('rec-complaint')?.value.trim() || '';
   const trafficContract = document.getElementById('rec-traffic-contract')?.value.trim() || '';
-
-  const nextServiceDate = document.getElementById('rec-next-service-date')?.value || '';
-  const nextServiceKm = Number(document.getElementById('rec-next-service-km')?.value) || (mileageIn + 5000);
-  const nextServiceNote = document.getElementById('rec-next-service-note')?.value.trim() || 'تبديل دهن وفلتر وفحص دوري';
   const bodyDamages = JSON.parse(JSON.stringify(receptionBodyDamages || []));
 
   const receivedAt = document.getElementById('rec-received-at')?.value || getLocalDateTimeValue(0);
@@ -5968,6 +4739,7 @@ function submitNewReceptionJob(e) {
   if (customOpName) {
     services.push({ name: customOpName, price: customOpPrice });
   }
+  const complaint = rawComplaint || services.map(s => s.name).join(' + ') || 'خدمة وصيانة';
 
   const newJobId = 'JC-' + Date.now().toString().slice(-6);
   const nowStr = formatDateTimeDisplay(receivedAt);
@@ -6007,9 +4779,6 @@ function submitNewReceptionJob(e) {
     customerName,
     customerPhone,
     mileageIn,
-    nextServiceDate,
-    nextServiceKm,
-    nextServiceNote,
     vehicleBodyType: selectedVehicleBodyType,
     bodyDamages,
     attachments: JSON.parse(JSON.stringify(receptionAttachments || [])),
@@ -6070,10 +4839,7 @@ function submitNewReceptionJob(e) {
     make: vehicleTitle,
     model: '',
     year: 2024,
-    mileage: mileageIn,
-    nextServiceDate,
-    nextServiceKm,
-    nextServiceNote
+    mileage: mileageIn
   });
 
   receptionBodyDamages = [];
@@ -6174,7 +4940,7 @@ function openJobDetailsModal(jobId) {
         <textarea id="modal-traffic-contract" rows="2" placeholder="اكتب رقم وتفاصيل العقد المروري هنا..." class="sks-input bg-white text-xs font-bold">${job.trafficContract || ''}</textarea>
       </div>
 
-      <!-- مخطط فحص البدي وموعد الصيانة القادمة -->
+      <!-- مخطط فحص البدي -->
       <div class="sks-subcard p-3.5 space-y-3 border border-slate-200">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div class="text-xs font-black text-[#0f172a]">
@@ -6184,14 +4950,6 @@ function openJobDetailsModal(jobId) {
             <button type="button" onclick="printCarBodyDiagramReport('${job.id}')" class="sks-electric-btn px-3 py-1 text-[11px]">
               🖨️ طباعة مخطط السيارة مع التفاصيل
             </button>
-            ${(job.nextServiceDate || job.nextServiceKm) ? `
-              <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-lg">
-                🔔 الصيانة القادمة: ${job.nextServiceDate || ''} (${job.nextServiceKm ? Number(job.nextServiceKm).toLocaleString() + ' كم' : ''})
-              </span>
-              <button type="button" onclick="sendMaintenanceReminderWhatsApp('${job.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-lg">
-                💬 تذكير واتساب
-              </button>
-            ` : ''}
           </div>
         </div>
         <div class="bg-white p-2 rounded-xl border border-slate-200">
@@ -6402,233 +5160,125 @@ function renderAccountingView() {
   const nowLocal = getLocalDateTimeValue(0);
 
   return `
-    <div class="space-y-5">
-      <!-- Top Summary Row -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="sks-card p-4 border-r-4 border-r-[#0066ff]">
-          <div class="text-xs font-bold text-slate-500">إجمالي رصيد القاصات</div>
-          <div class="text-xl font-black text-[#0066ff] mt-1">${formatCurrency(grandTotalBalance)}</div>
-        </div>
-        <div class="sks-card p-4 border-r-4 border-r-emerald-500">
-          <div class="text-xs font-bold text-slate-500">إجمالي القبض (الوارد)</div>
-          <div class="text-xl font-black text-emerald-600 mt-1">${formatCurrency(grandTotalIn)}</div>
-        </div>
-        <div class="sks-card p-4 border-r-4 border-r-amber-500">
-          <div class="text-xs font-bold text-slate-500">إجمالي الدفع (التسديدات)</div>
-          <div class="text-xl font-black text-amber-600 mt-1">${formatCurrency(grandTotalPayment)}</div>
-        </div>
-        <div class="sks-card p-4 border-r-4 border-r-rose-500">
-          <div class="text-xs font-bold text-slate-500">إجمالي المصاريف</div>
-          <div class="text-xl font-black text-rose-600 mt-1">${formatCurrency(grandTotalExpense)}</div>
-        </div>
-      </div>
-
-      <!-- Safes (القاصات) Section -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+    <div class="max-w-4xl mx-auto space-y-4">
+      <!-- Ultra-Clean Compact Balance & Safes Card -->
+      <div class="sks-card p-4 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h2 class="text-base font-black">🏦 القاصات والأرصدة النقدية</h2>
-            <p class="text-xs text-slate-500 font-bold">متابعة رصيد كل قاصة بشكل مستقل ومباشر</p>
+            <div class="text-xs font-bold text-slate-500">💰 إجمالي رصيد القاصات</div>
+            <div class="text-2xl font-black text-[#0066ff]">${formatCurrency(grandTotalBalance)}</div>
           </div>
-          <div class="flex items-center gap-2">
-            <button type="button" onclick="openSafeTransferModal()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-extrabold">
-              🔄 تحويل بين القاصات
-            </button>
-            <button type="button" onclick="openAddSafeModal()" class="sks-navy-btn px-3 py-1.5 text-xs">
-              + إضافة قاصة جديدة
-            </button>
+          <div class="flex items-center gap-1.5">
+            <button type="button" onclick="openSafeTransferModal()" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-extrabold">🔄 تحويل</button>
+            <button type="button" onclick="openAddSafeModal()" class="sks-navy-btn px-2.5 py-1.5 text-xs">+ قاصة</button>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+        <div class="flex flex-wrap gap-2">
           ${safes.map(sf => {
             const st = calcSafeStats(sf.id);
+            const active = accFilterSafe === sf.id;
             return `
-              <div class="sks-subcard p-4 flex flex-col justify-between gap-3 border-2 ${accFilterSafe === sf.id ? 'border-[#0066ff]' : 'border-transparent'}">
-                <div class="flex items-start justify-between gap-2">
-                  <div>
-                    <div class="text-sm font-black">${sf.name}</div>
-                    <div class="text-xl font-black text-[#0066ff] mt-1">${formatCurrency(st.balance)}</div>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <button type="button" onclick="filterBySafe('${sf.id}')" class="px-2 py-1 rounded-lg bg-sky-500/10 text-[#0066ff] text-[11px] font-extrabold hover:bg-sky-500 hover:text-white transition">
-                      كشف القاصة
-                    </button>
-                    ${safes.length > 1 ? `
-                      <button type="button" onclick="deleteSafeById('${sf.id}')" class="px-1.5 py-1 rounded-lg text-rose-500 hover:bg-rose-50 text-xs font-black" title="حذف القاصة">✕</button>
-                    ` : ''}
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200/70 text-[11px] font-bold">
-                  <div class="text-emerald-600">وارد: ${formatCurrency(st.totalIn)}</div>
-                  <div class="text-rose-600">صادر ومصاريف: ${formatCurrency(st.totalOut)}</div>
-                </div>
+              <div onclick="filterBySafe('${active ? 'all' : sf.id}')" class="cursor-pointer px-3 py-2 rounded-xl border-2 text-xs font-black flex items-center gap-2 transition ${active ? 'border-[#0066ff] bg-blue-50 text-[#0066ff]' : 'border-slate-200 bg-slate-50 text-slate-800 hover:border-slate-300'}">
+                <span>🏦 ${sf.name}:</span>
+                <span class="text-[#0066ff]">${formatCurrency(st.balance)}</span>
+                ${safes.length > 1 ? `<button type="button" onclick="event.stopPropagation(); deleteSafeById('${sf.id}')" class="text-rose-500 hover:text-rose-700 mr-1" title="حذف القاصة">✕</button>` : ''}
               </div>
             `;
           }).join('')}
         </div>
       </div>
 
-      <!-- Simple Fast Form: Record Receipt / Payment / Expense -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="border-b pb-3 flex flex-wrap items-center justify-between gap-2">
-          <h3 class="text-base font-black">⚡ تسجيل حركة مالية سريعة (قبض / دفع / مصاريف)</h3>
-          <div class="flex items-center gap-1.5">
-            <button type="button" onclick="setAccTxType('receipt')" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition ${accSelectedType === 'receipt' ? 'bg-emerald-600 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-              📥 سند قبض
-            </button>
-            <button type="button" onclick="setAccTxType('payment')" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition ${accSelectedType === 'payment' ? 'bg-amber-600 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-              📤 سند دفع
-            </button>
-            <button type="button" onclick="setAccTxType('expense')" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition ${accSelectedType === 'expense' ? 'bg-rose-600 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-              🧾 تسجيل مصروف
-            </button>
-          </div>
+      <!-- Ultra-Simple 3-Step Fast Movement Form (قبض / دفع / مصروف) -->
+      <div class="sks-card p-4 space-y-3.5">
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" onclick="setAccTxType('receipt')" class="py-2.5 rounded-xl text-xs font-black transition ${accSelectedType === 'receipt' ? 'bg-emerald-600 text-white shadow' : 'bg-slate-100 text-slate-700'}">
+            📥 قبض
+          </button>
+          <button type="button" onclick="setAccTxType('payment')" class="py-2.5 rounded-xl text-xs font-black transition ${accSelectedType === 'payment' ? 'bg-amber-500 text-white shadow' : 'bg-slate-100 text-slate-700'}">
+            📤 دفع
+          </button>
+          <button type="button" onclick="setAccTxType('expense')" class="py-2.5 rounded-xl text-xs font-black transition ${accSelectedType === 'expense' ? 'bg-rose-600 text-white shadow' : 'bg-slate-100 text-slate-700'}">
+            🧾 مصروف
+          </button>
         </div>
 
-        <form onsubmit="submitAccountingTx(event)" class="space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-            <div>
-              <label class="block text-xs font-extrabold mb-1.5">القاصة *</label>
-              <select id="acc-tx-safe" required class="sks-input font-bold">
-                ${safes.map(sf => `<option value="${sf.id}">${sf.name}</option>`).join('')}
-              </select>
-            </div>
+        <form onsubmit="submitAccountingTx(event)" class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <input id="acc-tx-amount" type="number" step="any" min="0" required placeholder="💵 المبلغ (${SKS_BRAND.currency}) *" class="sks-input font-black text-center text-base text-[#0066ff]" />
 
-            <div>
-              <label class="block text-xs font-extrabold mb-1.5">المبلغ (${SKS_BRAND.currency}) *</label>
-              <input id="acc-tx-amount" type="number" step="any" min="0" required placeholder="مثال: 50000" class="sks-input font-black text-center text-[#0066ff]" />
-            </div>
-
-            <div>
-              <div class="flex items-center justify-between mb-1.5">
-                <label class="text-xs font-extrabold">
-                  ${accSelectedType === 'receipt' ? 'المستلم منه (جهات الاتصال) *' : accSelectedType === 'payment' ? 'المدفوع له (جهات الاتصال) *' : 'الجهة / الاسم (جهات الاتصال) *'}
-                </label>
-                <button type="button" onclick="openQuickAddContactModal('accounting')" class="text-[11px] font-black text-[#0066ff] hover:underline">
-                  + إضافة جهة اتصال
-                </button>
-              </div>
-              <select id="acc-tx-party" required class="sks-input font-extrabold">
-                <option value="">-- اختر الاسم من جهات الاتصال --</option>
+            <div class="flex gap-1.5">
+              <select id="acc-tx-party" required class="sks-input font-extrabold text-xs flex-1">
+                <option value="">👤 اختر الاسم / الجهة *</option>
                 ${(AppState.db.customers || []).map(c => `
                   <option value="${c.name}" ${preselectedContactId === c.id ? 'selected' : ''}>
-                    ${c.name} ${c.phone ? `(${c.phone})` : ''} — ${c.type || 'زبون'}
+                    ${c.name}
                   </option>
                 `).join('')}
               </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold mb-1.5">التاريخ والوقت</label>
-              <input id="acc-tx-date" type="datetime-local" value="${nowLocal}" class="sks-input font-bold" dir="ltr" />
+              <button type="button" onclick="openQuickAddContactModal('accounting')" class="px-3 rounded-xl bg-blue-50 text-[#0066ff] font-black text-xs shrink-0">+</button>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
-            <div class="sm:col-span-9">
-              <label class="block text-xs font-extrabold mb-1.5">البيان / التفاصيل</label>
-              <input id="acc-tx-desc" type="text" placeholder="اكتب تفاصيل العملية أو اختر من الأزرار السريعة أدناه..." class="sks-input" />
-            </div>
-            <div class="sm:col-span-3">
-              <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-white font-black text-xs shadow transition ${
-                accSelectedType === 'receipt' ? 'bg-emerald-600 hover:bg-emerald-500' :
-                accSelectedType === 'payment' ? 'bg-amber-600 hover:bg-amber-500' :
-                'bg-rose-600 hover:bg-rose-500'
-              }">
-                حفظ ${ACC_TYPE_META[accSelectedType].label}
-              </button>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <input id="acc-tx-desc" type="text" placeholder="📝 الملاحظة / البيان (اختياري)..." class="sks-input text-xs font-bold" />
+            <div class="grid grid-cols-2 gap-2">
+              <select id="acc-tx-safe" required class="sks-input text-xs font-bold">
+                ${safes.map(sf => `<option value="${sf.id}">${sf.name}</option>`).join('')}
+              </select>
+              <input id="acc-tx-date" type="datetime-local" value="${nowLocal}" class="sks-input text-[11px] font-bold" dir="ltr" />
             </div>
           </div>
 
-          <!-- Quick Preset Chips -->
-          <div class="flex flex-wrap items-center gap-1.5 pt-1">
-            <span class="text-[11px] font-bold text-slate-400 ml-1">اختصارات سريعة:</span>
-            ${(accSelectedType === 'receipt'
-              ? ['قبض أجور صيانة', 'دفعة حساب زبون', 'إيداع رصيد في القاصة']
-              : accSelectedType === 'payment'
-              ? ['تسديد حساب مجهز قطع غيار', 'تسديد دفعة زيوت وفلاتر', 'سلفة فني / عامل']
-              : ['مشتريات مواد سريعة للورشة', 'أجور ويوميات الفنيين', 'ضيافة ومصاريف يومية', 'كهرباء ومولدة وإنترنت', 'إيجار الورشة']
-            ).map(preset => `
-              <button type="button" onclick="fillAccPreset('${preset}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-sky-500/15 text-slate-600 hover:text-[#0066ff] text-[11px] font-bold transition">
-                + ${preset}
-              </button>
-            `).join('')}
-          </div>
+          <button type="submit" class="w-full py-3 rounded-xl text-white font-black text-sm shadow transition ${
+            accSelectedType === 'receipt' ? 'bg-emerald-600 hover:bg-emerald-500' :
+            accSelectedType === 'payment' ? 'bg-amber-500 hover:bg-amber-600' :
+            'bg-rose-600 hover:bg-rose-500'
+          }">
+            ✅ حفظ ${ACC_TYPE_META[accSelectedType].label}
+          </button>
         </form>
       </div>
 
-      <!-- Transactions Ledger Table -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <h3 class="text-base font-black">📋 كشف حركات القبض والدفع والمصاريف (${filteredTxs.length})</h3>
-
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" onclick="exportTransactionsToExcel()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
-              📊 تصدير إلى Excel
-            </button>
-            <select onchange="filterBySafe(this.value)" class="sks-input w-44 py-1.5 text-xs font-bold">
-              <option value="all" ${accFilterSafe === 'all' ? 'selected' : ''}>كل القاصات</option>
-              ${safes.map(sf => `<option value="${sf.id}" ${accFilterSafe === sf.id ? 'selected' : ''}>${sf.name}</option>`).join('')}
+      <!-- Clean Mobile-First Ledger Cards -->
+      <div class="space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h3 class="text-sm font-black">📋 آخر الحركات (${filteredTxs.length})</h3>
+          <div class="flex items-center gap-1.5">
+            <select onchange="filterByAccType(this.value)" class="sks-input w-auto py-1 px-2.5 text-xs font-bold bg-white">
+              <option value="all" ${accFilterType === 'all' ? 'selected' : ''}>الكل</option>
+              <option value="receipt" ${accFilterType === 'receipt' ? 'selected' : ''}>📥 قبض</option>
+              <option value="payment" ${accFilterType === 'payment' ? 'selected' : ''}>📤 دفع</option>
+              <option value="expense" ${accFilterType === 'expense' ? 'selected' : ''}>🧾 مصروف</option>
             </select>
-
-            <select onchange="filterByAccType(this.value)" class="sks-input w-36 py-1.5 text-xs font-bold">
-              <option value="all" ${accFilterType === 'all' ? 'selected' : ''}>كل الحركات</option>
-              <option value="receipt" ${accFilterType === 'receipt' ? 'selected' : ''}>📥 القبض فقط</option>
-              <option value="payment" ${accFilterType === 'payment' ? 'selected' : ''}>📤 الدفع فقط</option>
-              <option value="expense" ${accFilterType === 'expense' ? 'selected' : ''}>🧾 المصاريف فقط</option>
-            </select>
+            <button type="button" onclick="exportTransactionsToExcel()" class="px-2.5 py-1.5 rounded-xl bg-white border border-slate-200 text-emerald-700 text-xs font-black" title="تصدير Excel">📊</button>
           </div>
         </div>
 
-        <div class="sks-table-wrap">
-          <table class="sks-table">
-            <thead>
-              <tr>
-                <th>رقم السند</th>
-                <th>التاريخ</th>
-                <th>نوع الحركة</th>
-                <th>القاصة</th>
-                <th>الجهة / المستفيد</th>
-                <th>البيان والتفاصيل</th>
-                <th>المبلغ</th>
-                <th>إجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${filteredTxs.map(tx => {
-                const meta = ACC_TYPE_META[tx.type] || ACC_TYPE_META.expense;
-                const sfName = safes.find(s => s.id === tx.safeId)?.name || 'القاصة الرئيسية';
-                return `
-                  <tr>
-                    <td class="font-mono font-bold text-xs">${tx.id}</td>
-                    <td class="text-xs text-slate-500" dir="ltr">${tx.date || ''}</td>
-                    <td><span class="sks-badge ${meta.badge}">${meta.short}</span></td>
-                    <td class="font-bold text-xs">${sfName}</td>
-                    <td class="font-bold text-xs">${tx.party || '—'}</td>
-                    <td class="text-xs">${tx.description || ''}</td>
-                    <td class="font-black ${meta.color}" dir="ltr">${meta.sign} ${formatCurrency(tx.amount)}</td>
-                    <td>
-                      <div class="flex items-center gap-1.5">
-                        <button type="button" onclick="printAccountingVoucher('${tx.id}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">
-                          طباعة سند
-                        </button>
-                        <button type="button" onclick="deleteAccountingTx('${tx.id}')" class="px-2 py-1 rounded-lg text-rose-500 hover:bg-rose-50 text-xs font-black" title="حذف الحركة">
-                          ✕
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                `;
-              }).join('') || `
-                <tr>
-                  <td colspan="8" class="text-center py-8 text-slate-400 font-bold">لا توجد حركات مسجلة حالياً</td>
-                </tr>
-              `}
-            </tbody>
-          </table>
-        </div>
+        ${filteredTxs.length === 0 ? `
+          <div class="sks-card p-6 text-center text-xs text-slate-400 font-bold">لا توجد حركات مسجلة حالياً</div>
+        ` : filteredTxs.map(tx => {
+          const meta = ACC_TYPE_META[tx.type] || ACC_TYPE_META.expense;
+          const sfName = safes.find(s => s.id === tx.safeId)?.name || 'القاصة الرئيسية';
+          return `
+            <div class="sks-card p-3.5 flex items-center justify-between gap-3">
+              <div class="min-w-0 space-y-0.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="sks-badge ${meta.badge}">${meta.short}</span>
+                  <span class="font-black text-xs text-[#0f172a]">${tx.party || '—'}</span>
+                  <span class="text-[11px] text-slate-400 font-bold">${sfName}</span>
+                </div>
+                ${tx.description ? `<div class="text-xs text-slate-600 font-bold truncate">${tx.description}</div>` : ''}
+                <div class="text-[10px] text-slate-400 font-bold" dir="ltr">${tx.date || ''} • ${tx.id}</div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <div class="font-black text-sm ${meta.color}" dir="ltr">${meta.sign} ${formatCurrency(tx.amount)}</div>
+                <button type="button" onclick="printAccountingVoucher('${tx.id}')" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs" title="طباعة سند">🖨️</button>
+                <button type="button" onclick="deleteAccountingTx('${tx.id}')" class="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 text-xs font-black" title="حذف">✕</button>
+              </div>
+            </div>
+          `;
+        }).join('')}
       </div>
     </div>
   `;
@@ -6998,13 +5648,11 @@ function getContactMovements(contact) {
       contracts: [],
       invoices: [],
       transactions: [],
-      installmentPlans: [],
       totalReceipts: 0,
       totalPayments: 0,
       totalExpenses: 0,
       totalInvoiced: 0,
       totalRemainingOnJobs: 0,
-      totalInstallmentsRemaining: 0,
       totalCount: 0,
       matchedRefs: []
     };
@@ -7048,11 +5696,6 @@ function getContactMovements(contact) {
     (cRef && tx.description && tx.description.includes(cRef))
   );
 
-  const installmentPlans = (AppState.db.installmentPlans || []).filter(pl =>
-    matchesContact(pl.customerId, pl.customerName, pl.customerPhone, pl.plateNumber)
-  );
-  const totalInstallmentsRemaining = installmentPlans.reduce((sum, pl) => sum + getInstallmentPlanStats(pl).remaining, 0);
-
   const totalReceipts = transactions
     .filter(tx => tx.type === 'receipt')
     .reduce((sum, tx) => sum + (Number(tx.amount) || 0), 0);
@@ -7085,9 +5728,7 @@ function getContactMovements(contact) {
     ...contracts.map(tc => tc.plateNumber),
     ...contracts.map(tc => tc.vin),
     ...invoices.map(inv => inv.id),
-    ...transactions.map(tx => tx.id),
-    ...installmentPlans.map(pl => pl.id),
-    ...installmentPlans.flatMap(pl => (pl.schedule || []).map(it => it.promissoryNo))
+    ...transactions.map(tx => tx.id)
   ].filter(Boolean);
 
   return {
@@ -7095,14 +5736,12 @@ function getContactMovements(contact) {
     contracts,
     invoices,
     transactions,
-    installmentPlans,
     totalReceipts,
     totalPayments,
     totalExpenses,
     totalInvoiced,
     totalRemainingOnJobs,
-    totalInstallmentsRemaining,
-    totalCount: jobs.length + contracts.length + invoices.length + transactions.length + installmentPlans.length,
+    totalCount: jobs.length + contracts.length + invoices.length + transactions.length,
     matchedRefs
   };
 }
@@ -7151,15 +5790,6 @@ function contactMatchesUniversalQuery(contact, rawQuery) {
     }
   }
 
-  for (const pl of (mov.installmentPlans || [])) {
-    if ((pl.id || '').toLowerCase().includes(q)) return { matched: true, reason: `رقم عقد الأقساط: ${pl.id}` };
-    if ((pl.guarantorName || '').toLowerCase().includes(q) || (pl.itemDescription || '').toLowerCase().includes(q)) {
-      return { matched: true, reason: `عقد أقساط (${pl.id})` };
-    }
-    const matchedKmb = (pl.schedule || []).find(it => (it.promissoryNo || '').toLowerCase().includes(q));
-    if (matchedKmb) return { matched: true, reason: `رقم الكمبيالة: ${matchedKmb.promissoryNo}` };
-  }
-
   return { matched: false, reason: '' };
 }
 
@@ -7187,16 +5817,12 @@ function renderContactMovementsDetailCard(contact, matchReason = '') {
             <span>⭐ نقاط الولاء: <strong class="text-amber-700">${loy.points} نقطة</strong> ${loy.autoDiscountPct > 0 ? `(خصم تلقائي ${loy.autoDiscountPct}%)` : ''}</span>
           </div>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <button type="button" onclick="printCustomerVipCard('${contact.id}')" class="px-3.5 py-2 rounded-xl bg-[#070b14] text-amber-300 hover:bg-slate-800 text-xs font-black shadow">
-            💳 طباعة بطاقة VIP
-          </button>
-          <button type="button" onclick="printContactMovementsStatement('${contact.id}')" class="sks-electric-btn px-3.5 py-2 text-xs">
-            🖨️ طباعة كشف حركات الزبون
-          </button>
-          <button type="button" onclick="clearSelectedContactStatement()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-black">
-            إغلاق الكشف ✕
-          </button>
+        <div class="flex flex-wrap items-center gap-1.5">
+          <button type="button" onclick="startBillingForContact('${contact.id}')" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white text-xs font-black transition">+ فاتورة</button>
+          <button type="button" onclick="startAccountingForContact('${contact.id}')" class="px-2.5 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white text-xs font-black transition">+ قبض/دفع</button>
+          <button type="button" onclick="printCustomerVipCard('${contact.id}')" class="px-3 py-1.5 rounded-xl bg-[#070b14] text-amber-300 text-xs font-black">💳 VIP</button>
+          <button type="button" onclick="printContactMovementsStatement('${contact.id}')" class="sks-electric-btn px-3 py-1.5 text-xs">🖨️ طباعة</button>
+          <button type="button" onclick="clearSelectedContactStatement()" class="px-2.5 py-1.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-black">✕</button>
         </div>
       </div>
 
@@ -7399,48 +6025,6 @@ function renderContactMovementsDetailCard(contact, matchReason = '') {
           </div>
         ` : `<div class="text-xs text-slate-400 font-bold bg-slate-50 p-3 rounded-xl">لا توجد فواتير مصدرة لهذا الزبون</div>`}
       </div>
-
-      <!-- 5. Installment Plans & Promissory Notes for this Contact -->
-      <div class="space-y-2">
-        <h4 class="text-xs font-black text-amber-800 flex items-center gap-1.5">
-          <span>📅 خامساً: عقود الأقساط الشهرية والكمبيالات (${(mov.installmentPlans || []).length})</span>
-        </h4>
-        ${(mov.installmentPlans || []).length > 0 ? `
-          <div class="sks-table-wrap">
-            <table class="sks-table">
-              <thead>
-                <tr>
-                  <th>رقم العقد</th>
-                  <th>الموضوع والمركبة</th>
-                  <th>الإجمالي</th>
-                  <th>المدفوع</th>
-                  <th>المتبقي</th>
-                  <th>الأقساط</th>
-                  <th>طباعة</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${(mov.installmentPlans || []).map(pl => {
-                  const st = getInstallmentPlanStats(pl);
-                  return `
-                    <tr>
-                      <td class="font-black text-[#0066ff]" dir="ltr">${pl.id}</td>
-                      <td class="text-xs font-bold">${pl.itemDescription} ${pl.vehicleTitle ? `(${pl.vehicleTitle})` : ''}</td>
-                      <td class="font-black text-xs">${formatCurrency(st.totalAmount)}</td>
-                      <td class="font-black text-xs text-emerald-600">${formatCurrency(st.totalPaid)}</td>
-                      <td class="font-black text-xs text-amber-600">${formatCurrency(st.remaining)}</td>
-                      <td class="text-xs font-black">${st.paidCount} / ${st.totalCount}</td>
-                      <td>
-                        <button type="button" onclick="printInstallmentPlanSchedule('${pl.id}')" class="sks-electric-btn px-2.5 py-1 text-[11px]">طباعة الجدول</button>
-                      </td>
-                    </tr>
-                  `;
-                }).join('')}
-              </tbody>
-            </table>
-          </div>
-        ` : `<div class="text-xs text-slate-400 font-bold bg-slate-50 p-3 rounded-xl">لا توجد عقود أقساط أو كمبيالات مسجلة لهذا الزبون</div>`}
-      </div>
     </div>
   `;
 }
@@ -7462,218 +6046,78 @@ function renderCustomersView() {
   const readyFreeCount = contacts.filter(c => getCustomerLoyaltyInfo(c).canRedeemFree).length;
 
   return `
-    <div class="space-y-5">
-      <!-- VIP & Loyalty Program Control Bar -->
-      <div class="bg-[#070b14] text-white rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b-4 border-amber-400">
-        <div class="space-y-1">
-          <div class="flex flex-wrap items-center gap-2">
-            <h2 class="text-base md:text-lg font-black text-amber-300">⭐ نظام نقاط الولاء وبطاقة الزبون الـ VIP (خصم تلقائي)</h2>
-            <span class="px-2.5 py-0.5 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-400/40 text-[11px] font-black">👑 ${vipCount} عميل VIP</span>
-            ${readyFreeCount > 0 ? `<span class="px-2.5 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[11px] font-black">🎁 ${readyFreeCount} مؤهل لخدمة مجانية</span>` : ''}
-          </div>
-          <p class="text-xs text-slate-300 font-semibold">
-            كل زيارة أو فاتورة تمنح الزبون <strong>+${loyCfg.pointsPerVisit} نقطة</strong> تلقائياً — كل <strong>${loyCfg.freeEveryVisits} زيارات</strong> = الزيارة رقم <strong>${loyCfg.freeEveryVisits + 1} مجاناً</strong> | خصم VIP تلقائي: فضي ${loyCfg.silverDiscountPct}% • ذهبي ${loyCfg.goldDiscountPct}% • ماسي ${loyCfg.diamondDiscountPct}%
-          </p>
-        </div>
-        <button type="button" onclick="openLoyaltySettingsModal()" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-[#070b14] text-xs font-black shadow shrink-0">
-          ⚙️ إعدادات نقاط الولاء والخصم
-        </button>
+    <div class="max-w-4xl mx-auto space-y-4">
+      <!-- Clean Top Search & Quick Add Bar -->
+      <div class="flex flex-wrap items-center gap-2">
+        <input
+          id="contact-universal-search-input"
+          type="text"
+          value="${contactUniversalSearchQuery}"
+          oninput="updateContactUniversalSearch(this.value)"
+          placeholder="🔍 ابحث بالاسم، الهاتف، اللوحة، رقم العقد أو الفاتورة..."
+          class="sks-input py-2.5 px-3.5 text-xs font-bold flex-1 min-w-[200px] bg-white"
+        />
+        ${q ? `<button type="button" onclick="updateContactUniversalSearch('')" class="px-3 py-2.5 rounded-xl bg-rose-100 text-rose-700 text-xs font-black">✕</button>` : ''}
+        <button type="button" onclick="openQuickAddContactModal('customers')" class="sks-electric-btn px-4 py-2.5 text-xs shrink-0">+ زبون جديد</button>
+        <button type="button" onclick="openLoyaltySettingsModal()" class="px-3 py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-black shrink-0" title="إعدادات نقاط الولاء والـ VIP">⭐ VIP</button>
+        <button type="button" onclick="exportContactsToExcel()" class="px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-emerald-700 text-xs font-black shrink-0" title="تصدير Excel">📊</button>
       </div>
 
-      <!-- Universal Reference & Movement Search Box -->
-      <div class="sks-card p-5 space-y-3 border-2 border-[#0066ff]/30 bg-gradient-to-l from-blue-50/60 to-white">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h2 class="text-base font-black text-[#0f172a]">🔍 بحث شامل في جهات الاتصال بأي رفرنس (مرجع) لإظهار حركات الزبون</h2>
-            <p class="text-xs text-slate-600 font-bold">ابحث برقم الهاتف، رقم العقد المروري (MR/TC)، رقم عقد الأقساط (INS)، رقم الكمبيالة (KMB)، رقم الفاتورة (INV)، رقم السند (TRX)، رقم اللوحة، أو الاسم</p>
-          </div>
-          ${q ? `
-            <button type="button" onclick="updateContactUniversalSearch('')" class="px-3 py-1.5 rounded-xl bg-rose-100 text-rose-700 text-xs font-black">
-              مسح البحث ✕
-            </button>
-          ` : ''}
-        </div>
-
-        <div class="relative">
-          <input
-            id="contact-universal-search-input"
-            type="text"
-            value="${contactUniversalSearchQuery}"
-            oninput="updateContactUniversalSearch(this.value)"
-            placeholder="اكتب هنا أي رفرنس: رقم هاتف، رقم عقد مروري، رقم فاتورة، رقم سند قبض/دفع، رقم لوحة، أو اسم..."
-            class="sks-input py-3 px-4 text-sm font-black border-2 border-[#0066ff]/40 focus:border-[#0066ff] bg-white"
-          />
-        </div>
-
-        ${q ? `
-          <div class="text-xs font-extrabold text-[#0066ff]">
-            نتائج البحث عن المرجع "${q}": تم العثور على (${filteredWithReasons.length}) جهة اتصال مطابقة — تظهر أدناه كافة تفاصيل الحركات الخاصة بالزبون:
-          </div>
-        ` : ''}
-      </div>
-
-      <!-- Automatically show full movements for matching contacts when searching by ANY reference, or when a contact statement is selected -->
+      <!-- Automatically show full movements for matching contacts when searching, or when selected -->
       ${q && filteredWithReasons.length > 0 ? `
         <div class="space-y-4">
           ${filteredWithReasons.map(item => renderContactMovementsDetailCard(item.contact, item.match.reason)).join('')}
         </div>
       ` : (selectedContactObj ? renderContactMovementsDetailCard(selectedContactObj) : '')}
 
-      <!-- Add New Contact Card -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="border-b pb-3 flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h2 class="text-base font-black">👤 إضافة جهة اتصال جديدة (زبون / مجهز / جهة صرف)</h2>
-            <p class="text-xs text-slate-500 font-bold">يجب تسجيل الاسم في جهات الاتصال ليظهر في قوائم الفواتير والقبض والدفع والصرف</p>
-          </div>
-          <span class="bg-blue-50 text-[#0066ff] border border-blue-200 px-3 py-1 rounded-xl text-xs font-black">
-            إجمالي جهات الاتصال: ${contacts.length}
-          </span>
-        </div>
+      <!-- Ultra-Clean Customer Cards (بدون جدول مزدحم بـ 7 أزرار!) -->
+      <div class="space-y-2.5">
+        <div class="text-xs font-black text-slate-500">👥 الزبائن وجهات الاتصال (${filteredWithReasons.length})</div>
 
-        <form onsubmit="submitNewContactForm(event)" class="space-y-3.5">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
-            <div>
-              <label class="block text-xs font-extrabold mb-1">الاسم الكامل / اسم الجهة *</label>
-              <input id="cnt-name" type="text" required placeholder="مثال: أستاذ أحمد / شركة..." class="sks-input font-extrabold" />
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">رقم الهاتف *</label>
-              <input id="cnt-phone" type="text" required placeholder="0770XXXXXXX" class="sks-input font-bold" dir="ltr" />
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">رقم المرجع / رقم العقد (اختياري)</label>
-              <input id="cnt-ref" type="text" placeholder="مثال: MR-1025 أو رقم هوية" class="sks-input font-bold text-[#0066ff]" dir="ltr" />
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">تصنيف جهة الاتصال *</label>
-              <select id="cnt-type" class="sks-input font-bold">
-                <option value="زبون">زبون (عميل ورشة)</option>
-                <option value="مجهز">مجهز (مورد قطع ومواد)</option>
-                <option value="فني / موظف">فني / موظف</option>
-                <option value="جهة مصروف">جهة مصروف (كهرباء / إيجار / عامة)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">نوع السيارة (اختياري)</label>
-              <input id="cnt-vehicle" type="text" placeholder="مثال: تويوتا لاندكروزر 2024" class="sks-input" />
-            </div>
-            <div>
-              <label class="block text-xs font-extrabold mb-1">رقم اللوحة (اختياري)</label>
-              <input id="cnt-plate" type="text" placeholder="بغداد أ - 12345" class="sks-input" />
-            </div>
+        ${filteredWithReasons.length === 0 ? `
+          <div class="sks-card p-8 text-center space-y-2">
+            <div class="text-3xl">👥</div>
+            <div class="text-sm font-black text-slate-600">لا توجد نتائج</div>
+            <div class="text-xs text-slate-400 font-bold">اضغط «+ زبون جديد» لإضافة أول زبون</div>
           </div>
+        ` : filteredWithReasons.map(({ contact: c, match }) => {
+          const mov = getContactMovements(c);
+          const loy = getCustomerLoyaltyInfo(c);
+          return `
+            <div class="sks-card p-4 space-y-2.5 ${selectedContactStatementId === c.id ? 'border-2 border-[#0066ff]' : ''}">
+              <div class="flex items-start justify-between gap-2">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <button type="button" onclick="showContactStatement('${c.id}')" class="font-black text-sm text-[#0f172a] hover:text-[#0066ff]">${c.name}</button>
+                    <span class="px-2 py-0.5 rounded-lg text-[10px] font-black ${loy.tier.badgeClass}">${loy.tier.icon} ${loy.tier.label} • ${loy.points} ⭐</span>
+                  </div>
+                  <div class="text-xs text-slate-500 font-bold mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5">
+                    <span dir="ltr">📞 ${c.phone || '—'}</span>
+                    ${c.defaultVehicle ? `<span>🚗 ${c.defaultVehicle} ${c.defaultPlate ? `(${c.defaultPlate})` : ''}</span>` : ''}
+                  </div>
+                  ${match.reason && q ? `<div class="text-[11px] font-black text-amber-700 mt-0.5">🎯 ${match.reason}</div>` : ''}
+                </div>
+                <button type="button" onclick="deleteContactById('${c.id}')" class="text-slate-400 hover:text-rose-600 text-xs font-black p-1" title="حذف">✕</button>
+              </div>
 
-          <div class="flex justify-end">
-            <button type="submit" class="sks-electric-btn px-6 py-2.5 text-xs">
-              + حفظ وإضافة إلى جهات الاتصال
-            </button>
-          </div>
-        </form>
-      </div>
+              <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
+                <div class="flex items-center gap-1.5 text-[11px] font-bold">
+                  <span class="text-amber-500 tracking-wider">${loy.starsVisual}</span>
+                  ${loy.canRedeemFree
+                    ? `<button type="button" onclick="adjustCustomerPointsQuick('${c.id}', -${loy.freeEvery})" class="px-2 py-0.5 rounded-lg bg-emerald-600 text-white font-black">🎁 استبدال</button>`
+                    : `<button type="button" onclick="adjustCustomerPointsQuick('${c.id}', 1)" class="px-2 py-0.5 rounded-lg bg-amber-100 text-amber-900 font-black">+1 ⭐</button>`
+                  }
+                </div>
 
-      <!-- Contacts Table -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h3 class="text-base font-black">📒 قائمة جهات الاتصال المسجلة (${filteredWithReasons.length})</h3>
-            <span class="text-xs font-bold text-slate-500">اضغط على «📜 كشف الحركات» لأي زبون لعرض كافة حركاته وعقوده وفواتيره</span>
-          </div>
-          <button type="button" onclick="exportContactsToExcel()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
-            📊 تصدير جهات الاتصال إلى Excel
-          </button>
-        </div>
-        <div class="sks-table-wrap">
-          <table class="sks-table">
-            <thead>
-              <tr>
-                <th>الاسم / الجهة</th>
-                <th>رقم الهاتف</th>
-                <th>نقاط الولاء والـ VIP</th>
-                <th>التصنيف والمرجع</th>
-                <th>السيارة واللوحة المرتبطة</th>
-                <th>عدد الحركات</th>
-                <th>إجراءات وكشف الحركات</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${filteredWithReasons.map(({ contact: c, match }) => {
-                const mov = getContactMovements(c);
-                const loy = getCustomerLoyaltyInfo(c);
-                return `
-                  <tr class="${selectedContactStatementId === c.id ? 'bg-blue-50/70' : ''}">
-                    <td>
-                      <button type="button" onclick="showContactStatement('${c.id}')" class="font-black text-sm text-right hover:text-[#0066ff] hover:underline">
-                        ${c.name}
-                      </button>
-                      ${match.reason && q ? `<div class="text-[11px] font-extrabold text-amber-700">${match.reason}</div>` : ''}
-                    </td>
-                    <td class="font-bold text-xs text-slate-600" dir="ltr">${c.phone || '—'}</td>
-                    <td>
-                      <div class="flex flex-col gap-1">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                          <span class="px-2 py-0.5 rounded-lg text-[11px] font-black ${loy.tier.badgeClass}">
-                            ${loy.tier.icon} ${loy.tier.label}${loy.autoDiscountPct > 0 ? ` (${loy.autoDiscountPct}%)` : ''}
-                          </span>
-                          <span class="text-xs font-black text-amber-600">${loy.points} ⭐</span>
-                        </div>
-                        <div class="flex items-center gap-1.5 text-[10px] font-bold">
-                          <span class="text-amber-500 tracking-wider">${loy.starsVisual}</span>
-                          ${loy.canRedeemFree
-                            ? `<button type="button" onclick="adjustCustomerPointsQuick('${c.id}', -${loy.freeEvery})" class="px-1.5 py-0.5 rounded bg-emerald-600 text-white font-black">🎁 استبدال ${loy.freeEvery}</button>`
-                            : `<span class="text-slate-500">باقي ${loy.visitsRemainingForFree} للمجانية</span>`
-                          }
-                          <button type="button" onclick="adjustCustomerPointsQuick('${c.id}', 1)" class="px-1.5 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-900 font-black" title="إضافة نقطة ولاء">+1</button>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span class="sks-badge bg-sky-100 text-sky-800">${c.type || 'زبون'}</span>
-                      <div class="font-black text-[11px] text-[#0066ff] mt-0.5" dir="ltr">${c.refNumber || mov.contracts[0]?.contractNumber || c.id}</div>
-                    </td>
-                    <td class="text-xs font-bold">
-                      ${c.defaultVehicle ? `${c.defaultVehicle} (${c.defaultPlate || 'بدون لوحة'})` : '—'}
-                    </td>
-                    <td>
-                      <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs font-black">
-                        ${mov.totalCount} حركة
-                      </span>
-                    </td>
-                    <td>
-                      <div class="flex flex-wrap items-center gap-1.5">
-                        <button type="button" onclick="printCustomerVipCard('${c.id}')" class="px-2.5 py-1 rounded-lg bg-[#070b14] hover:bg-slate-800 text-amber-300 text-xs font-black transition shadow-sm">
-                          💳 بطاقة VIP
-                        </button>
-                        <button type="button" onclick="showContactStatement('${c.id}')" class="px-2.5 py-1 rounded-lg bg-[#0066ff] hover:bg-blue-700 text-white text-xs font-extrabold transition shadow-sm">
-                          📜 كشف (${mov.totalCount})
-                        </button>
-                        <button type="button" onclick="startReceptionForContact('${c.id}')" class="px-2.5 py-1 rounded-lg bg-sky-500/10 hover:bg-[#0066ff] text-[#0066ff] hover:text-white text-xs font-extrabold transition">
-                          + استلام
-                        </button>
-                        <button type="button" onclick="startInstallmentForContact('${c.id}')" class="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-600 text-amber-800 hover:text-white text-xs font-extrabold transition">
-                          + أقساط
-                        </button>
-                        <button type="button" onclick="startBillingForContact('${c.id}')" class="px-2.5 py-1 rounded-lg bg-indigo-500/10 hover:bg-indigo-600 text-indigo-700 hover:text-white text-xs font-extrabold transition">
-                          + فاتورة
-                        </button>
-                        <button type="button" onclick="startAccountingForContact('${c.id}')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-600 text-emerald-700 hover:text-white text-xs font-extrabold transition">
-                          + قبض/دفع
-                        </button>
-                        <button type="button" onclick="deleteContactById('${c.id}')" class="px-2 py-1 rounded-lg text-rose-500 hover:bg-rose-50 text-xs font-black" title="حذف جهة الاتصال">
-                          ✕
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                `;
-              }).join('') || `
-                <tr>
-                  <td colspan="7" class="text-center py-8 text-slate-400 font-bold">لا توجد نتائج مطابقة للبحث — جرب البحث برقم آخر أو أضف جهة اتصال جديدة</td>
-                </tr>
-              `}
-            </tbody>
-          </table>
-        </div>
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <button type="button" onclick="showContactStatement('${c.id}')" class="px-3 py-1.5 rounded-xl bg-[#0066ff] text-white text-xs font-black">📜 الحركات (${mov.totalCount})</button>
+                  <button type="button" onclick="printCustomerVipCard('${c.id}')" class="px-2.5 py-1.5 rounded-xl bg-[#070b14] text-amber-300 text-xs font-black">💳 VIP</button>
+                  <button type="button" onclick="startReceptionForContact('${c.id}')" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-black">🚗 استلام</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
       </div>
     </div>
   `;
@@ -7809,34 +6253,6 @@ function printContactMovementsStatement(contactId) {
               </tr>
             `;
           }).join('') || `<tr><td colspan="5" style="text-align:center;">لا توجد حركات مالية</td></tr>`}
-        </tbody>
-      </table>
-      <div style="margin-top: 14px; font-weight: 900; font-size: 11pt;">4. عقود الأقساط والكمبيالات (${(mov.installmentPlans || []).length}):</div>
-      <table class="print-table">
-        <thead>
-          <tr>
-            <th>رقم العقد</th>
-            <th>الموضوع والمركبة</th>
-            <th>الإجمالي</th>
-            <th>المدفوع</th>
-            <th>المتبقي</th>
-            <th>الأقساط المدفوعة</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${(mov.installmentPlans || []).map(pl => {
-            const st = getInstallmentPlanStats(pl);
-            return `
-              <tr>
-                <td>${pl.id}</td>
-                <td>${pl.itemDescription} ${pl.vehicleTitle ? `(${pl.vehicleTitle})` : ''}</td>
-                <td>${formatCurrency(st.totalAmount)}</td>
-                <td>${formatCurrency(st.totalPaid)}</td>
-                <td>${formatCurrency(st.remaining)}</td>
-                <td>${st.paidCount} / ${st.totalCount}</td>
-              </tr>
-            `;
-          }).join('') || `<tr><td colspan="6" style="text-align:center;">لا توجد عقود أقساط</td></tr>`}
         </tbody>
       </table>
     </div>
@@ -7993,20 +6409,16 @@ function renderBillingView() {
 
   return `
     <div class="space-y-5">
-      <!-- Create Direct Invoice for Contact (Cannot type free text customer name, must select from Contacts!) -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+      <!-- Create Direct Invoice for Contact (Collapsible for Ultra-Simple UX) -->
+      <details ${(selectedContact || AppState.db.invoices.length === 0) ? 'open' : ''} class="sks-card overflow-hidden">
+        <summary class="p-4 sm:p-5 cursor-pointer select-none flex items-center justify-between gap-2 hover:bg-slate-50 transition">
           <div>
-            <h2 class="text-base font-black">🧾 إنشاء فاتورة جديدة لزبون (من جهات الاتصال حصراً)</h2>
-            <p class="text-xs text-slate-500 font-bold">لا يمكن إنشاء فاتورة كحقل كتابة إلا بعد اختيار الزبون من قائمة جهات الاتصال</p>
+            <h2 class="text-base font-black">🧾 إصدار فاتورة سريعة جديدة</h2>
+            <p class="text-xs text-slate-500 font-bold">اختر الزبون واكتب المبلغ والخدمة واطبع الفاتورة فوراً</p>
           </div>
-          <div class="flex gap-2">
-            <button type="button" onclick="openQuickAddContactModal('billing')" class="sks-navy-btn px-3 py-1.5 text-xs">
-              + إضافة جهة اتصال جديدة
-            </button>
-          </div>
-        </div>
-
+          <span class="px-3 py-1.5 rounded-xl bg-[#0066ff] text-white text-xs font-black shrink-0">+ فاتورة جديدة</span>
+        </summary>
+        <div class="p-4 sm:p-5 pt-3 border-t space-y-4">
         <form onsubmit="submitDirectContactInvoice(event)" class="space-y-3.5">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div>
@@ -8063,7 +6475,8 @@ function renderBillingView() {
             </div>
           </div>
         </form>
-      </div>
+        </div>
+      </details>
 
       <!-- Existing Invoices Table -->
       <div class="sks-card p-5 space-y-4">
@@ -8360,20 +6773,16 @@ function renderTrafficContractsView() {
 
   return `
     <div class="space-y-5">
-      <!-- Form for writing a new Traffic Contract -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+      <!-- Form for writing a new Traffic Contract (Collapsible for Ultra-Simple UX) -->
+      <details ${contracts.length === 0 ? 'open' : ''} class="sks-card overflow-hidden">
+        <summary class="p-4 sm:p-5 cursor-pointer select-none flex items-center justify-between gap-2 hover:bg-slate-50 transition">
           <div>
             <h2 class="text-base font-black">📄 كتابة عقد مروري جديد</h2>
             <p class="text-xs text-slate-500 font-bold">تنظيم وحفظ وطباعة العقود المرورية الرسمية بشعار SKS Car</p>
           </div>
-          <div class="flex gap-2">
-            <button type="button" onclick="openQuickAddContactModal('contracts')" class="sks-navy-btn px-3 py-1.5 text-xs">
-              + إضافة جهة اتصال جديدة
-            </button>
-          </div>
-        </div>
-
+          <span class="px-3 py-1.5 rounded-xl bg-[#0066ff] text-white text-xs font-black shrink-0">+ عقد جديد</span>
+        </summary>
+        <div class="p-4 sm:p-5 pt-3 border-t space-y-4">
         <form onsubmit="submitTrafficContract(event)" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div>
@@ -8443,7 +6852,8 @@ function renderTrafficContractsView() {
             </button>
           </div>
         </form>
-      </div>
+        </div>
+      </details>
 
       <!-- Saved Traffic Contracts Table -->
       <div class="sks-card p-5 space-y-4">
@@ -8804,10 +7214,10 @@ function renderPrintableCarDiagramDocument(docData) {
         </div>
       </div>
 
-      <!-- تفاصيل السيارة الكاملة وموعد الصيانة القادمة -->
+      <!-- تفاصيل السيارة الكاملة والفحص الفني -->
       <div style="border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 12px 14px; margin-top: 12px; font-size: 10pt; line-height: 1.8;">
         <div style="font-weight: 900; font-size: 11pt; color: #0066ff; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px;">
-          🚗 تفاصيل المركبة والفحص الفني والصيانة الدورية:
+          🚗 تفاصيل المركبة والفحص الفني:
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div><strong>نوع وموديل السيارة:</strong> ${docData.vehicleTitle || '—'}</div>
@@ -8815,9 +7225,7 @@ function renderPrintableCarDiagramDocument(docData) {
           <div><strong>رقم اللوحة المرورية:</strong> ${docData.plateNumber || '—'}</div>
           <div><strong>رقم الشاصي (VIN):</strong> <span dir="ltr">${docData.vin || '—'}</span></div>
           <div><strong>العداد الحالي عند الاستلام:</strong> ${(Number(docData.mileageIn) || 0).toLocaleString()} كم</div>
-          <div><strong>تاريخ الصيانة القادمة:</strong> <span dir="ltr">${docData.nextServiceDate || '—'}</span></div>
-          <div><strong>عداد الصيانة القادمة:</strong> ${docData.nextServiceKm ? Number(docData.nextServiceKm).toLocaleString() + ' كم' : '—'}</div>
-          <div><strong>نوع الصيانة القادمة:</strong> ${docData.nextServiceNote || 'تبديل دهن وفلتر وفحص دوري'}</div>
+          <div><strong>موعد الاستلام:</strong> <span dir="ltr">${formatDateTimeDisplay(docData.receivedAt || docData.createdAt)}</span></div>
         </div>
       </div>
 
@@ -8939,9 +7347,6 @@ function printCurrentReceptionDiagram() {
   const mileageIn = Number(document.getElementById('rec-mileage')?.value) || 0;
   const receivedAt = document.getElementById('rec-received-at')?.value || getLocalDateTimeValue(0);
   const deliveryAt = document.getElementById('rec-delivery-at')?.value || getLocalDateTimeValue(3);
-  const nextServiceDate = document.getElementById('rec-next-service-date')?.value || '';
-  const nextServiceKm = Number(document.getElementById('rec-next-service-km')?.value) || 0;
-  const nextServiceNote = document.getElementById('rec-next-service-note')?.value.trim() || 'تبديل دهن وفلتر وفحص دوري';
   const complaint = document.getElementById('rec-complaint')?.value.trim() || '';
   const trafficContract = document.getElementById('rec-traffic-contract')?.value.trim() || '';
   const signatureText = document.getElementById('rec-signature-text')?.value.trim() || customerName;
@@ -8976,9 +7381,6 @@ function printCurrentReceptionDiagram() {
     vehicleTitle,
     plateNumber,
     mileageIn,
-    nextServiceDate,
-    nextServiceKm,
-    nextServiceNote,
     complaint,
     trafficContract,
     vehicleBodyType: selectedVehicleBodyType,
