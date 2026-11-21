@@ -1,0 +1,20 @@
+{
+  "name": "sks-car",
+  "productName": "SKS Car",
+  "version": "2.5.0",
+  "description": "نظام SKS Car لإدارة خدمات السيارات - Automotive Workshop & Service Management ERP",
+  "main": "index.html",
+  "scripts": {
+    "start": "powershell -ExecutionPolicy Bypass -File ./server.ps1"
+  },
+  "keywords": [
+    "sks-car",
+    "SKS Car",
+    "نظام SKS Car لإدارة خدمات السيارات",
+    "automotive",
+    "workshop",
+    "erp"
+  ],
+  "author": "SKS Car Systems",
+  "license": "PROPRIETARY"
+}

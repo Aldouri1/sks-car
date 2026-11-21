@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>SKS Car | نظام SKS Car لإدارة خدمات السيارات</title>
   <meta name="application-name" content="SKS Car" />
-  <meta name="sks-app-version" content="1.5.1" />
-  <meta name="sks-build-id" content="20261121151" />
+  <meta name="sks-app-version" content="2.0.0" />
+  <meta name="sks-build-id" content="20261121200" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -451,7 +451,7 @@ details > summary::-webkit-details-marker {
       <div class="p-4 border-t border-slate-800 space-y-2">
         <button onclick="openCloudSyncModal('ota')" class="w-full py-2.5 px-3 rounded-xl bg-[#0066ff] hover:bg-blue-500 text-white text-xs font-black flex items-center justify-between transition shadow">
           <span>⚙️ الإعدادات والتحديث</span>
-          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-black" dir="ltr">v1.5.1</span>
+          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-black" dir="ltr">v2.0.0</span>
         </button>
         <button onclick="toggleSurfaceTheme()" class="w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 text-xs font-bold flex items-center justify-between">
           <span id="surface-theme-label">الوضع الليلي</span>
@@ -1715,8 +1715,8 @@ function copySupabaseSetupSQL() {
 /* ==========================================================================
    1-E. REMOTE OTA AUTO-UPDATE ENGINE (🔄 التحديث التلقائي عن بُعد للأندرويد والكمبيوتر والآيفون)
    ========================================================================== */
-const SKS_APP_VERSION = '1.5.1';
-const SKS_BUILD_ID = '20261121151';
+const SKS_APP_VERSION = '2.0.0';
+const SKS_BUILD_ID = '20261121200';
 const SKS_DEFAULT_OTA_URL = 'https://github.com/Aldouri1/sks-car';
 const SKS_OTA_LOCAL_STORAGE_KEY = 'sks_car_ota_local_cfg_v1';
 
@@ -4308,31 +4308,21 @@ function renderDashboardView() {
     <div class="max-w-4xl mx-auto space-y-4">
       <!-- 2 Primary Big Buttons (أهم زرين في يومك فقط) -->
       <div class="grid grid-cols-2 gap-3">
-        <button type="button" onclick="switchTab('reception')" class="p-4 rounded-2xl bg-[#0066ff] hover:bg-blue-600 text-white shadow-md transition flex items-center justify-center gap-2.5 font-black text-sm sm:text-base">
+        <button type="button" onclick="switchTab('reception')" class="p-4 rounded-2xl bg-[#0066ff] hover:bg-blue-600 text-white shadow-md transition flex items-center justify-center gap-2 font-black text-sm sm:text-base">
           <span class="text-xl">🚗</span>
           <span>استلام سيارة</span>
         </button>
 
-        <button type="button" onclick="switchTab('accounting')" class="p-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition flex items-center justify-center gap-2.5 font-black text-sm sm:text-base">
+        <button type="button" onclick="switchTab('accounting')" class="p-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition flex items-center justify-center gap-2 font-black text-sm sm:text-base">
           <span class="text-xl">💰</span>
           <span>قبض / دفع</span>
         </button>
       </div>
 
-      <!-- Compact Shortcut Pills (اختصارات هادئة) -->
-      <div class="grid grid-cols-3 gap-2 text-xs font-extrabold">
-        <button type="button" onclick="switchTab('billing')" class="sks-card py-2.5 px-2 text-center hover:border-[#0066ff] transition">🧾 الفواتير</button>
-        <button type="button" onclick="switchTab('contracts')" class="sks-card py-2.5 px-2 text-center hover:border-[#0066ff] transition">📄 العقود</button>
-        <button type="button" onclick="switchTab('customers')" class="sks-card py-2.5 px-2 text-center hover:border-[#0066ff] transition">👥 الزبائن</button>
-      </div>
-
       <!-- Single Minimal Summary Bar -->
-      <div class="sks-card px-4 py-3 flex flex-wrap items-center justify-between gap-2 text-xs font-black">
-        <div class="flex items-center gap-4">
-          <span class="text-slate-600">بالورشة: <strong class="text-[#0066ff] text-sm">${activeJobs.length}</strong></span>
-          <span class="text-slate-300">|</span>
-          <span class="text-slate-600">المستلم: <strong class="text-emerald-600 text-sm">${formatCurrency(totalRevenue)}</strong></span>
-        </div>
+      <div class="sks-card px-4 py-3 flex items-center justify-between gap-2 text-xs font-black">
+        <span class="text-slate-600">بالورشة: <strong class="text-[#0066ff] text-sm">${activeJobs.length}</strong></span>
+        <span class="text-slate-600">المستلم: <strong class="text-emerald-600 text-sm">${formatCurrency(totalRevenue)}</strong></span>
       </div>
 
       <!-- Search + Clean Mobile-First Vehicle Cards (بدون سكرول أفقي!) -->
@@ -4883,109 +4873,87 @@ function openJobDetailsModal(jobId) {
       <div class="flex items-center justify-between border-b pb-3">
         <div>
           <h3 class="text-base font-black">${job.vehicleTitle} (${job.plateNumber})</h3>
-          <p class="text-xs text-slate-500 font-bold">رقم الأمر: ${job.id} — العميل: ${job.customerName}</p>
+          <p class="text-xs text-slate-500 font-bold">👤 ${job.customerName} • ${job.id}</p>
         </div>
         <button onclick="closeModal()" class="p-1.5 rounded-lg bg-slate-100 text-slate-600 font-black">✕</button>
       </div>
 
-      <!-- Current Operations with Editable Price -->
+      <!-- Services (الخدمات) -->
       <div class="sks-subcard p-3.5 space-y-2.5">
-        <div class="text-xs font-black text-[#0066ff]">العمليات والخدمات المسجلة (${formatCurrency(totals.subtotal)})</div>
-        <div class="space-y-2">
+        <div class="text-xs font-black text-[#0066ff]">🔧 الخدمات (${formatCurrency(totals.subtotal)})</div>
+        <div class="space-y-1.5">
           ${(job.services || []).map((s, idx) => `
-            <div class="flex items-center justify-between gap-2 text-xs py-1.5 border-b border-slate-200/60">
+            <div class="flex items-center justify-between gap-2 text-xs py-1 border-b border-slate-200/60">
               <span class="font-bold flex-1">${s.name}</span>
-              <div class="flex items-center gap-1.5">
-                <input
-                  type="number"
-                  value="${s.price}"
-                  step="any"
-                  onchange="updateJobServicePrice('${job.id}', ${idx}, this.value)"
-                  class="sks-input w-28 py-1 px-2 text-xs font-black text-[#0066ff] text-center"
-                />
-                <span class="text-[11px] text-slate-500 font-bold">${SKS_BRAND.currency}</span>
-                <button onclick="removeJobService('${job.id}', ${idx})" class="text-rose-500 hover:text-rose-700 font-black px-1.5" title="حذف">✕</button>
+              <div class="flex items-center gap-1">
+                <input type="number" value="${s.price}" step="any" onchange="updateJobServicePrice('${job.id}', ${idx}, this.value)" class="sks-input w-24 py-1 px-2 text-xs font-black text-[#0066ff] text-center" />
+                <button onclick="removeJobService('${job.id}', ${idx})" class="text-rose-500 font-black px-1">✕</button>
               </div>
             </div>
-          `).join('') || '<div class="text-xs text-slate-400">لا توجد عمليات مسجلة بعد</div>'}
+          `).join('') || '<div class="text-xs text-slate-400">لا توجد خدمات مضافة</div>'}
         </div>
 
-        <!-- Add Operation from Quick List or Custom Input with Custom Price -->
-        <div class="pt-3 border-t border-slate-200 space-y-2">
-          <div class="text-xs font-extrabold">إضافة عملية جديدة مع تحديد السعر:</div>
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
-            <div class="sm:col-span-5">
-              <select id="modal-add-service" onchange="syncModalServiceSelection()" class="sks-input py-1.5 text-xs">
-                <option value="__custom__">-- كتابة نوع عملية مخصصة --</option>
-                ${AppState.db.serviceCatalog.map((s, i) => `<option value="${s.id}" ${i === 0 ? 'selected' : ''}>${s.name}</option>`).join('')}
-              </select>
-            </div>
-            <div class="sm:col-span-4">
-              <input id="modal-custom-service-name" type="text" placeholder="أو اكتب نوع العملية هنا..." class="sks-input py-1.5 text-xs" />
-            </div>
-            <div class="sm:col-span-3">
-              <input id="modal-service-price" type="number" step="any" value="${firstSrvPrice}" placeholder="السعر" class="sks-input py-1.5 text-xs font-black text-[#0066ff] text-center" />
-            </div>
-          </div>
-          <button onclick="addServiceToJob('${job.id}')" class="w-full sks-electric-btn py-2 text-xs">+ إضافة العملية بالسعر المحدد</button>
+        <div class="pt-2 border-t border-slate-200 grid grid-cols-12 gap-1.5">
+          <select id="modal-add-service" onchange="syncModalServiceSelection()" class="col-span-5 sks-input py-1.5 text-xs">
+            <option value="__custom__">+ خدمة مخصصة</option>
+            ${AppState.db.serviceCatalog.map((s, i) => `<option value="${s.id}" ${i === 0 ? 'selected' : ''}>${s.name}</option>`).join('')}
+          </select>
+          <input id="modal-custom-service-name" type="text" placeholder="أو اكتب هنا..." class="col-span-4 sks-input py-1.5 text-xs" />
+          <input id="modal-service-price" type="number" step="any" value="${firstSrvPrice}" placeholder="السعر" class="col-span-3 sks-input py-1.5 text-xs font-black text-[#0066ff] text-center" />
+          <button onclick="addServiceToJob('${job.id}')" class="col-span-12 sks-light-btn py-1.5 text-xs font-black">+ إضافة الخدمة</button>
         </div>
       </div>
 
-      <!-- حقل كتابة العقود المرورية داخل بطاقة السيارة -->
-      <div class="sks-subcard p-3.5 space-y-2 border border-blue-200 bg-blue-50/40">
-        <div class="flex items-center justify-between">
-          <label class="text-xs font-black text-[#0f172a]">📄 حقل كتابة العقد المروري الخاص بالمركبة:</label>
-          <button type="button" onclick="saveJobTrafficContract('${job.id}')" class="sks-navy-btn px-3 py-1 text-[11px]">حفظ العقد المروري</button>
-        </div>
-        <textarea id="modal-traffic-contract" rows="2" placeholder="اكتب رقم وتفاصيل العقد المروري هنا..." class="sks-input bg-white text-xs font-bold">${job.trafficContract || ''}</textarea>
-      </div>
-
-      <!-- مخطط فحص البدي -->
-      <div class="sks-subcard p-3.5 space-y-3 border border-slate-200">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="text-xs font-black text-[#0f172a]">
-            🚗 فحص جسم السيارة عند الاستلام (${(job.bodyDamages || []).length} ملاحظة)
-          </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" onclick="printCarBodyDiagramReport('${job.id}')" class="sks-electric-btn px-3 py-1 text-[11px]">
-              🖨️ طباعة مخطط السيارة مع التفاصيل
-            </button>
+      <!-- Payment & Print (التسديد والطباعة) -->
+      <div class="sks-subcard p-3.5 space-y-2.5 border border-emerald-200 bg-emerald-50/30">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div>
+            ${totals.discount > 0 ? `<div class="text-rose-600 font-black">${job.loyaltyDiscountLabel || 'خصم VIP'}: -${formatCurrency(totals.discount)}</div>` : ''}
+            <span>الصافي: <strong class="text-sm text-[#0066ff]">${formatCurrency(totals.total)}</strong></span>
+            <span class="mx-1.5 text-slate-300">|</span>
+            <span>المدفوع: <strong class="text-emerald-600">${formatCurrency(totals.paid)}</strong></span>
+            <span class="mx-1.5 text-slate-300">|</span>
+            <span>المتبقي: <strong class="text-amber-600">${formatCurrency(totals.remaining)}</strong></span>
           </div>
         </div>
-        <div class="bg-white p-2 rounded-xl border border-slate-200">
-          ${renderCarBodySVGMarkup(job.bodyDamages || [], false, job.vehicleBodyType || detectVehicleBodyTypeFromTitle(job.vehicleTitle))}
-        </div>
-        ${(job.bodyDamages || []).length > 0 ? `
-          <div class="flex flex-wrap gap-1.5 text-xs">
-            ${(job.bodyDamages || []).map((d, i) => `
-              <span class="px-2.5 py-1 rounded-lg bg-slate-100 font-bold text-slate-800">
-                <strong style="color:${d.color}">#${i + 1}</strong> ${d.zoneName} (${d.typeLabel})${d.note ? ' — ' + d.note : ''}
-              </span>
-            `).join('')}
-          </div>
-        ` : ''}
-      </div>
-
-      <!-- صور السيارة (4 جهات) والسنوية والبطاقة الوطنية داخل بطاقة السيارة -->
-      ${renderAttachmentsManagerCard('job', job.id, job.attachments || [], VEHICLE_PHOTO_SLOTS)}
-
-      <!-- Payment & Print -->
-      <div class="sks-subcard p-3 flex flex-wrap items-center justify-between gap-3">
-        <div class="text-xs space-y-0.5">
-          ${totals.discount > 0 ? `<div class="text-rose-600 font-black">${job.loyaltyDiscountLabel || 'خصم VIP'}: -${formatCurrency(totals.discount)}</div>` : ''}
-          <div>الإجمالي الصافي: <strong>${formatCurrency(totals.total)}</strong></div>
-          <div>المدفوع: <strong class="text-emerald-600">${formatCurrency(totals.paid)}</strong> | المتبقي: <strong class="text-amber-600">${formatCurrency(totals.remaining)}</strong></div>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <select id="modal-pay-safe" class="sks-input w-40 py-1.5 text-xs font-bold">
+        <div class="grid grid-cols-12 gap-2">
+          <select id="modal-pay-safe" class="col-span-6 sks-input py-2 text-xs font-bold bg-white">
             ${(AppState.db.safes || []).map(sf => `<option value="${sf.id}">${sf.name}</option>`).join('')}
           </select>
-          <input id="modal-pay-amount" type="number" step="any" value="${totals.remaining}" class="sks-input w-28 py-1.5 text-xs font-black text-center" />
-          <button onclick="recordJobPayment('${job.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-2 rounded-xl text-xs">تسديد للقاصة</button>
-          <button onclick="printCarBodyDiagramReport('${job.id}')" class="sks-navy-btn px-3 py-2 text-xs">🖨️ طباعة مخطط السيارة مع التفاصيل</button>
-          <button onclick="printInvoiceForJob('${job.id}')" class="sks-electric-btn px-3 py-2 text-xs">طباعة فاتورة</button>
+          <input id="modal-pay-amount" type="number" step="any" value="${totals.remaining}" class="col-span-6 sks-input py-2 text-xs font-black text-center bg-white" />
+          <button onclick="recordJobPayment('${job.id}')" class="col-span-6 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2.5 rounded-xl text-xs">✅ تسديد للقاصة</button>
+          <button onclick="printInvoiceForJob('${job.id}')" class="col-span-6 sks-electric-btn py-2.5 text-xs">🖨️ طباعة الفاتورة</button>
         </div>
       </div>
+
+      <!-- Optional Extras Drawer (مخطط البدي + الصور + العقد المروري مطوية بهدوء) -->
+      <details class="rounded-2xl border border-slate-200 bg-slate-50/70 overflow-hidden">
+        <summary class="px-4 py-3 text-xs font-black text-slate-700 cursor-pointer select-none flex items-center justify-between hover:bg-slate-100">
+          <span>➕ المخطط والصور والعقد المروري (${(job.bodyDamages || []).length} ملاحظة • ${(job.attachments || []).length} صورة)</span>
+          <span class="text-[#0066ff]">▼</span>
+        </summary>
+        <div class="p-3.5 border-t bg-white space-y-3.5">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-black">📄 العقد المروري</label>
+              <button type="button" onclick="saveJobTrafficContract('${job.id}')" class="sks-navy-btn px-2.5 py-1 text-[11px]">حفظ العقد</button>
+            </div>
+            <textarea id="modal-traffic-contract" rows="2" placeholder="رقم وتفاصيل العقد المروري..." class="sks-input text-xs">${job.trafficContract || ''}</textarea>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black">🚗 مخطط جسم السيارة</span>
+              <button type="button" onclick="printCarBodyDiagramReport('${job.id}')" class="sks-navy-btn px-2.5 py-1 text-[11px]">🖨️ طباعة المخطط</button>
+            </div>
+            <div class="bg-white p-2 rounded-xl border border-slate-200">
+              ${renderCarBodySVGMarkup(job.bodyDamages || [], false, job.vehicleBodyType || detectVehicleBodyTypeFromTitle(job.vehicleTitle))}
+            </div>
+          </div>
+
+          ${renderAttachmentsManagerCard('job', job.id, job.attachments || [], VEHICLE_PHOTO_SLOTS)}
+        </div>
+      </details>
     </div>
   `;
 
@@ -6478,51 +6446,33 @@ function renderBillingView() {
         </div>
       </details>
 
-      <!-- Existing Invoices Table -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <h3 class="text-base font-black">سجل الفواتير والمطبوعات الرسمية (${AppState.db.invoices.length})</h3>
-          <div class="flex flex-wrap gap-2">
-            <button onclick="exportInvoicesToExcel()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">📊 تصدير إلى Excel</button>
-            <button onclick="printJobCard('${AppState.db.jobCards[0]?.id}')" class="sks-light-btn px-3 py-1.5 text-xs">طباعة أمر عمل</button>
-            <button onclick="printGatePass('${AppState.db.jobCards[0]?.id}')" class="sks-light-btn px-3 py-1.5 text-xs">طباعة تصريح خروج</button>
-          </div>
+      <!-- Existing Invoices Cards (بطاقات نظيفة بدون جدول عريض) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <h3 class="text-sm font-black text-slate-600">🧾 الفواتير (${AppState.db.invoices.length})</h3>
+          <button onclick="exportInvoicesToExcel()" class="px-2.5 py-1.5 rounded-xl bg-white border border-slate-200 text-emerald-700 text-xs font-black" title="تصدير Excel">📊</button>
         </div>
 
-        <div class="sks-table-wrap">
-          <table class="sks-table">
-            <thead>
-              <tr>
-                <th>رقم الفاتورة</th>
-                <th>الزبون (جهة الاتصال)</th>
-                <th>السيارة</th>
-                <th>المبلغ الإجمالي</th>
-                <th>المدفوع</th>
-                <th>الحالة</th>
-                <th>طباعة</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${AppState.db.invoices.map(inv => `
-                <tr>
-                  <td class="font-black text-[#0066ff]">${inv.id}</td>
-                  <td class="font-bold">${inv.customerName}</td>
-                  <td>${inv.vehicleTitle} ${inv.plateNumber ? `(${inv.plateNumber})` : ''}</td>
-                  <td class="font-black">${formatCurrency(inv.total)}</td>
-                  <td class="font-black text-emerald-600">${formatCurrency(inv.paid)}</td>
-                  <td><span class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-emerald-100 text-emerald-800">${inv.status}</span></td>
-                  <td>
-                    <button onclick="printInvoiceForJob('${inv.jobCardId}')" class="sks-electric-btn px-3 py-1.5 text-xs">طباعة فاتورة SKS Car</button>
-                  </td>
-                </tr>
-              `).join('') || `
-                <tr>
-                  <td colspan="7" class="text-center py-8 text-slate-400 font-bold">لا توجد فواتير مسجلة حالياً</td>
-                </tr>
-              `}
-            </tbody>
-          </table>
-        </div>
+        ${AppState.db.invoices.length === 0 ? `
+          <div class="sks-card p-6 text-center text-xs text-slate-400 font-bold">لا توجد فواتير مسجلة حالياً</div>
+        ` : AppState.db.invoices.map(inv => `
+          <div class="sks-card p-4 flex flex-wrap items-center justify-between gap-3">
+            <div class="min-w-0 space-y-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-black text-sm text-[#0f172a]">${inv.customerName}</span>
+                <span class="text-[11px] font-black text-[#0066ff]" dir="ltr">${inv.id}</span>
+              </div>
+              <div class="text-xs text-slate-500 font-bold">🚗 ${inv.vehicleTitle} ${inv.plateNumber ? `(${inv.plateNumber})` : ''}</div>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+              <div class="text-left">
+                <div class="font-black text-sm text-emerald-600">${formatCurrency(inv.total)}</div>
+                <div class="text-[10px] font-bold text-slate-400">${inv.status}</div>
+              </div>
+              <button onclick="printInvoiceForJob('${inv.jobCardId}')" class="sks-electric-btn px-3 py-1.5 text-xs">🖨️ طباعة</button>
+            </div>
+          </div>
+        `).join('')}
       </div>
     </div>
   `;
@@ -6855,57 +6805,39 @@ function renderTrafficContractsView() {
         </div>
       </details>
 
-      <!-- Saved Traffic Contracts Table -->
-      <div class="sks-card p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <h3 class="text-base font-black">سجل العقود المرورية المحفوظة (${contracts.length})</h3>
-          <button type="button" onclick="exportTrafficContractsToExcel()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold">
-            📊 تصدير العقود المرورية إلى Excel
-          </button>
+      <!-- Saved Traffic Contracts Cards (بطاقات نظيفة بدون جدول عريض) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <h3 class="text-sm font-black text-slate-600">📄 العقود المرورية (${contracts.length})</h3>
+          <button type="button" onclick="exportTrafficContractsToExcel()" class="px-2.5 py-1.5 rounded-xl bg-white border border-slate-200 text-emerald-700 text-xs font-black" title="تصدير Excel">📊</button>
         </div>
 
-        <div class="sks-table-wrap">
-          <table class="sks-table">
-            <thead>
-              <tr>
-                <th>رقم العقد</th>
-                <th>التاريخ</th>
-                <th>الطرف الأول (البائع)</th>
-                <th>الطرف الثاني (المشتري)</th>
-                <th>السيارة واللوحة</th>
-                <th>مبلغ العقد</th>
-                <th>نص العقد المروري</th>
-                <th>إجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${contracts.map(tc => `
-                <tr>
-                  <td class="font-black text-[#0066ff]" dir="ltr">${tc.contractNumber || tc.id}</td>
-                  <td class="text-xs font-bold text-slate-600" dir="ltr">${tc.date}</td>
-                  <td class="font-bold">${tc.sellerName || '-'}</td>
-                  <td class="font-extrabold">${tc.buyerName || '-'} ${tc.buyerPhone ? `<span class="text-xs text-slate-500" dir="ltr">(${tc.buyerPhone})</span>` : ''}</td>
-                  <td class="font-bold">${tc.vehicleTitle} (${tc.plateNumber})</td>
-                  <td class="font-black">${tc.amount ? formatCurrency(tc.amount) : '-'}</td>
-                  <td class="text-xs max-w-xs truncate" title="${tc.contractText || ''}">${tc.contractText || '-'}</td>
-                  <td>
-                    <div class="flex flex-wrap items-center gap-1.5">
-                      <button onclick="openContractDocsModal('${tc.id}')" class="sks-navy-btn px-2.5 py-1.5 text-xs">
-                        🪪 المستمسكات (${(tc.attachments || []).length})
-                      </button>
-                      <button onclick="printTrafficContract('${tc.id}')" class="sks-electric-btn px-3 py-1.5 text-xs">طباعة العقد</button>
-                      <button onclick="deleteTrafficContract('${tc.id}')" class="px-2.5 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 font-black text-xs" title="حذف">✕</button>
-                    </div>
-                  </td>
-                </tr>
-              `).join('') || `
-                <tr>
-                  <td colspan="8" class="text-center py-8 text-slate-400 font-bold">لا توجد عقود مرورية مسجلة حالياً — استخدم الحقل أعلاه لكتابة عقد مروري جديد</td>
-                </tr>
-              `}
-            </tbody>
-          </table>
-        </div>
+        ${contracts.length === 0 ? `
+          <div class="sks-card p-6 text-center text-xs text-slate-400 font-bold">لا توجد عقود مرورية مسجلة حالياً</div>
+        ` : contracts.map(tc => `
+          <div class="sks-card p-4 space-y-2.5">
+            <div class="flex items-start justify-between gap-2">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="font-black text-xs text-[#0066ff]" dir="ltr">${tc.contractNumber || tc.id}</span>
+                  <span class="font-black text-sm text-[#0f172a]">${tc.vehicleTitle} (${tc.plateNumber})</span>
+                </div>
+                <div class="text-xs text-slate-600 font-bold mt-1">
+                  ${tc.sellerName || '-'} ⬅ <strong>${tc.buyerName || '-'}</strong>
+                  ${tc.amount ? ` • <span class="text-emerald-700 font-black">${formatCurrency(tc.amount)}</span>` : ''}
+                </div>
+              </div>
+              <button onclick="deleteTrafficContract('${tc.id}')" class="text-slate-400 hover:text-rose-600 font-black text-xs p-1" title="حذف">✕</button>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
+              <span class="text-[11px] text-slate-400 font-bold" dir="ltr">${tc.date}</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="openContractDocsModal('${tc.id}')" class="sks-navy-btn px-2.5 py-1.5 text-xs">🪪 الصور (${(tc.attachments || []).length})</button>
+                <button onclick="printTrafficContract('${tc.id}')" class="sks-electric-btn px-3 py-1.5 text-xs">🖨️ طباعة</button>
+              </div>
+            </div>
+          </div>
+        `).join('')}
       </div>
     </div>
   `;
