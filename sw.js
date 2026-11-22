@@ -1,7 +1,7 @@
 /* ==========================================================================
    SKS Car — Progressive Web App (PWA) Offline Service Worker
    ========================================================================== */
-const SKS_CACHE_NAME = 'sks-car-pwa-v3';
+const SKS_CACHE_NAME = 'sks-car-pwa-v4';
 const SKS_CORE_ASSETS = [
   './',
   './index.html',
