@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>SKS Car | نظام SKS Car لإدارة خدمات السيارات</title>
   <meta name="application-name" content="SKS Car" />
-  <meta name="sks-app-version" content="1.6.1" />
-  <meta name="sks-build-id" content="20261122161" />
+  <meta name="sks-app-version" content="1.6.2" />
+  <meta name="sks-build-id" content="20261122162" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -516,7 +516,7 @@ body.dark-mode .ss-panel .bg-slate-50 {
       <div class="p-4 border-t border-slate-800 space-y-2">
         <button onclick="openCloudSyncModal('ota')" class="w-full py-2.5 px-3 rounded-xl bg-[#0066ff] hover:bg-blue-500 text-white text-xs font-black flex items-center justify-between transition shadow">
           <span>⚙️ الإعدادات والتحديث</span>
-          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-black" dir="ltr">v1.6.1</span>
+          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-black" dir="ltr">v1.6.2</span>
         </button>
         <button onclick="toggleSurfaceTheme()" class="w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 text-xs font-bold flex items-center justify-between">
           <span id="surface-theme-label">الوضع الليلي</span>
@@ -886,8 +886,11 @@ function ssFormatBytes(bytes) {
   return (n / (1024 * 1024)).toFixed(1) + ' MB';
 }
 
+const SKS_DEFAULT_PUBLIC_WEB_URL = 'https://aldouri1.github.io/sks-car/SKS-Car.html';
+
 function getSmartServiceConfig() {
   const defaults = {
+    publicWebBaseUrl: SKS_DEFAULT_PUBLIC_WEB_URL,
     apiBaseUrl: '',
     workshopApiKey: '',
     defaultExpiryHours: 72,
@@ -896,7 +899,9 @@ function getSmartServiceConfig() {
   try {
     const raw = localStorage.getItem(SKS_SS_CONFIG_KEY);
     if (!raw) return defaults;
-    return Object.assign(defaults, JSON.parse(raw));
+    const merged = Object.assign(defaults, JSON.parse(raw));
+    if (!merged.publicWebBaseUrl) merged.publicWebBaseUrl = SKS_DEFAULT_PUBLIC_WEB_URL;
+    return merged;
   } catch (e) {
     return defaults;
   }
@@ -904,6 +909,7 @@ function getSmartServiceConfig() {
 
 function saveSmartServiceConfig(cfg) {
   const clean = {
+    publicWebBaseUrl: String(cfg.publicWebBaseUrl || SKS_DEFAULT_PUBLIC_WEB_URL).trim().split('?')[0].split('#')[0],
     apiBaseUrl: String(cfg.apiBaseUrl || '').trim().replace(/\/+$/, ''),
     workshopApiKey: String(cfg.workshopApiKey || '').trim(),
     defaultExpiryHours: Math.max(1, Math.min(720, Number(cfg.defaultExpiryHours) || 72)),
@@ -1177,8 +1183,15 @@ function renderSmartServiceWorkOrderSection(job) {
   const cfg = getSmartServiceConfig();
   const hasBackend = Boolean(cfg.apiBaseUrl);
 
-  // Auto-upgrade any pre-v1.6.1 local link missing the self-contained &q= web packet
-  if (!hasBackend && job.smartService && job.smartService.shareUrl && !job.smartService.shareUrl.includes('&q=') && Array.isArray(job.smartService.items) && job.smartService.items.length > 0) {
+  // Auto-upgrade any local/localhost/file link so it always uses the public HTTPS web URL + &q= packet
+  if (
+    !hasBackend &&
+    job.smartService &&
+    job.smartService.shareUrl &&
+    (!job.smartService.shareUrl.includes('&q=') || job.smartService.shareUrl.startsWith('http://localhost') || job.smartService.shareUrl.startsWith('http://127.0.0.1') || job.smartService.shareUrl.startsWith('file:')) &&
+    Array.isArray(job.smartService.items) &&
+    job.smartService.items.length > 0
+  ) {
     setTimeout(() => {
       generateLocalSmartServiceApprovalLink(job, job.smartService, true);
     }, 10);
@@ -2565,25 +2578,40 @@ function renderSmartServiceSettingsTab() {
   const cfg = getSmartServiceConfig();
   return `
     <form onsubmit="saveSmartServiceSettingsForm(event)" class="space-y-3.5">
-      <div class="sks-subcard p-3.5 border-2 ${cfg.apiBaseUrl ? 'border-emerald-400 bg-emerald-50/50' : 'border-red-300 bg-red-50/40'} space-y-1.5">
+      <div class="sks-subcard p-3.5 border-2 border-emerald-400 bg-emerald-50/50 space-y-2">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="text-xs font-black text-[#0f172a]">🔧 اتصال سيرفر Smart Service الآمن (PostgreSQL Backend)</span>
-          <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-black ${cfg.apiBaseUrl ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'}">
-            ${cfg.apiBaseUrl ? '🟢 مهيأ ومرتبط' : '⚪ غير مرتبط بعد'}
-          </span>
+          <span class="text-xs font-black text-[#0f172a]">🌐 رابط الويب العام للزبائن (يفتح من أي هاتف أندرويد أو آيفون)</span>
+          <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-black bg-emerald-100 text-emerald-800">🟢 جاهز عبر GitHub Pages</span>
         </div>
+        <input
+          id="ss-cfg-public-web-url"
+          type="url"
+          value="${ssEscapeHtml(cfg.publicWebBaseUrl || SKS_DEFAULT_PUBLIC_WEB_URL)}"
+          placeholder="https://aldouri1.github.io/sks-car/SKS-Car.html"
+          dir="ltr"
+          class="sks-input font-bold text-emerald-800 bg-white"
+        />
         <p class="text-[11px] text-slate-600 font-bold leading-relaxed">
-          بيانات اتصال قاعدة بيانات PostgreSQL تبقى مشفرة ومحمية داخل السيرفر الخلفي فقط ولا تُخزَّن أبداً داخل واجهة التطبيق.
+          جميع روابط موافقة الزبون تستخدم هذا الرابط العام تلقائياً حتى لو كنت تعمل من داخل تطبيق الويندوز (<code>SKS-Car.exe</code>)، لتفتح على أي هاتف آخر عبر الإنترنت.
         </p>
       </div>
 
+      <div class="sks-subcard p-3.5 border-2 ${cfg.apiBaseUrl ? 'border-emerald-400 bg-emerald-50/50' : 'border-slate-200 bg-slate-50'} space-y-1.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="text-xs font-black text-[#0f172a]">🔧 سيرفر PostgreSQL الخلفي المخصص (اختياري)</span>
+          <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-black ${cfg.apiBaseUrl ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'}">
+            ${cfg.apiBaseUrl ? '🟢 مرتبط' : '⚪ اختياري (يعمل بدونه عبر السحابة)'}
+          </span>
+        </div>
+      </div>
+
       <div>
-        <label class="block text-xs font-extrabold mb-1">🌐 عنوان السيرفر الخلفي (Backend API URL) *</label>
+        <label class="block text-xs font-extrabold mb-1">🌐 عنوان سيرفر PostgreSQL الخلفي (اختياري)</label>
         <input
           id="ss-cfg-url"
           type="url"
           value="${ssEscapeHtml(cfg.apiBaseUrl)}"
-          placeholder="مثال: http://localhost:4000 أو https://api.sks-car.com"
+          placeholder="اتركه فارغاً للعمل عبر GitHub Pages أو أدخل رابط السيرفر..."
           dir="ltr"
           class="sks-input font-bold text-[#0066ff]"
         />
@@ -2625,6 +2653,7 @@ function renderSmartServiceSettingsTab() {
 function saveSmartServiceSettingsForm(e) {
   e.preventDefault();
   const saved = saveSmartServiceConfig({
+    publicWebBaseUrl: document.getElementById('ss-cfg-public-web-url')?.value || SKS_DEFAULT_PUBLIC_WEB_URL,
     apiBaseUrl: document.getElementById('ss-cfg-url')?.value || '',
     workshopApiKey: document.getElementById('ss-cfg-key')?.value || '',
     defaultExpiryHours: document.getElementById('ss-cfg-expiry')?.value || 72
@@ -2898,10 +2927,12 @@ async function generateLocalSmartServiceApprovalLink(job, ss, silentUpgrade = fa
   const contentHash = await computeLocalQuotationHash(ss);
   const expIso = formatDateTimeDisplay(getLocalDateTimeValue(expiryHours));
   const expEpoch = Date.now() + expiryHours * 3600 * 1000;
+  const syncRoom = typeof getSyncRoomId === 'function' ? getSyncRoomId() : 'sks-car-770';
 
   // Build self-contained customer-scoped URL packet (contains ONLY this vehicle & quotation items; zero other customers or secrets)
   const urlPacket = {
     j: job.id,
+    rm: syncRoom,
     cn: job.customerName || '',
     cp: job.customerPhone || '',
     vt: job.vehicleTitle || '',
@@ -2929,7 +2960,8 @@ async function generateLocalSmartServiceApprovalLink(job, ss, silentUpgrade = fa
   };
   const encodedPacket = ssEncodeUrlPacket(urlPacket);
 
-  const baseUrl = window.location.href.split('?')[0].split('#')[0];
+  const cfg = getSmartServiceConfig();
+  const baseUrl = (cfg.publicWebBaseUrl || SKS_DEFAULT_PUBLIC_WEB_URL).trim().split('?')[0].split('#')[0];
   ss.localTokenHash = tokenHash;
   ss.contentSha256 = contentHash;
   ss.tokenExpiresEpoch = expEpoch;
@@ -2944,9 +2976,12 @@ async function generateLocalSmartServiceApprovalLink(job, ss, silentUpgrade = fa
     job.status = 'awaiting_approval';
   }
 
+  // Publish token-isolated media thumbnails packet to MQTT so customer's phone can view damaged-part photos
+  publishTokenScopedMediaPacket(tokenHash, ss);
+
   if (!silentUpgrade) {
     recordSmartServiceHistory(ss, 'إصدار رابط موافقة آمن', `صالح حتى ${expIso} (الإصدار v${ss.version || 1})`);
-    showToast('✅ تم إنشاء رابط موافقة الزبون الآمن! يعمل مباشرةً عبر المتصفح وزر المعاينة');
+    showToast('✅ تم إنشاء رابط الويب العام! يفتح من أي هاتف أندرويد أو آيفون');
   }
   saveDatabase();
   openJobDetailsModal(job.id);
@@ -2955,12 +2990,50 @@ async function generateLocalSmartServiceApprovalLink(job, ss, silentUpgrade = fa
   }
 }
 
+function publishTokenScopedMediaPacket(tokenHash, ss) {
+  if (!tokenHash || !ss || !Array.isArray(ss.items)) return;
+  const mediaByItem = {};
+  let hasAnyMedia = false;
+  ss.items.forEach((it) => {
+    const thumbs = (it.media || [])
+      .filter((m) => m.thumbDataUrl)
+      .map((m) => ({ id: m.id, kind: m.kind || 'photo', name: m.name || '', thumbDataUrl: m.thumbDataUrl }));
+    if (thumbs.length > 0) {
+      mediaByItem[it.id] = thumbs;
+      hasAnyMedia = true;
+    }
+  });
+  if (!hasAnyMedia) return;
+
+  const topic = `sks_car_ss_quote_media/${tokenHash}`;
+  const jsonStr = JSON.stringify({ tokenHash, mediaByItem });
+  try {
+    if (typeof sksPahoClient !== 'undefined' && sksPahoClient && typeof sksCloudConnected !== 'undefined' && sksCloudConnected) {
+      const m = new Paho.MQTT.Message(jsonStr);
+      m.destinationName = topic;
+      m.qos = 1;
+      m.retained = true;
+      sksPahoClient.send(m);
+    }
+  } catch (e) {}
+  try {
+    if (typeof sksMqttClient !== 'undefined' && sksMqttClient && sksMqttClient.connected) {
+      sksMqttClient.publish(topic, jsonStr, { qos: 1, retain: true });
+    }
+  } catch (e) {}
+}
+
 const EmbeddedPortalState = {
   rawToken: '',
+  tokenHash: '',
+  syncRoom: 'sks-car-770',
   jobId: '',
+  activeJob: null,
   isolatedMode: false,
   reconstructedFromUrlOnly: false,
-  selections: {}
+  selections: {},
+  customerMqttClient: null,
+  pendingConfirmPacket: null
 };
 
 async function hydrateLatestStateForCustomerPortal() {
@@ -3049,6 +3122,10 @@ async function reconstructJobFromUrlPacketIfNeeded(tokenHash) {
       });
     }
 
+    if (pkt.rm) {
+      EmbeddedPortalState.syncRoom = String(pkt.rm);
+    }
+
     const hydratedJob = {
       id: pkt.j || 'JC-WEB',
       customerName: pkt.cn || 'الزبون الكريم',
@@ -3119,6 +3196,7 @@ async function openEmbeddedCustomerApprovalPortal(rawToken, isolatedUrlMode = fa
   await hydrateLatestStateForCustomerPortal();
 
   const tokenHash = await ssSha256Hex('sks_local_token:' + EmbeddedPortalState.rawToken);
+  EmbeddedPortalState.tokenHash = tokenHash;
   const jobs = (AppState.db && AppState.db.jobCards) || [];
   let job = jobs.find((j) => j.smartService && j.smartService.localTokenHash === tokenHash);
 
@@ -3137,6 +3215,11 @@ async function openEmbeddedCustomerApprovalPortal(rawToken, isolatedUrlMode = fa
       'لم يتم العثور على عرض السعر المرتبط بهذا الرابط، أو أن الورشة قامت بتعديل العرض وإصدار رابط أحدث.'
     );
     return;
+  }
+
+  EmbeddedPortalState.activeJob = job;
+  if (isolatedUrlMode) {
+    initCustomerIsolatedMqttChannel(tokenHash);
   }
 
   const ss = job.smartService;
@@ -3209,8 +3292,9 @@ function renderEmbeddedPortalError(overlay, icon, title, msg) {
 function renderEmbeddedCustomerPortalView() {
   const overlay = document.getElementById('sks-customer-portal-overlay');
   if (!overlay) return;
-  const job = AppState.db.jobCards.find((j) => j.id === EmbeddedPortalState.jobId);
+  const job = (AppState.db && Array.isArray(AppState.db.jobCards) && AppState.db.jobCards.find((j) => j.id === EmbeddedPortalState.jobId)) || EmbeddedPortalState.activeJob;
   if (!job || !job.smartService) return;
+  EmbeddedPortalState.activeJob = job;
   const ss = job.smartService;
   const isConfirmed = Boolean(ss.customerConfirmedAt || ss.status === 'approved' || ss.status === 'partially_approved' || ss.status === 'rejected');
 
@@ -3482,7 +3566,7 @@ function embeddedPortalSelectTier(itemId, tier) {
 }
 
 function embeddedPortalQuickSelect(mode) {
-  const job = AppState.db.jobCards.find((j) => j.id === EmbeddedPortalState.jobId);
+  const job = (AppState.db && Array.isArray(AppState.db.jobCards) && AppState.db.jobCards.find((j) => j.id === EmbeddedPortalState.jobId)) || EmbeddedPortalState.activeJob;
   if (!job || !job.smartService) return;
   (job.smartService.items || []).forEach((it) => {
     if (!EmbeddedPortalState.selections[it.id]) {
@@ -3498,7 +3582,7 @@ function embeddedPortalQuickSelect(mode) {
 }
 
 async function confirmEmbeddedCustomerPortalSelections() {
-  const job = AppState.db.jobCards.find((j) => j.id === EmbeddedPortalState.jobId);
+  const job = (AppState.db && Array.isArray(AppState.db.jobCards) && AppState.db.jobCards.find((j) => j.id === EmbeddedPortalState.jobId)) || EmbeddedPortalState.activeJob;
   if (!job || !job.smartService) return;
   const ss = job.smartService;
 
@@ -3623,6 +3707,69 @@ async function confirmEmbeddedCustomerPortalSelections() {
   renderEmbeddedCustomerPortalView();
 }
 
+function initCustomerIsolatedMqttChannel(tokenHash) {
+  if (typeof Paho === 'undefined' || !Paho.MQTT) return;
+  const mediaTopic = `sks_car_ss_quote_media/${tokenHash}`;
+  const broker = (typeof SKS_BROKERS !== 'undefined' && SKS_BROKERS[0]) || { host: 'broker.emqx.io', port: 8084, path: '/mqtt' };
+
+  try {
+    const client = new Paho.MQTT.Client(broker.host, broker.port, broker.path, 'sks_cust_' + Math.random().toString(36).slice(2, 10));
+    EmbeddedPortalState.customerMqttClient = client;
+
+    client.onMessageArrived = (message) => {
+      try {
+        if (message.destinationName !== mediaTopic) return;
+        const pkt = JSON.parse(message.payloadString);
+        if (!pkt || pkt.tokenHash !== tokenHash || !pkt.mediaByItem || !EmbeddedPortalState.activeJob) return;
+        const ss = EmbeddedPortalState.activeJob.smartService;
+        if (!ss || !Array.isArray(ss.items)) return;
+        let updated = false;
+        ss.items.forEach((it) => {
+          if (pkt.mediaByItem[it.id] && (!it.media || it.media.length === 0)) {
+            it.media = pkt.mediaByItem[it.id];
+            updated = true;
+          }
+        });
+        if (updated) renderEmbeddedCustomerPortalView();
+      } catch (e) {}
+    };
+
+    client.connect({
+      useSSL: true,
+      timeout: 5,
+      keepAliveInterval: 30,
+      cleanSession: true,
+      onSuccess: () => {
+        try {
+          client.subscribe(mediaTopic, { qos: 1 });
+          if (EmbeddedPortalState.pendingConfirmPacket) {
+            sendConfirmPacketOverCustomerMqtt(EmbeddedPortalState.pendingConfirmPacket);
+          }
+        } catch (e) {}
+      }
+    });
+  } catch (e) {}
+}
+
+function sendConfirmPacketOverCustomerMqtt(confirmPacket) {
+  const room = EmbeddedPortalState.syncRoom || (typeof getSyncRoomId === 'function' ? getSyncRoomId() : 'sks-car-770');
+  const confirmTopic = `sks_car_erp_sync_v1/${room}/ss_confirm`;
+  const jsonStr = JSON.stringify(confirmPacket);
+  try {
+    if (EmbeddedPortalState.customerMqttClient && EmbeddedPortalState.customerMqttClient.isConnected()) {
+      const m = new Paho.MQTT.Message(jsonStr);
+      m.destinationName = confirmTopic;
+      m.qos = 1;
+      m.retained = true;
+      EmbeddedPortalState.customerMqttClient.send(m);
+      EmbeddedPortalState.pendingConfirmPacket = null;
+      return true;
+    }
+  } catch (e) {}
+  EmbeddedPortalState.pendingConfirmPacket = confirmPacket;
+  return false;
+}
+
 function broadcastSmartServiceConfirmPacket(confirmPacket) {
   try {
     if (typeof sksBroadcast !== 'undefined' && sksBroadcast) {
@@ -3630,7 +3777,9 @@ function broadcastSmartServiceConfirmPacket(confirmPacket) {
     }
   } catch (e) {}
 
-  const room = typeof getSyncRoomId === 'function' ? getSyncRoomId() : 'sks-car-770';
+  sendConfirmPacketOverCustomerMqtt(confirmPacket);
+
+  const room = EmbeddedPortalState.syncRoom || (typeof getSyncRoomId === 'function' ? getSyncRoomId() : 'sks-car-770');
   const confirmTopic = `sks_car_erp_sync_v1/${room}/ss_confirm`;
   const jsonStr = JSON.stringify(confirmPacket);
 
@@ -4807,7 +4956,7 @@ function copySupabaseSetupSQL() {
 /* ==========================================================================
    1-E. REMOTE OTA AUTO-UPDATE ENGINE (🔄 التحديث التلقائي عن بُعد للأندرويد والكمبيوتر والآيفون)
    ========================================================================== */
-const SKS_APP_VERSION = '1.6.1';
+const SKS_APP_VERSION = '1.6.2';
 const SKS_BUILD_ID = '20261122159';
 const SKS_DEFAULT_OTA_URL = 'https://github.com/Aldouri1/sks-car';
 const SKS_OTA_LOCAL_STORAGE_KEY = 'sks_car_ota_local_cfg_v1';
@@ -5331,6 +5480,12 @@ function showToast(message) {
    ========================================================================== */
 function initApp() {
   loadDatabase();
+
+  // If opened by a customer via ?approve=<token>, render ONLY the isolated Customer Approval Portal
+  if (typeof isCustomerApprovalUrlMode === 'function' && isCustomerApprovalUrlMode()) {
+    if (typeof initSmartServiceModule === 'function') initSmartServiceModule();
+    return;
+  }
 
   const sidebarLogoEl = document.getElementById('sidebar-logo-slot');
   if (sidebarLogoEl) sidebarLogoEl.innerHTML = renderSksLogo('md');
